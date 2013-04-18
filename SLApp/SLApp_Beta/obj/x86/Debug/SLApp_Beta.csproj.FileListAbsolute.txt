@@ -1,0 +1,17 @@
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\bin\Debug\SLApp_Beta.exe
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\bin\Debug\SLApp_Beta.pdb
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\AgencyProfile.baml
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\LoginWindow.baml
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\MainWindow.baml
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\StudentProfile.baml
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\AgencyProfile.g.cs
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\LoginWindow.g.cs
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\MainWindow.g.cs
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\StudentProfile.g.cs
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\App.g.cs
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\SLApp_Beta_MarkupCompile.cache
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\SLApp_Beta.g.resources
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\SLApp_Beta.Properties.Resources.resources
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\SLApp_Beta.csproj.GenerateResource.Cache
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\SLApp_Beta.exe
+\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\SLApp_Beta.pdb
