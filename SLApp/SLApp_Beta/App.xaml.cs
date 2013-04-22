@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
-namespace Test_app_1
+namespace SLApp_Beta
 {
 	/// <summary>
 	/// Interaction logic for App.xaml

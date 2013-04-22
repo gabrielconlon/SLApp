@@ -1,4 +1,4 @@
-﻿<Window x:Class="Test_app_1.AgencyProfile"
+﻿<Window x:Class="SLApp_Beta.AgencyProfile"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="AgencyProfile" Height="550" Width="850" MinHeight="550" MinWidth="850">

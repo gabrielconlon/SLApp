@@ -1,0 +1,7 @@
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Tests\bin\Release\SLApp_Tests.dll
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Tests\bin\Release\SLApp_Tests.pdb
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Tests\bin\Release\SLApp_Beta.exe
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Tests\bin\Release\SLApp_Beta.pdb
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Tests\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Tests\obj\Release\SLApp_Tests.dll
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Tests\obj\Release\SLApp_Tests.pdb

@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\obj\x86\Debug\
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\
 SLApp_Beta
 none
 false
 DEBUG;TRACE
-\\cs1\CSProjects\2013_Spring_CS472\SLApp\SLApp_Beta\App.xaml
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Beta\App.xaml
 4-224234157
 
-9-1247713258
-12-1381780322
+91155092703
+12-1547151337
 AgencyProfile.xaml;LoginWindow.xaml;MainWindow.xaml;StudentProfile.xaml;
 
 False

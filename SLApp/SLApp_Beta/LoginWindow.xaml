@@ -1,4 +1,4 @@
-﻿<Window x:Class="Test_app_1.LoginWindow"
+﻿<Window x:Class="SLApp_Beta.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="LoginWindow" Height="320" Width="375">

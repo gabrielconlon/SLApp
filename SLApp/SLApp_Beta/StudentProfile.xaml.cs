@@ -11,20 +11,42 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Test_app_1
+namespace SLApp_Beta
 {
 	/// <summary>
 	/// Interaction logic for CreateStudentProfile.xaml
 	/// </summary>
 	public partial class StudentProfile : Window
 	{
-		public StudentProfile()
+		public StudentProfile(bool isAdmin)
 		{
 			InitializeComponent();
+            if (isAdmin == false)
+            {
+                studentNotes_DataGrid.IsEnabled = false;
+            }
+            ///TODO: if opening a student profile from the DB,
+            ///needs to populate all fields, checkboxes, etc. from the data
 		}
+
+        public bool areStudentNotesLocked()
+        {
+            if (studentNotes_DataGrid.IsEnabled)
+                return false;
+            else
+                return true;
+        }
 
         private void cancel_BTN_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
+
+        private void save_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            ///TODO: saves the profile to the database
+            ///performs a check if saved properly before closing the window
+            ///
             this.Close();
         }
 	}

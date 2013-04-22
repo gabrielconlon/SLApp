@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Test_app_1
+namespace SLApp_Beta
 {
     /// <summary>
     /// Interaction logic for AgencyProfile.xaml

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="90d1f1c9-e231-476b-a0eb-4138222978a1" name="Gabriel@GABRIEL-PC 2013-04-21 15:08:07" runUser="Gabriel-PC\Gabriel" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="6306415e-3f51-4de1-91ea-c530f529f1c5">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="Gabriel_GABRIEL-PC 2013-04-21 15_08_07">
+      <DeploymentItem filename="C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Beta\bin\Debug\SLApp_Beta.exe" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2013-04-21T15:08:07.9870995-07:00" queuing="2013-04-21T15:08:08.0131010-07:00" start="2013-04-21T15:08:08.0181013-07:00" finish="2013-04-21T15:08:08.2021118-07:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="SLDatabase_Connection_Test" storage="c:\users\gabriel\documents\github\slapp\slapp\slapp_tests\bin\debug\slapp_tests.dll" id="50d40501-67c1-8286-31fb-779abdce76cc">
+      <Execution id="5172772e-7d68-4e58-a98a-0ea06df89c22" />
+      <TestMethod codeBase="C:/Users/Gabriel/Documents/GitHub/SLApp/SLApp/SLApp_Tests/bin/Debug/SLApp_Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="SLApp_Tests.UnitTest1, SLApp_Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="SLDatabase_Connection_Test" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="50d40501-67c1-8286-31fb-779abdce76cc" executionId="5172772e-7d68-4e58-a98a-0ea06df89c22" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="5172772e-7d68-4e58-a98a-0ea06df89c22" testId="50d40501-67c1-8286-31fb-779abdce76cc" testName="SLDatabase_Connection_Test" computerName="GABRIEL-PC" duration="00:00:00.0113638" startTime="2013-04-21T15:08:08.0201014-07:00" endTime="2013-04-21T15:08:08.1901111-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5172772e-7d68-4e58-a98a-0ea06df89c22">
+    </UnitTestResult>
+  </Results>
+</TestRun>
