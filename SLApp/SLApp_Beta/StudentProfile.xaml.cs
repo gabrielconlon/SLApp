@@ -32,9 +32,9 @@ namespace SLApp_Beta
         public bool areStudentNotesLocked()
         {
             if (studentNotes_DataGrid.IsEnabled)
-                return false;
-            else
                 return true;
+            else
+                return false;
         }
 
         private void cancel_BTN_Click(object sender, RoutedEventArgs e)
