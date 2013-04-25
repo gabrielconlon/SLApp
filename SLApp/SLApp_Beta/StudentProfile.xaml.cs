@@ -29,6 +29,15 @@ namespace SLApp_Beta
             ///needs to populate all fields, checkboxes, etc. from the data
 		}
 
+		public StudentProfile(Student stud)
+		{
+			this.studentFirstName_TB.Text = stud.FirstName;
+			this.studentLastName_TB.Text = stud.LastName;
+			this.studentID_TB.Text = stud.Student_ID.ToString();
+			this.studentemail_TB.Text = stud.Email;
+			this.graduationYear_TB.Text = stud.GraduationYear.ToString();
+		}
+
         public bool areStudentNotesLocked()
         {
             if (studentNotes_DataGrid.IsEnabled)

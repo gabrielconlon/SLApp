@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Windows.Input;
 
 namespace SLApp_Beta
 {
@@ -174,89 +175,28 @@ namespace SLApp_Beta
             
         }
 
-        #region Search Button Examples from Athletic Recruitement App
-        //private void AthleteSearch_BTN_Click(object sender, EventArgs e)
-        //{
-        //    DateTime contact;
-
-        //    if (txtDateLastContacted.Text.Length > 0)
-        //    {
-        //        contact = Convert.ToDateTime(txtDateLastContacted.Text);      //if there is text in the date last contacted field, convert it to type DateTime (need to add data validation)
-        //    }
-        //    else
-        //    {
-        //        contact = DateTime.MinValue;                                  //if not date inputed then set date to minimum value
-        //    }
-
-        //    Athlete_dataview.DataSource = (from a in database.Athletes
-        //                                   from c in database.Coaches
-        //                                   from ev in database.Events
-        //                                   from ae in database.Ath_Events
-        //                                   where (txtFName.Text.Length == 0 || txtFName.Text == a.First_Name) &&
-        //                                         (txtLName.Text.Length == 0 || txtLName.Text == a.Last_Name) &&
-        //                                         (txtHighSchool.Text.Length == 0 || txtHighSchool.Text == a.High_School) &&
-        //                                         (txtCity.Text.Length == 0 || txtCity.Text == a.City) &&
-        //                                         (txtState.Text.Length == 0 || txtState.Text == a.State) &&
-        //                                         (ddSkillRating.Text.Length == 0 || ddSkillRating.Text == a.Skill_Rating) &&
-        //                                         (ddClass.Text.Length == 0 || ddClass.Text == a.Class) &&
-        //                                         (ddPrimaryWhitworthCoach.Text.Length == 0 || ddPrimaryWhitworthCoach.Text == c.Last_Name) &&
-        //                                         (ddEvent.Text.Length == 0 || ddEvent.Text == ev.Event_Name) &&
-        //                                         (a.Coach_id == c.Coach_id) &&
-        //                                         (ev.Event_id == ae.Event_Id) &&
-        //                                         (ae.Athlete_Id == a.Athlete_id) &&
-        //                                         (txtDateLastContacted.Text.Length == 0 || contact >= a.Date_Last_Contacted) //our user wants to query for all athletes who have not been contacted
-        //                                   //since the inputed date.
-        //                                   //the or statements make it so that the user can choose what he wants to query over. If he leaves a textbox blank, then the first part of the or
-        //                                   //will return true. If text is entered in the textbox, then we want to query for results that match the inputed text.
-
-        //                                   select new //select clause to output the desired data
-        //                                   {
-        //                                       Name = String.Format("{0} {1}", a.First_Name, a.Last_Name), //combine first and last name into one Name column
-        //                                       Skill_Rating = a.Skill_Rating,
-        //                                       Date_Last_Contacted = a.Date_Last_Contacted,
-        //                                       Class = a.Class,
-        //                                       High_School = a.High_School,
-        //                                       High_School_Coach = a.High_School_Coach,
-        //                                       Address = String.Format("{0} {1}, {2}", a.Address, a.City, a.State),
-        //                                       Phone = a.Phone_Number,
-        //                                       Email = a.Email,
-        //                                       Height = a.Height,
-        //                                       Weight = a.Weight,
-        //                                       Whitworth_Coach = c.Last_Name,
-        //                                   }).Distinct(); //without asking for only Distinct athletes, those athletes who are listed in the Ath_Event table for multiple events will 
-        //    //be displayed by this query multiple times
-
-        //}
-
-        //private void N_search_b_Click(object sender, EventArgs e)
-        //{
-        //    Note_dataview.DataSource = (from a in database.Athletes
-        //                                from c in database.Coaches
-        //                                from nt in database.Note_Types
-        //                                from rn in database.Recruit_Notes
-        //                                where (N_txtFname.Text.Length == 0 || N_txtFname.Text == a.First_Name) &&
-        //                                      (N_txtLname.Text.Length == 0 || N_txtLname.Text == a.Last_Name) &&
-        //                                      (N_ddNoteType.Text.Length == 0 || N_ddNoteType.Text == nt.Note_Type_Name) &&
-        //                                      (c.Coach_id == rn.Coach_id) &&
-        //                                      (a.Athlete_id == rn.Athlete_id) &&
-        //                                      (nt.Note_Type_id == rn.Note_type_id) //&&
-        //                                //(a.Coach_id == c.Coach_id)
-        //                                //similar to the athlete query, we want the user to be able to enter whichever field he wants, and leave others blank
-        //                                select new
-        //                                {
-        //                                    Name = String.Format("{0} {1}", a.First_Name, a.Last_Name),
-        //                                    Note_Type = nt.Note_Type_Name,
-        //                                    Date_of_Note = rn.Date_of_Note,
-        //                                    Note = rn.Note,
-        //                                    Written_By = c.Last_Name,
-        //                                }).Distinct();
-        //}
-        #endregion
-
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+		/// <summary>
+		/// http://stackoverflow.com/questions/11070873/how-to-get-value-of-a-cell-from-datagrid-in-wpf
+		/// http://stackoverflow.com/questions/5549321/how-to-read-value-from-a-cell-from-a-wpf-datagrid
+		/// http://www.scottlogic.co.uk/blog/colin/2008/12/wpf-datagrid-detecting-clicked-cell-and-row/
+		/// http://www.codeproject.com/Articles/24192/Simple-Demo-of-Binding-to-a-Database-in-WPF-using
+		/// http://www.codeproject.com/Articles/46422/A-LINQ-Tutorial-Adding-Updating-Deleting-Data
+		/// http://stackoverflow.com/questions/3913580/get-selected-row-item-in-datagrid-wpf
+		/// http://www.youtube.com/watch?v=LCfvcBObX8k
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+
+		private void StudentSearch_DataGrid_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			Student stud = (Student)studentSearch_DataGrid.SelectedItem;
+
+			StudentProfile studenetForm = new StudentProfile(stud);
+		}
 	}
 }
