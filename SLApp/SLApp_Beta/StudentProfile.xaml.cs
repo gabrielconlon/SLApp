@@ -47,6 +47,18 @@ namespace SLApp_Beta
             ///TODO: saves the profile to the database
             ///performs a check if saved properly before closing the window
             ///
+			using (PubsDataContext db = new PubsDataContext())
+			{
+				Student addStudent = new Student();
+				addStudent.Student_ID = Convert.ToInt32(studentID_TB.Text);
+				addStudent.FirstName = studentFirstName_TB.Text;
+				addStudent.LastName = studentLastName_TB.Text;
+				addStudent.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
+				addStudent.Email = studentemail_TB.Text;
+
+				db.Students.InsertOnSubmit(addStudent);
+				db.SubmitChanges();
+			}
             this.Close();
         }
 	}

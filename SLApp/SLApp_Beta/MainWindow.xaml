@@ -33,7 +33,7 @@
 				<Grid>
 					<TextBox Height="23" HorizontalAlignment="Left" Margin="6,107,0,0" Name="studentLastName_TB" VerticalAlignment="Top" Width="120" />
 					<TextBox Height="23" HorizontalAlignment="Left" Margin="132,107,0,0" Name="studentFirstName_TB" VerticalAlignment="Top" Width="120" />
-					<TextBox Height="23" HorizontalAlignment="Left" Margin="258,107,0,0" Name="studentMiddleName_TB" VerticalAlignment="Top" Width="120" IsEnabled="False" />
+					<TextBox Height="23" HorizontalAlignment="Left" Margin="258,0,0,376" Name="studentEmail_TB" VerticalAlignment="Bottom" Width="120" IsEnabled="True" />
 					<TextBox Height="23" HorizontalAlignment="Left" Margin="6,44,0,0" Name="studentID_TB" VerticalAlignment="Top" Width="100" DataContext="{Binding}" />
 					<TextBox Height="23" HorizontalAlignment="Left" Margin="6,162,0,0" Name="graduationYear_TB" VerticalAlignment="Top" Width="96" />
 					<Button Content="Create New" Height="23" HorizontalAlignment="Right" Margin="0,15,87,0" Name="newStudentProfile_BTN" VerticalAlignment="Top" Width="75" Click="newStudentProfile_BTN_Click" />
@@ -41,11 +41,11 @@
                     <Label Content="Student ID" Height="28" HorizontalAlignment="Left" Margin="6,10,0,0" Name="studentID_LBL" VerticalAlignment="Top" />
                     <Label Content="Last Name" Height="28" HorizontalAlignment="Left" Margin="6,73,0,0" Name="studentLastName_LBL" VerticalAlignment="Top" />
                     <Label Content="Graduation Year" Height="28" HorizontalAlignment="Left" Margin="6,136,0,0" Name="studentGraduationYear_LBL" VerticalAlignment="Top" />
-                    <Label Content="Middle Name" Height="28" HorizontalAlignment="Left" Margin="258,73,0,0" Name="studentMiddleName_LBL" VerticalAlignment="Top" IsEnabled="False" />
+                    <Label Content="Email" Height="28" HorizontalAlignment="Left" Margin="258,73,0,0" Name="studentMiddleName_LBL" VerticalAlignment="Top" IsEnabled="True" />
                     <Label Content="First Name" Height="28" HorizontalAlignment="Left" Margin="132,73,0,0" Name="studentFirstName_LBL" VerticalAlignment="Top" />
                     <Button Content="Search" Height="23" HorizontalAlignment="Right" Margin="0,257,6,0" Name="studentSearch_BTN" VerticalAlignment="Top" Width="75" Click="studentSearch_BTN_Click" />
-                    <DataGrid AutoGenerateColumns="False" Name="studentSearch_DataGrid" Margin="0,286,0,0" />
-                    <!--TODO: adjust the datagrid to change size with the window,
+                    <DataGrid AutoGenerateColumns="True" Name="studentSearch_DataGrid" Margin="0,286,0,0" ItemsSource="{Binding}" />
+					<!--TODO: adjust the datagrid to change size with the window,
                     THIS MIGHT BE WORKING, needs more testing-->
                 </Grid>
 			</TabItem>

@@ -11,15 +11,15 @@
 		<CheckBox Content="Project Agreement" Height="16" HorizontalAlignment="Left" Margin="23,211,0,0" Name="projectAgreement_RBTN" VerticalAlignment="Top" />
 		<CheckBox Content="Time Log" Height="16" HorizontalAlignment="Left" Margin="23,233,0,0" Name="timeLog_RBTN" VerticalAlignment="Top" />
 		<CheckBox Content="Confirmed Hours" Height="16" HorizontalAlignment="Left" Margin="23,255,0,0" Name="confirmedHours_RBTN" VerticalAlignment="Top" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="10,107,0,0" Name="studentLastName_TB" VerticalAlignment="Top" Width="120" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="136,107,0,0" Name="studentFirstName_TB" VerticalAlignment="Top" Width="120" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="262,107,0,0" Name="studentMiddleName_TB" VerticalAlignment="Top" Width="120" />
-        <TextBox DataContext="{Binding}" Height="23" HorizontalAlignment="Left" Margin="10,44,0,0" Name="studentID_TB" VerticalAlignment="Top" Width="100" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="116,44,0,0" Name="graduationYear_TB" VerticalAlignment="Top" Width="96" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="10,107,0,0" Name="studentLastName_TB" VerticalAlignment="Top" Width="120" TabIndex="2" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="136,107,0,0" Name="studentFirstName_TB" VerticalAlignment="Top" Width="120" TabIndex="3" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="262,107,0,0" Name="studentemail_TB" VerticalAlignment="Top" Width="120" TabIndex="4" />
+        <TextBox DataContext="{Binding}" Height="23" HorizontalAlignment="Left" Margin="10,44,0,0" Name="studentID_TB" VerticalAlignment="Top" Width="100" TabIndex="0" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="116,44,0,0" Name="graduationYear_TB" VerticalAlignment="Top" Width="96" TabIndex="1" />
         <Label Content="Student ID" Height="28" HorizontalAlignment="Left" Margin="10,10,0,0" Name="studentID_LBL" VerticalAlignment="Top" />
         <Label Content="Last Name" Height="28" HorizontalAlignment="Left" Margin="10,73,0,0" Name="studentLastName_LBL" VerticalAlignment="Top" />
         <Label Content="Graduation Year" Height="28" HorizontalAlignment="Left" Margin="116,10,0,0" Name="studentGraduationYear_LBL" VerticalAlignment="Top" />
-        <Label Content="Middle Name" Height="28" HorizontalAlignment="Left" Margin="262,73,0,0" Name="studentMiddleName_LBL" VerticalAlignment="Top" />
+        <Label Content="Email" Height="28" HorizontalAlignment="Left" Margin="262,73,0,0" Name="studentMiddleName_LBL" VerticalAlignment="Top" />
         <Label Content="First Name" Height="28" HorizontalAlignment="Left" Margin="136,73,0,0" Name="studentFirstName_LBL" VerticalAlignment="Top" />
         <DataGrid AutoGenerateColumns="False" Margin="0,323,0,0" Name="studentNotes_DataGrid" />
     </Grid>

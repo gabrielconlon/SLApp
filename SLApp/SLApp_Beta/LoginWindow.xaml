@@ -7,6 +7,6 @@
 		<TextBox Height="23" HorizontalAlignment="Left" Margin="100,139,0,0" Name="password_TB" VerticalAlignment="Top" Width="120" />
 		<Label Content="Username" Height="28" HorizontalAlignment="Left" Margin="12,71,0,0" Name="usernam_LBL" VerticalAlignment="Top" />
 		<Label Content="Password" Height="28" HorizontalAlignment="Left" Margin="12,139,0,0" Name="password_LBL" VerticalAlignment="Top" />
-		<Button Content="Login" Height="23" HorizontalAlignment="Left" Margin="122,168,0,0" Name="login_BTN" VerticalAlignment="Top" Width="75" Click="login_BTN_Click" />
+		<Button Content="Login" Height="23" HorizontalAlignment="Left" Margin="122,168,0,0" Name="login_BTN" VerticalAlignment="Top" Width="75" Click="login_BTN_Click" TabIndex="0" />
 	</Grid>
 </Window>
