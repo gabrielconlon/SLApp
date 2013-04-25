@@ -9,22 +9,7 @@ using System.Windows.Input;
 namespace SLApp_Beta
 {
 
-    ///code to build and run if Debug mode
-    ///TODO: code to be run in debug mode
-    ///HACK ASK PETE, is this better than using a unit test?
-#if (DEBUG)
-    public class Conditionals
-    {
-        private bool mustbe(bool condition1, bool condition2)
-        {
-            if (condition1 = condition2)
-                return true;
-            else
-                return false;
-        }
-    }
-#else
-#endif
+
 
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
@@ -57,43 +42,6 @@ namespace SLApp_Beta
             ///http://msdn.microsoft.com/en-us/library/bb399398.aspx more OLE DB info
             ///http://msdn.microsoft.com/en-us/library/aa288452%28v=vs.71%29.aspx OLE DB tutorial from MS
 			/// http://www.codeproject.com/Tips/362436/Data-binding-in-WPF-DataGrid-control datagrid info and binding
-			//try
-			//{
-			//string conString = ConfigurationManager.ConnectionStrings["SLApp_Beta.Properties.Settings.SLDatabaseConnectionString"].ConnectionString;
-			//string cmdString = string.Empty;
-			//using (SqlConnection con = new SqlConnection(conString))
-			//{
-			//    cmdString = "Select Student_ID FROM Student";
-			//    SqlCommand cmd = new SqlCommand(cmdString, con);
-			//    SqlDataAdapter sda = new SqlDataAdapter(cmd);
-			//    DataTable dt = new DataTable("Student");
-			//    sda.Fill(dt);
-			//    studentSearch_DataGrid.DataContext = dt.DefaultView;
-			//}
-			//}
-			//catch (Exception ex)
-			//{
-			//    string messageBoxText = "The database could not be opened.  This application cannot load any information without a database connection."+ 
-			//        "\n\nContinue anyways?";
-			//    string caption = "Database Error";
-			//    MessageBoxButton button = MessageBoxButton.YesNo;
-			//    MessageBoxImage icon = MessageBoxImage.Warning;
-
-			//    //show a dialog indicating the database has not opened successfully
-			//    MessageBoxResult result = MessageBox.Show(messageBoxText, caption, button, icon);
-
-			//    //handles the user input
-			//    switch (result)
-			//    {
-			//        case MessageBoxResult.Yes:
-			//            //user pressed yes, wants to open App anyways
-                        
-			//            break;
-			//        case MessageBoxResult.No:
-			//            this.Close();
-			//            break;
-			//    }
-			//}
             ///TODO: create a login for the app, so the database can be
             ///accessed without a user ID (e.g. Ross or student worker putting in a university login)
             ///
@@ -157,18 +105,7 @@ namespace SLApp_Beta
 								   where (studentID_TB.Text.Length == 0 || studentID_TB.Text == stud.FirstName) &&
 	                                 (studentLastName_TB.Text.Length == 0 || studentLastName_TB.Text == stud.LastName) &&
 	                                 (graduationYear_TB.Text.Length == 0 || graduationYear_TB.Text == stud.GraduationYear.ToString())
-	                               select new { stud.Student_ID, Name = String.Format("{0}, {1}", stud.LastName, stud.FirstName), stud.GraduationYear, stud.Email });
-	            //(from stud in db.Students
-	            //               where (studentID_TB.Text.Length == 0 || studentID_TB.Text == stud.FirstName) &&
-	            //                     (studentLastName_TB.Text.Length == 0 || studentLastName_TB.Text == stud.LastName) &&
-	            //                     //(graduationYear_TB.Text.Length == 0 || graduationYear_TB.Text == stud.GraduationYear)
-	            //               select
-	            //                   {
-	            //                       /// <summary>
-	            //                       ///HACK Fill in the select to match the database,
-	            //                       ///this involves returning more information than was originally put in
-	            //                       /// </summary>
-	            //                   });
+	                               select stud);
 	            studentSearch_DataGrid.DataContext = allStudents;
             }
                                                       
@@ -194,9 +131,22 @@ namespace SLApp_Beta
 
 		private void StudentSearch_DataGrid_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
-			Student stud = (Student)studentSearch_DataGrid.SelectedItem;
+			using (PubsDataContext datab = new PubsDataContext())
+			{
+				Student studentRow = studentSearch_DataGrid.SelectedItem as Student;
+				int m = studentRow.Student_ID;
+				Student stud = (from s in datab.Students
+				                where s.Student_ID == studentRow.Student_ID
+				                select s).Single();
 
-			StudentProfile studenetForm = new StudentProfile(stud);
+				StudentProfile studentForm = new StudentProfile(stud);
+				studentForm.Show();
+			}
 		}
+
 	}
+    ///code to build and run if Debug mode
+    ///TODO: code to be run in debug mode
+    ///HACK ASK PETE, is this better than using a unit test?
+
 }

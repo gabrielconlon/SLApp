@@ -31,6 +31,8 @@ namespace SLApp_Beta
 
 		public StudentProfile(Student stud)
 		{
+			InitializeComponent();
+
 			this.studentFirstName_TB.Text = stud.FirstName;
 			this.studentLastName_TB.Text = stud.LastName;
 			this.studentID_TB.Text = stud.Student_ID.ToString();
@@ -55,7 +57,7 @@ namespace SLApp_Beta
         {
             ///TODO: saves the profile to the database
             ///performs a check if saved properly before closing the window
-            ///
+			///http://www.c-sharpcorner.com/uploadfile/raj1979/showdeleteedit-data-in-wpf-datagrid-using-linq-to-sql-classes/
 			using (PubsDataContext db = new PubsDataContext())
 			{
 				Student addStudent = new Student();
@@ -66,6 +68,7 @@ namespace SLApp_Beta
 				addStudent.Email = studentemail_TB.Text;
 
 				db.Students.InsertOnSubmit(addStudent);
+				//breaks if you try to save something you previously opened
 				db.SubmitChanges();
 			}
             this.Close();
