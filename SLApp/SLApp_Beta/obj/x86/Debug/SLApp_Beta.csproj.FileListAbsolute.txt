@@ -97,3 +97,4 @@ Q:\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\SLApp_Beta.pdb
 \\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\SLApp_Beta.exe
 \\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\SLApp_Beta.pdb
 \\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\bin\Debug\SLApp_Beta.pdb
+Q:\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\SLApp_Beta.csprojResolveAssemblyReference.cache

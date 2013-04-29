@@ -2,14 +2,19 @@
   <Connection Mode="AppSettings" ConnectionString="Data Source=cs1;Initial Catalog=SLDatabase;Integrated Security=True" SettingsObjectName="SLApp_Beta.Properties.Settings" SettingsPropertyName="SLDatabaseConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Agency" Member="Agencies">
     <Type Name="Agency">
-      <Column Name="Name" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="CoordinatorName" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="AlternateContact" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="Address" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="FaxNumber" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="WebsiteLink" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CoordinatorName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="AlternateContact" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="StreetAddress" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FaxNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="WebsiteLink" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="Rating" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="State" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Zip" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Types_of_Service" Member="Types_of_Services">
@@ -21,10 +26,10 @@
   </Table>
   <Table Name="dbo.Application_Users" Member="Application_Users">
     <Type Name="Application_User">
-      <Column Name="Username" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Password" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="FirstName" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="LastName" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Username" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Birthdate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="IsAdmin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </Type>
@@ -33,12 +38,12 @@
     <Type Name="Community_Partnership_Agreement">
       <Column Name="DateSigned" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="PDF" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PDF" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
     </Type>
   </Table>
   <Table Name="dbo.Completion_of_Hours" Member="Completion_of_Hours">
     <Type Name="Completion_of_Hour">
-      <Column Name="Student_ID" Type="System.Boolean" DbType="Bit NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="ConfirmedHours" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="LiabilityWaver" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="ProjectAgreement" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
@@ -47,42 +52,42 @@
   </Table>
   <Table Name="dbo.Course" Member="Courses">
     <Type Name="Course">
-      <Column Name="CourseNumber" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="CourseName" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="Section" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Professor" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="CourseNumber" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Section" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Professor" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Learning_Experience" Member="Learning_Experiences">
     <Type Name="Learning_Experience">
       <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="CourseNumber" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="Semester" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="CourseNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Semester" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Year" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="TotalHours" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="TypeofLearning" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Note_Types" Member="Note_Types">
-    <Type Name="Note_Type">
-      <Column Name="AgencyVisittoCampus" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="AgencyComplaint" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="FeedbackFromAgency" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="FeedbackFromFaculty" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="FeedbackFromStudent" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="IncidentReport" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="SLFair" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="StudentPlacement" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="VisittoAgency" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="TypeofLearning" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Student" Member="Students">
     <Type Name="Student">
       <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="FirstName" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="LastName" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="GraduationYear" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Email" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Types_of_Notes" Member="Types_of_Notes">
+    <Type Name="Types_of_Note">
+      <Column Name="AgencyVisittoCampus" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AgencyComplaint" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FeedbackFromAgency" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FeedbackFromFaculty" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FeedbackFromStudent" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IncidentReport" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SLFair" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="StudentPlacement" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="VisittoAgency" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

@@ -133,19 +133,19 @@ namespace SLApp_Beta
 			}
 		}
 		
-		public System.Data.Linq.Table<Note_Type> Note_Types
-		{
-			get
-			{
-				return this.GetTable<Note_Type>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Student> Students
 		{
 			get
 			{
 				return this.GetTable<Student>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Types_of_Note> Types_of_Notes
+		{
+			get
+			{
+				return this.GetTable<Types_of_Note>();
 			}
 		}
 	}
@@ -160,9 +160,9 @@ namespace SLApp_Beta
 		
 		private string _AlternateContact;
 		
-		private string _Address;
+		private string _StreetAddress;
 		
-		private System.Nullable<int> _FaxNumber;
+		private string _FaxNumber;
 		
 		private string _WebsiteLink;
 		
@@ -170,11 +170,21 @@ namespace SLApp_Beta
 		
 		private System.Nullable<int> _Rating;
 		
+		private string _Email;
+		
+		private string _City;
+		
+		private string _State;
+		
+		private string _Zip;
+		
+		private string _Phone;
+		
 		public Agency()
 		{
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50)")]
 		public string Name
 		{
 			get
@@ -190,7 +200,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CoordinatorName", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CoordinatorName", DbType="VarChar(50)")]
 		public string CoordinatorName
 		{
 			get
@@ -206,7 +216,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AlternateContact", DbType="NText", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AlternateContact", DbType="VarChar(50)")]
 		public string AlternateContact
 		{
 			get
@@ -222,24 +232,24 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="NText", UpdateCheck=UpdateCheck.Never)]
-		public string Address
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StreetAddress", DbType="VarChar(50)")]
+		public string StreetAddress
 		{
 			get
 			{
-				return this._Address;
+				return this._StreetAddress;
 			}
 			set
 			{
-				if ((this._Address != value))
+				if ((this._StreetAddress != value))
 				{
-					this._Address = value;
+					this._StreetAddress = value;
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FaxNumber", DbType="Int")]
-		public System.Nullable<int> FaxNumber
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FaxNumber", DbType="VarChar(50)")]
+		public string FaxNumber
 		{
 			get
 			{
@@ -254,7 +264,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WebsiteLink", DbType="NText", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WebsiteLink", DbType="VarChar(50)")]
 		public string WebsiteLink
 		{
 			get
@@ -298,6 +308,86 @@ namespace SLApp_Beta
 				if ((this._Rating != value))
 				{
 					this._Rating = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(50)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this._Email = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_City", DbType="VarChar(50)")]
+		public string City
+		{
+			get
+			{
+				return this._City;
+			}
+			set
+			{
+				if ((this._City != value))
+				{
+					this._City = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_State", DbType="VarChar(50)")]
+		public string State
+		{
+			get
+			{
+				return this._State;
+			}
+			set
+			{
+				if ((this._State != value))
+				{
+					this._State = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Zip", DbType="VarChar(50)")]
+		public string Zip
+		{
+			get
+			{
+				return this._Zip;
+			}
+			set
+			{
+				if ((this._Zip != value))
+				{
+					this._Zip = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone", DbType="VarChar(50)")]
+		public string Phone
+		{
+			get
+			{
+				return this._Phone;
+			}
+			set
+			{
+				if ((this._Phone != value))
+				{
+					this._Phone = value;
 				}
 			}
 		}
@@ -407,7 +497,7 @@ namespace SLApp_Beta
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Username", DbType="NChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Username", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string Username
 		{
 			get
@@ -427,7 +517,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="NChar(10) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="VarChar(50)")]
 		public string Password
 		{
 			get
@@ -447,7 +537,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="VarChar(50)")]
 		public string FirstName
 		{
 			get
@@ -467,7 +557,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="VarChar(50)")]
 		public string LastName
 		{
 			get
@@ -556,7 +646,7 @@ namespace SLApp_Beta
 		
 		private string _Notes;
 		
-		private System.Nullable<bool> _PDF;
+		private System.Data.Linq.Binary _PDF;
 		
 		public Community_Partnership_Agreement()
 		{
@@ -594,8 +684,8 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PDF", DbType="Bit")]
-		public System.Nullable<bool> PDF
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PDF", DbType="VarBinary(MAX)", UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary PDF
 		{
 			get
 			{
@@ -617,7 +707,7 @@ namespace SLApp_Beta
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private bool _Student_ID;
+		private int _Student_ID;
 		
 		private System.Nullable<bool> _ConfirmedHours;
 		
@@ -631,7 +721,7 @@ namespace SLApp_Beta
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnStudent_IDChanging(bool value);
+    partial void OnStudent_IDChanging(int value);
     partial void OnStudent_IDChanged();
     partial void OnConfirmedHoursChanging(System.Nullable<bool> value);
     partial void OnConfirmedHoursChanged();
@@ -648,8 +738,8 @@ namespace SLApp_Beta
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Student_ID", DbType="Bit NOT NULL", IsPrimaryKey=true)]
-		public bool Student_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Student_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Student_ID
 		{
 			get
 			{
@@ -779,7 +869,7 @@ namespace SLApp_Beta
 		
 		private string _CourseName;
 		
-		private int _Section;
+		private System.Nullable<int> _Section;
 		
 		private string _Professor;
 		
@@ -791,7 +881,7 @@ namespace SLApp_Beta
     partial void OnCourseNumberChanged();
     partial void OnCourseNameChanging(string value);
     partial void OnCourseNameChanged();
-    partial void OnSectionChanging(int value);
+    partial void OnSectionChanging(System.Nullable<int> value);
     partial void OnSectionChanged();
     partial void OnProfessorChanging(string value);
     partial void OnProfessorChanged();
@@ -802,7 +892,7 @@ namespace SLApp_Beta
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseNumber", DbType="NChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseNumber", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string CourseNumber
 		{
 			get
@@ -822,7 +912,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseName", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseName", DbType="VarChar(50)")]
 		public string CourseName
 		{
 			get
@@ -842,8 +932,8 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Section", DbType="Int NOT NULL")]
-		public int Section
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Section", DbType="Int")]
+		public System.Nullable<int> Section
 		{
 			get
 			{
@@ -862,7 +952,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Professor", DbType="NText", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Professor", DbType="VarChar(50)")]
 		public string Professor
 		{
 			get
@@ -964,7 +1054,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseNumber", DbType="NChar(10) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseNumber", DbType="VarChar(50)")]
 		public string CourseNumber
 		{
 			get
@@ -984,7 +1074,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Semester", DbType="NChar(10) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Semester", DbType="VarChar(50)")]
 		public string Semester
 		{
 			get
@@ -1044,7 +1134,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeofLearning", DbType="NText", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeofLearning", DbType="VarChar(50)")]
 		public string TypeofLearning
 		{
 			get
@@ -1081,177 +1171,6 @@ namespace SLApp_Beta
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Note_Types")]
-	public partial class Note_Type
-	{
-		
-		private string _AgencyVisittoCampus;
-		
-		private string _AgencyComplaint;
-		
-		private string _FeedbackFromAgency;
-		
-		private string _FeedbackFromFaculty;
-		
-		private string _FeedbackFromStudent;
-		
-		private string _IncidentReport;
-		
-		private string _SLFair;
-		
-		private string _StudentPlacement;
-		
-		private string _VisittoAgency;
-		
-		public Note_Type()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AgencyVisittoCampus", DbType="NText", UpdateCheck=UpdateCheck.Never)]
-		public string AgencyVisittoCampus
-		{
-			get
-			{
-				return this._AgencyVisittoCampus;
-			}
-			set
-			{
-				if ((this._AgencyVisittoCampus != value))
-				{
-					this._AgencyVisittoCampus = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AgencyComplaint", DbType="NText", UpdateCheck=UpdateCheck.Never)]
-		public string AgencyComplaint
-		{
-			get
-			{
-				return this._AgencyComplaint;
-			}
-			set
-			{
-				if ((this._AgencyComplaint != value))
-				{
-					this._AgencyComplaint = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FeedbackFromAgency", DbType="NText", UpdateCheck=UpdateCheck.Never)]
-		public string FeedbackFromAgency
-		{
-			get
-			{
-				return this._FeedbackFromAgency;
-			}
-			set
-			{
-				if ((this._FeedbackFromAgency != value))
-				{
-					this._FeedbackFromAgency = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FeedbackFromFaculty", DbType="NText", UpdateCheck=UpdateCheck.Never)]
-		public string FeedbackFromFaculty
-		{
-			get
-			{
-				return this._FeedbackFromFaculty;
-			}
-			set
-			{
-				if ((this._FeedbackFromFaculty != value))
-				{
-					this._FeedbackFromFaculty = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FeedbackFromStudent", DbType="NText", UpdateCheck=UpdateCheck.Never)]
-		public string FeedbackFromStudent
-		{
-			get
-			{
-				return this._FeedbackFromStudent;
-			}
-			set
-			{
-				if ((this._FeedbackFromStudent != value))
-				{
-					this._FeedbackFromStudent = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IncidentReport", DbType="NText", UpdateCheck=UpdateCheck.Never)]
-		public string IncidentReport
-		{
-			get
-			{
-				return this._IncidentReport;
-			}
-			set
-			{
-				if ((this._IncidentReport != value))
-				{
-					this._IncidentReport = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SLFair", DbType="NText", UpdateCheck=UpdateCheck.Never)]
-		public string SLFair
-		{
-			get
-			{
-				return this._SLFair;
-			}
-			set
-			{
-				if ((this._SLFair != value))
-				{
-					this._SLFair = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StudentPlacement", DbType="NText", UpdateCheck=UpdateCheck.Never)]
-		public string StudentPlacement
-		{
-			get
-			{
-				return this._StudentPlacement;
-			}
-			set
-			{
-				if ((this._StudentPlacement != value))
-				{
-					this._StudentPlacement = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VisittoAgency", DbType="NText", UpdateCheck=UpdateCheck.Never)]
-		public string VisittoAgency
-		{
-			get
-			{
-				return this._VisittoAgency;
-			}
-			set
-			{
-				if ((this._VisittoAgency != value))
-				{
-					this._VisittoAgency = value;
-				}
 			}
 		}
 	}
@@ -1313,7 +1232,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="VarChar(50)")]
 		public string FirstName
 		{
 			get
@@ -1333,7 +1252,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="VarChar(50)")]
 		public string LastName
 		{
 			get
@@ -1373,7 +1292,7 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(50)")]
 		public string Email
 		{
 			get
@@ -1410,6 +1329,177 @@ namespace SLApp_Beta
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Types_of_Notes")]
+	public partial class Types_of_Note
+	{
+		
+		private System.Nullable<bool> _AgencyVisittoCampus;
+		
+		private System.Nullable<bool> _AgencyComplaint;
+		
+		private System.Nullable<bool> _FeedbackFromAgency;
+		
+		private System.Nullable<bool> _FeedbackFromFaculty;
+		
+		private System.Nullable<bool> _FeedbackFromStudent;
+		
+		private System.Nullable<bool> _IncidentReport;
+		
+		private System.Nullable<bool> _SLFair;
+		
+		private System.Nullable<bool> _StudentPlacement;
+		
+		private System.Nullable<bool> _VisittoAgency;
+		
+		public Types_of_Note()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AgencyVisittoCampus", DbType="Bit")]
+		public System.Nullable<bool> AgencyVisittoCampus
+		{
+			get
+			{
+				return this._AgencyVisittoCampus;
+			}
+			set
+			{
+				if ((this._AgencyVisittoCampus != value))
+				{
+					this._AgencyVisittoCampus = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AgencyComplaint", DbType="Bit")]
+		public System.Nullable<bool> AgencyComplaint
+		{
+			get
+			{
+				return this._AgencyComplaint;
+			}
+			set
+			{
+				if ((this._AgencyComplaint != value))
+				{
+					this._AgencyComplaint = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FeedbackFromAgency", DbType="Bit")]
+		public System.Nullable<bool> FeedbackFromAgency
+		{
+			get
+			{
+				return this._FeedbackFromAgency;
+			}
+			set
+			{
+				if ((this._FeedbackFromAgency != value))
+				{
+					this._FeedbackFromAgency = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FeedbackFromFaculty", DbType="Bit")]
+		public System.Nullable<bool> FeedbackFromFaculty
+		{
+			get
+			{
+				return this._FeedbackFromFaculty;
+			}
+			set
+			{
+				if ((this._FeedbackFromFaculty != value))
+				{
+					this._FeedbackFromFaculty = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FeedbackFromStudent", DbType="Bit")]
+		public System.Nullable<bool> FeedbackFromStudent
+		{
+			get
+			{
+				return this._FeedbackFromStudent;
+			}
+			set
+			{
+				if ((this._FeedbackFromStudent != value))
+				{
+					this._FeedbackFromStudent = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IncidentReport", DbType="Bit")]
+		public System.Nullable<bool> IncidentReport
+		{
+			get
+			{
+				return this._IncidentReport;
+			}
+			set
+			{
+				if ((this._IncidentReport != value))
+				{
+					this._IncidentReport = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SLFair", DbType="Bit")]
+		public System.Nullable<bool> SLFair
+		{
+			get
+			{
+				return this._SLFair;
+			}
+			set
+			{
+				if ((this._SLFair != value))
+				{
+					this._SLFair = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StudentPlacement", DbType="Bit")]
+		public System.Nullable<bool> StudentPlacement
+		{
+			get
+			{
+				return this._StudentPlacement;
+			}
+			set
+			{
+				if ((this._StudentPlacement != value))
+				{
+					this._StudentPlacement = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VisittoAgency", DbType="Bit")]
+		public System.Nullable<bool> VisittoAgency
+		{
+			get
+			{
+				return this._VisittoAgency;
+			}
+			set
+			{
+				if ((this._VisittoAgency != value))
+				{
+					this._VisittoAgency = value;
+				}
 			}
 		}
 	}

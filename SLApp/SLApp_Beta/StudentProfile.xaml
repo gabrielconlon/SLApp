@@ -6,7 +6,7 @@
         <Label Content="Completion of Paperwork" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="10,155,0,0" Name="label1" VerticalAlignment="Top" />
         <Label Content="Notes" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="10,289,0,0" Name="label2" VerticalAlignment="Top" />
         <Button Content="Save" Height="23" HorizontalAlignment="Right" Margin="0,294,12,0" Name="save_BTN" VerticalAlignment="Top" Width="75" Click="save_BTN_Click" />
-		<Button Content="Cancel" Height="23" HorizontalAlignment="Right" Margin="0,294,93,0" Name="cancel_BTN" VerticalAlignment="Top" Width="75" Click="cancel_BTN_Click" />
+		<Button Content="Cancel" Height="23" HorizontalAlignment="Left" Margin="239,294,0,0" Name="cancel_BTN" VerticalAlignment="Top" Width="75" Click="cancel_BTN_Click" />
 		<CheckBox Content="Liability Waiver" Height="16" HorizontalAlignment="Left" Margin="23,189,0,0" Name="liabilityWaiver_RBTN" VerticalAlignment="Top" />
 		<CheckBox Content="Project Agreement" Height="16" HorizontalAlignment="Left" Margin="23,211,0,0" Name="projectAgreement_RBTN" VerticalAlignment="Top" />
 		<CheckBox Content="Time Log" Height="16" HorizontalAlignment="Left" Margin="23,233,0,0" Name="timeLog_RBTN" VerticalAlignment="Top" />
@@ -22,5 +22,6 @@
         <Label Content="Email" Height="28" HorizontalAlignment="Left" Margin="262,73,0,0" Name="studentMiddleName_LBL" VerticalAlignment="Top" />
         <Label Content="First Name" Height="28" HorizontalAlignment="Left" Margin="136,73,0,0" Name="studentFirstName_LBL" VerticalAlignment="Top" />
         <DataGrid AutoGenerateColumns="False" Margin="0,323,0,0" Name="studentNotes_DataGrid" />
-    </Grid>
+		<Button Content="Delete" Height="23" Margin="320,294,93,0" Name="delete_BTN" VerticalAlignment="Top" Click="delete_BTN_Click" />
+	</Grid>
 </Window>

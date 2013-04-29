@@ -35,8 +35,6 @@ namespace SLApp_Beta
 
 		public MainWindow()
 		{
-            ///HACK ASK PETE if this is appropriate or if there is a better way
-            /// Attempt Db connection, catch all exceptions and handle with a Dialog Window to user
             ///http://msdn.microsoft.com/en-us/library/aa969773.aspx messagebox info
             ///http://msdn.microsoft.com/en-us/library/bb386876.aspx OLE DB info
             ///http://msdn.microsoft.com/en-us/library/bb399398.aspx more OLE DB info
@@ -102,9 +100,12 @@ namespace SLApp_Beta
             using (PubsDataContext db = new PubsDataContext())
             {
 	            var allStudents = (from stud in db.Students
-								   where (studentID_TB.Text.Length == 0 || studentID_TB.Text == stud.FirstName) &&
+								   where 
+									(studentFirstName_TB.Text.Length == 0 || studentFirstName_TB.Text == stud.FirstName) &&
 	                                 (studentLastName_TB.Text.Length == 0 || studentLastName_TB.Text == stud.LastName) &&
-	                                 (graduationYear_TB.Text.Length == 0 || graduationYear_TB.Text == stud.GraduationYear.ToString())
+									 (studentID_TB.Text.Length == 0 || studentID_TB.Text == stud.Student_ID.ToString()) &&
+									(graduationYear_TB.Text.Length == 0 || graduationYear_TB.Text == stud.GraduationYear.ToString())	
+	                                 
 	                               select stud);
 	            studentSearch_DataGrid.DataContext = allStudents;
             }
@@ -134,12 +135,11 @@ namespace SLApp_Beta
 			using (PubsDataContext datab = new PubsDataContext())
 			{
 				Student studentRow = studentSearch_DataGrid.SelectedItem as Student;
-				int m = studentRow.Student_ID;
 				Student stud = (from s in datab.Students
 				                where s.Student_ID == studentRow.Student_ID
 				                select s).Single();
 
-				StudentProfile studentForm = new StudentProfile(stud);
+				StudentProfile studentForm = new StudentProfile(stud, IsAdmin, true);
 				studentForm.Show();
 			}
 		}
