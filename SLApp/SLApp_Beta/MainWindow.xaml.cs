@@ -64,17 +64,24 @@ namespace SLApp_Beta
 			this.IsEnabled = true;
 		}
 
-		private void menuCreateStudent_Click (object sender, RoutedEventArgs e)
-		{
-			StudentProfile Studentform = new StudentProfile(IsAdmin);
-			Studentform.Show();
-		}
+        private void menuExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void menuCreateStudent_Click(object sender, RoutedEventArgs e)
+        {
+            StudentProfile Studentform = new StudentProfile(IsAdmin);
+            Studentform.Show();
+        }
 
         private void menuCreateAgency_Click(object sender, RoutedEventArgs e)
         {
             AgencyProfile Agencyform = new AgencyProfile();
             Agencyform.Show();
         }
+
+        #region Student Tab
 
         private void newStudentProfile_BTN_Click(object sender, RoutedEventArgs e)
         {
@@ -84,10 +91,6 @@ namespace SLApp_Beta
 
         private void studentSearch_BTN_Click(object sender, RoutedEventArgs e)
         {
-            ///TODO: Present a way for the prototype to populate some basic data 
-            ///which can be clicked to show what a student profile window will look like
-            ///
-
             /// <summary>
             ///Data grid based off of which fields have data entered into them,
             ///if a box has no txt entered then it is not included in the query generation
@@ -100,22 +103,30 @@ namespace SLApp_Beta
             using (PubsDataContext db = new PubsDataContext())
             {
 	            var allStudents = (from stud in db.Students
+                                   from course in db.Courses
+                                   from experience in db.Learning_Experiences
 								   where 
+                                   //student search section
 									(studentFirstName_TB.Text.Length == 0 || studentFirstName_TB.Text == stud.FirstName) &&
 	                                 (studentLastName_TB.Text.Length == 0 || studentLastName_TB.Text == stud.LastName) &&
 									 (studentID_TB.Text.Length == 0 || studentID_TB.Text == stud.Student_ID.ToString()) &&
-									(graduationYear_TB.Text.Length == 0 || graduationYear_TB.Text == stud.GraduationYear.ToString())	
+									(graduationYear_TB.Text.Length == 0 || graduationYear_TB.Text == stud.GraduationYear.ToString()) &&
+	
+                                    //course search section
+                                    (course_TB.Text.Length == 0 || course_TB.Text == course.CourseName) &&
+                                    (semester_CBX.SelectedIndex != 0 || semester_CBX.SelectedIndex.ToString() == experience.Semester) &&
+                                    (year_TB.Text.Length == 0 || year_TB.Text == experience.Year.ToString()) &&
+                                    (professor_TB.Text.Length == 0 || professor_TB.Text == course.Professor) &&
+
+                                    //service and hours section
+                                    //HACK not sure about this one...
+                                    (serviceType_CBX.SelectedIndex != 0 || serviceType_CBX.SelectedIndex.ToString() == experience.TypeofLearning)
 	                                 
 	                               select stud);
 	            studentSearch_DataGrid.DataContext = allStudents;
             }
                                                       
             
-        }
-
-        private void menuExit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
 
 		/// <summary>
@@ -143,8 +154,24 @@ namespace SLApp_Beta
 				studentForm.Show();
 			}
 		}
+        #endregion
 
-	}
+        #region Agency Tab
+        private void agencySearch_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            using (PubsDataContext db = new PubsDataContext())
+            {
+                var allAgency = (from agency in db.Agencies
+                                   where
+                                 (agencyName_TB.Text.Length == 0 || agencyName_TB.Text == agency.Name)
+
+                                   select agency);
+                agencySearch_DataGrid.DataContext = allAgency;
+            }
+        }
+
+        #endregion
+    }
     ///code to build and run if Debug mode
     ///TODO: code to be run in debug mode
     ///HACK ASK PETE, is this better than using a unit test?

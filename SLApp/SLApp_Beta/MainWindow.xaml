@@ -33,7 +33,7 @@
 				<Grid>
 					<TextBox Height="23" HorizontalAlignment="Left" Margin="6,107,0,0" Name="studentLastName_TB" VerticalAlignment="Top" Width="120" />
 					<TextBox Height="23" HorizontalAlignment="Left" Margin="132,107,0,0" Name="studentFirstName_TB" VerticalAlignment="Top" Width="120" />
-					<TextBox Height="23" HorizontalAlignment="Left" Margin="258,0,0,376" Name="studentEmail_TB" VerticalAlignment="Bottom" Width="120" IsEnabled="True" />
+					<TextBox Height="23" HorizontalAlignment="Left" Margin="258,107,0,0" Name="studentEmail_TB" VerticalAlignment="Top" Width="120" IsEnabled="True" />
 					<TextBox Height="23" HorizontalAlignment="Left" Margin="6,44,0,0" Name="studentID_TB" VerticalAlignment="Top" Width="100" DataContext="{Binding}" />
 					<TextBox Height="23" HorizontalAlignment="Left" Margin="6,162,0,0" Name="graduationYear_TB" VerticalAlignment="Top" Width="96" />
 					<Button Content="Create New" Height="23" HorizontalAlignment="Right" Margin="0,11,6,0" Name="newStudentProfile_BTN" VerticalAlignment="Top" Width="75" Click="newStudentProfile_BTN_Click" />
@@ -44,7 +44,21 @@
                     <Label Content="First Name" Height="28" HorizontalAlignment="Left" Margin="132,73,0,0" Name="studentFirstName_LBL" VerticalAlignment="Top" />
                     <Button Content="_Search" Height="23" HorizontalAlignment="Right" Margin="0,257,6,0" Name="studentSearch_BTN" VerticalAlignment="Top" Width="75" Click="studentSearch_BTN_Click" />
                     <DataGrid AutoGenerateColumns="True" Name="studentSearch_DataGrid" Margin="0,286,0,0" ItemsSource="{Binding}" MouseDoubleClick="StudentSearch_DataGrid_OnMouseDoubleClick" IsReadOnly="True" IsManipulationEnabled="False" VerticalScrollBarVisibility="Visible" />
-					<!--TODO: adjust the datagrid to change size with the window,
+                    <Label Content="Semester" Height="28" HorizontalAlignment="Left" Margin="108,136,0,0" Name="semester_LBL" VerticalAlignment="Top" />
+                    <Label Content="Course Number" Height="28" HorizontalAlignment="Left" Margin="6,191,0,0" Name="course_LBL" VerticalAlignment="Top" />
+                    <Label Content="Year" Height="28" HorizontalAlignment="Left" Margin="232,136,0,0" Name="year_LBL" VerticalAlignment="Top" />
+                    <Label Content="Type of Service" Height="28" HorizontalAlignment="Left" Margin="132,191,0,0" Name="serviceType_LBL" VerticalAlignment="Top" />
+                    <TextBox Height="23" HorizontalAlignment="Left" IsEnabled="True" Margin="6,217,0,0" Name="course_TB" VerticalAlignment="Top" Width="120" />
+                    <TextBox Height="23" HorizontalAlignment="Left" IsEnabled="True" Margin="232,162,0,0" Name="year_TB" VerticalAlignment="Top" Width="120" />
+                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="132,217,0,0" Name="serviceType_CBX" VerticalAlignment="Top" Width="120">
+                        <ComboBoxItem Content="None" IsSelected="True" />
+                    </ComboBox>
+                    <Label Content="Professor" Height="28" HorizontalAlignment="Left" Margin="258,191,0,0" Name="professor_LBL" VerticalAlignment="Top" />
+                    <TextBox Height="23" HorizontalAlignment="Left" IsEnabled="True" Margin="258,217,0,0" Name="professor_TB" VerticalAlignment="Top" Width="120" />
+                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="108,162,0,0" Name="semester_CBX" VerticalAlignment="Top" Width="120">
+                        <ComboBoxItem Content="None" IsSelected="True" />
+                    </ComboBox>
+                    <!--TODO: adjust the datagrid to change size with the window,
                     THIS MIGHT BE WORKING, needs more testing-->
                 </Grid>
 			</TabItem>
@@ -74,11 +88,11 @@
                     <TextBox Height="23" Margin="348,166,0,0" Name="agencyAddressState_TB" VerticalAlignment="Top" HorizontalAlignment="Left" Width="50" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="408,166,0,0" Name="agencyAddressZipcode_TB" VerticalAlignment="Top" Width="75" />
                     <DataGrid AutoGenerateColumns="True" Margin="0,286,0,0" Name="agencySearch_DataGrid" />
-                    <Button Content="Search" Height="23" Margin="0,257,6,0" Name="agencySearch_BTN" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" />
+                    <Button Content="Search" Height="23" Margin="0,257,6,0" Name="agencySearch_BTN" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="agencySearch_BTN_Click" />
                 </Grid>
             </TabItem>
 			<TabItem Header="Faculty" IsEnabled="False" Name="faculty_tab" />
-			<TabItem Header="Admin" Name="admin_tab" />
-		</TabControl>
-	</Grid>
+			<TabItem Header="Admin" Name="admin_tab"></TabItem>
+        </TabControl>
+    </Grid>
 </Window>

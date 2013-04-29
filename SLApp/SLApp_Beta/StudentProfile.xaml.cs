@@ -100,6 +100,8 @@ namespace SLApp_Beta
 					student.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
 					student.Email = studentemail_TB.Text;
 
+
+                    //HACK possibly move completion of paperwork fields into the learning_experience table to simplify?
 					Completion_of_Hour coh = new Completion_of_Hour();
 					coh.Student_ID = Convert.ToInt32(studentID_TB.Text);
 					if (confirmedHours_RBTN.IsChecked == true)

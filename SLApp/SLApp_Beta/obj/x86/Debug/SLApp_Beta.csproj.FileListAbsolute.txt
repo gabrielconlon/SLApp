@@ -98,3 +98,6 @@ Q:\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\SLApp_Beta.pdb
 \\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\SLApp_Beta.pdb
 \\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\bin\Debug\SLApp_Beta.pdb
 Q:\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\SLApp_Beta.csprojResolveAssemblyReference.cache
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Beta\bin\Debug\SLApp_Beta.exe.config
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Beta\bin\Debug\EntityFramework.dll
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Beta\bin\Debug\EntityFramework.xml
