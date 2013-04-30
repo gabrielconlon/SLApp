@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,24 +57,20 @@ namespace SLApp_Beta
 					var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
 					                                  where s.Student_ID == student.Student_ID
 					                                  select s);
-					var completion = completionList.Single();
-					if (completion.LiabilityWaiver == true)
-					{
-						this.liabilityWaiver_RBTN.IsChecked = true;
-						
-					}
-					if (completion.ConfirmedHours == true)
-					{
-						this.confirmedHours_RBTN.IsChecked = true;
-					}
-					if (completion.ProjectAgreement == true)
-					{
-						this.projectAgreement_RBTN.IsChecked = true;
-					}
-					if (completion.TimeLog == true)
-					{
-						this.timeLog_RBTN.IsChecked = true;
-					}
+					studentLearningExperiences_DataGrid.DataContext = completionList;
+				}
+			}
+		}
+
+		public void LoadStudentLearningExperiences()
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+																	   where s.Student_ID == student.Student_ID
+																	   select s);
 					studentLearningExperiences_DataGrid.DataContext = completionList;
 				}
 			}
@@ -87,46 +84,23 @@ namespace SLApp_Beta
                 return false;
         }
 
-        private void setLearningExperience(Learning_Experience coh)
-        {
-            if (confirmedHours_RBTN.IsChecked == true)
-            {
-                coh.ConfirmedHours = true;
-            }
-            else
-            {
-                coh.ConfirmedHours = false;
-            }
-            if (liabilityWaiver_RBTN.IsChecked == true)
-            {
-                coh.LiabilityWaiver = true;
-            }
-            else
-            {
-                coh.LiabilityWaiver = false;
-            }
-            if (projectAgreement_RBTN.IsChecked == true)
-            {
-                coh.ProjectAgreement = true;
-            }
-            else
-            {
-                coh.ProjectAgreement = false;
-            }
-            if (timeLog_RBTN.IsChecked == true)
-            {
-                coh.TimeLog = true;
-            }
-            else
-            {
-                coh.TimeLog = false;
-            }
-        }
+      
 
         private void cancel_BTN_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
+		public IEnumerable<System.Windows.Controls.DataGridRow> GetDataGridRows(System.Windows.Controls.DataGrid grid)
+		{
+			var itemsSource = grid.ItemsSource as IEnumerable;
+			if (null == itemsSource) yield return null;
+			foreach (var item in itemsSource)
+			{
+				var row = grid.ItemContainerGenerator.ContainerFromItem(item) as System.Windows.Controls.DataGridRow;
+				if (null != row) yield return row;
+			}
+		}
 
         private void save_BTN_Click(object sender, RoutedEventArgs e)
         {
@@ -145,7 +119,6 @@ namespace SLApp_Beta
 
 				        Learning_Experience exp = new Learning_Experience();
 				        exp.Student_ID = Convert.ToInt32(studentID_TB.Text);
-                        setLearningExperience(exp);
 				        db.Students.InsertOnSubmit(student);
 				        db.Learning_Experiences.InsertOnSubmit(exp);
 				        db.SubmitChanges();
@@ -161,10 +134,13 @@ namespace SLApp_Beta
 				        stud.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
 				        stud.Email = studentemail_TB.Text;
 
-				        Learning_Experience exp = (from s in db.Learning_Experiences
-				                                   where s.Student_ID == student.Student_ID
-				                                   select s).Single();
-                        setLearningExperience(exp);
+						//Learning_Experience exp = (from s in db.Learning_Experiences
+						//                           where s.Student_ID == student.Student_ID
+						//                           select s).Single();
+						var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+																		   where s.Student_ID == student.Student_ID
+																		   select s);
+						var completion = completionList.First();
 
 				        db.SubmitChanges();
 			        }
@@ -186,11 +162,11 @@ namespace SLApp_Beta
 						Student stud = (from s in db.Students
 						                where s.Student_ID == student.Student_ID
 						                select s).Single();
-						Learning_Experience exp = (from ex in db.Learning_Experiences
-						                           where ex.Student_ID == student.Student_ID
-						                           select ex).Single();
+						var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+																		   where s.Student_ID == student.Student_ID
+																		   select s);
 						db.Students.DeleteOnSubmit(stud);
-						db.Learning_Experiences.DeleteOnSubmit(exp);
+						db.Learning_Experiences.DeleteAllOnSubmit(completionList);
 						db.SubmitChanges();
 						this.Close();
 					}
@@ -200,11 +176,7 @@ namespace SLApp_Beta
 
         private void studentLearningExperiences_DataGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //ContextMenu m = new ContextMenu();
-            //MenuItem item1 = new MenuItem();
-            //item1.Name = "Add";
-            //m.Items.Add(item1);
-            //studentLearningExperiences_DataGrid.ContextMenu = m;
+
 
         }
 
@@ -218,9 +190,114 @@ namespace SLApp_Beta
 
         }
 
-        private void Edit_MenuItem_Click(object sender, RoutedEventArgs e)
-        {
+		private void Edit_MenuItem_Click(object sender, MouseButtonEventArgs e)
+		{
+			//using (PubsDataContext db = new PubsDataContext())
+			//{
+			//Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
+			//var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+			//                                                   where s.Student_ID == student.Student_ID
+			//                                                   select s);
+			////Learning_Experience exp = (from s in db.Learning_Experiences
+			////                            where s.Student_ID == expROW.Student_ID
+			////                            select s).Single();
+			//    exp.ConfirmedHours = expROW.ConfirmedHours;
+			//    exp.CourseNumber = expROW.CourseNumber;
+			//    db.SubmitChanges();
+			//}
+		}
 
-        }
+		private void learningExperienceSave_BTN_Click(object sender, RoutedEventArgs e)
+		{
+			if (studentLearningExperiences_DataGrid.SelectedValue.Equals(null))
+			{
+				MessageBox.Show("You must first select a row before saving.",
+				                "Datagrid Row Selection Error", MessageBoxButton.OK,
+				                MessageBoxImage.Exclamation);
+			}
+			else
+			{
+
+				if (dbMethods.CheckDatabaseConnection())
+				{
+					using (PubsDataContext db = new PubsDataContext())
+					{
+						Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
+						//Learning_Experience exp = (from s in db.Learning_Experiences
+						//                           where s.Student_ID == expROW.Student_ID
+						//                           select s);
+						var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+						                                                   where s.ID == expROW.ID
+						                                                   select s);
+						var completion = completionList.First();
+						completion.Student_ID = student.Student_ID;
+						completion.ConfirmedHours = expROW.ConfirmedHours;
+						completion.CourseNumber = expROW.CourseNumber;
+						completion.LiabilityWaiver = expROW.LiabilityWaiver;
+						completion.ProjectAgreement = expROW.ProjectAgreement;
+						completion.Semester = expROW.Semester;
+						completion.Year = expROW.Year;
+						completion.TimeLog = expROW.TimeLog;
+						completion.TotalHours = expROW.TotalHours;
+						completion.TypeofLearning = expROW.TypeofLearning;
+
+						db.SubmitChanges();
+						LoadStudentLearningExperiences();
+
+					}
+				}
+			}
+		}
+
+		private void learningExperienceAdd_BTN_Click(object sender, RoutedEventArgs e)
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
+					Learning_Experience exp = new Learning_Experience();
+
+					//HACK works accept student_ID cannot be the key
+					exp.Student_ID = student.Student_ID;
+					exp.ConfirmedHours = expROW.ConfirmedHours;
+					exp.CourseNumber = expROW.CourseNumber;
+					exp.LiabilityWaiver = expROW.LiabilityWaiver;
+					exp.ProjectAgreement = expROW.ProjectAgreement;
+					exp.Semester = expROW.Semester;
+					exp.Year = expROW.Year;
+					exp.TimeLog = expROW.TimeLog;
+					exp.TotalHours = expROW.TotalHours;
+					exp.TypeofLearning = expROW.TypeofLearning;
+
+					db.Learning_Experiences.InsertOnSubmit(exp);
+					db.SubmitChanges();
+					LoadStudentLearningExperiences();
+				}
+			}
+
+		}
+
+		private void learningExperienceDelete_BTN_Click(object sender, RoutedEventArgs e)
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				if (MessageBox.Show("Are you sure you want to delete this learning experience?", "Confirm Delete!", MessageBoxButton.YesNo) ==
+					MessageBoxResult.Yes)
+				{
+					using (PubsDataContext db = new PubsDataContext())
+					{
+						Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
+						var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+																		   where s.ID == expROW.ID
+																		   select s);
+						var completion = completionList.First();
+						db.Learning_Experiences.DeleteOnSubmit(completion);
+						db.SubmitChanges();
+						LoadStudentLearningExperiences();
+					}
+				}
+			}
+		}
 	}
 }

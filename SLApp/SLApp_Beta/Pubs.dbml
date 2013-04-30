@@ -52,16 +52,17 @@
   </Table>
   <Table Name="dbo.Learning_Experience" Member="Learning_Experiences">
     <Type Name="Learning_Experience">
-      <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="CourseNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Semester" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Year" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="TotalHours" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="TypeofLearning" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="ConfirmedHours" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="LiabilityWaiver" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ProjectAgreement" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="TimeLog" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ConfirmedHours" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LiabilityWaiver" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ProjectAgreement" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TimeLog" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.Student" Member="Students">
@@ -69,7 +70,7 @@
       <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="FirstName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="LastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="GraduationYear" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GraduationYear" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
