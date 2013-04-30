@@ -2,7 +2,7 @@
   <Connection Mode="AppSettings" ConnectionString="Data Source=cs1;Initial Catalog=SLDatabase;Integrated Security=True" SettingsObjectName="SLApp_Beta.Properties.Settings" SettingsPropertyName="SLDatabaseConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Agency" Member="Agencies">
     <Type Name="Agency">
-      <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="CoordinatorName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="AlternateContact" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="StreetAddress" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
@@ -39,15 +39,7 @@
       <Column Name="DateSigned" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="PDF" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Completion_of_Hours" Member="Completion_of_Hours">
-    <Type Name="Completion_of_Hour">
-      <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="ConfirmedHours" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="LiabilityWaver" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ProjectAgreement" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="TimeLog" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AgencyName" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.Course" Member="Courses">
@@ -63,9 +55,13 @@
       <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="CourseNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Semester" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Year" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="TotalHours" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Year" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TotalHours" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="TypeofLearning" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ConfirmedHours" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="LiabilityWaiver" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ProjectAgreement" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="TimeLog" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Student" Member="Students">
@@ -73,7 +69,7 @@
       <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="FirstName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="LastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="GraduationYear" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GraduationYear" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>

@@ -30,12 +30,15 @@ namespace SLApp_Beta
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertAgency(Agency instance);
+    partial void UpdateAgency(Agency instance);
+    partial void DeleteAgency(Agency instance);
     partial void InsertApplication_User(Application_User instance);
     partial void UpdateApplication_User(Application_User instance);
     partial void DeleteApplication_User(Application_User instance);
-    partial void InsertCompletion_of_Hour(Completion_of_Hour instance);
-    partial void UpdateCompletion_of_Hour(Completion_of_Hour instance);
-    partial void DeleteCompletion_of_Hour(Completion_of_Hour instance);
+    partial void InsertCommunity_Partnership_Agreement(Community_Partnership_Agreement instance);
+    partial void UpdateCommunity_Partnership_Agreement(Community_Partnership_Agreement instance);
+    partial void DeleteCommunity_Partnership_Agreement(Community_Partnership_Agreement instance);
     partial void InsertCourse(Course instance);
     partial void UpdateCourse(Course instance);
     partial void DeleteCourse(Course instance);
@@ -109,14 +112,6 @@ namespace SLApp_Beta
 			}
 		}
 		
-		public System.Data.Linq.Table<Completion_of_Hour> Completion_of_Hours
-		{
-			get
-			{
-				return this.GetTable<Completion_of_Hour>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Course> Courses
 		{
 			get
@@ -151,8 +146,10 @@ namespace SLApp_Beta
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Agency")]
-	public partial class Agency
+	public partial class Agency : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private string _Name;
 		
@@ -180,11 +177,44 @@ namespace SLApp_Beta
 		
 		private string _Phone;
 		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnCoordinatorNameChanging(string value);
+    partial void OnCoordinatorNameChanged();
+    partial void OnAlternateContactChanging(string value);
+    partial void OnAlternateContactChanged();
+    partial void OnStreetAddressChanging(string value);
+    partial void OnStreetAddressChanged();
+    partial void OnFaxNumberChanging(string value);
+    partial void OnFaxNumberChanged();
+    partial void OnWebsiteLinkChanging(string value);
+    partial void OnWebsiteLinkChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnRatingChanging(System.Nullable<int> value);
+    partial void OnRatingChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    partial void OnCityChanging(string value);
+    partial void OnCityChanged();
+    partial void OnStateChanging(string value);
+    partial void OnStateChanged();
+    partial void OnZipChanging(string value);
+    partial void OnZipChanged();
+    partial void OnPhoneChanging(string value);
+    partial void OnPhoneChanged();
+    #endregion
+		
 		public Agency()
 		{
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string Name
 		{
 			get
@@ -195,7 +225,11 @@ namespace SLApp_Beta
 			{
 				if ((this._Name != value))
 				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
 					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
 				}
 			}
 		}
@@ -211,7 +245,11 @@ namespace SLApp_Beta
 			{
 				if ((this._CoordinatorName != value))
 				{
+					this.OnCoordinatorNameChanging(value);
+					this.SendPropertyChanging();
 					this._CoordinatorName = value;
+					this.SendPropertyChanged("CoordinatorName");
+					this.OnCoordinatorNameChanged();
 				}
 			}
 		}
@@ -227,7 +265,11 @@ namespace SLApp_Beta
 			{
 				if ((this._AlternateContact != value))
 				{
+					this.OnAlternateContactChanging(value);
+					this.SendPropertyChanging();
 					this._AlternateContact = value;
+					this.SendPropertyChanged("AlternateContact");
+					this.OnAlternateContactChanged();
 				}
 			}
 		}
@@ -243,7 +285,11 @@ namespace SLApp_Beta
 			{
 				if ((this._StreetAddress != value))
 				{
+					this.OnStreetAddressChanging(value);
+					this.SendPropertyChanging();
 					this._StreetAddress = value;
+					this.SendPropertyChanged("StreetAddress");
+					this.OnStreetAddressChanged();
 				}
 			}
 		}
@@ -259,7 +305,11 @@ namespace SLApp_Beta
 			{
 				if ((this._FaxNumber != value))
 				{
+					this.OnFaxNumberChanging(value);
+					this.SendPropertyChanging();
 					this._FaxNumber = value;
+					this.SendPropertyChanged("FaxNumber");
+					this.OnFaxNumberChanged();
 				}
 			}
 		}
@@ -275,7 +325,11 @@ namespace SLApp_Beta
 			{
 				if ((this._WebsiteLink != value))
 				{
+					this.OnWebsiteLinkChanging(value);
+					this.SendPropertyChanging();
 					this._WebsiteLink = value;
+					this.SendPropertyChanged("WebsiteLink");
+					this.OnWebsiteLinkChanged();
 				}
 			}
 		}
@@ -291,7 +345,11 @@ namespace SLApp_Beta
 			{
 				if ((this._Description != value))
 				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
 					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
 				}
 			}
 		}
@@ -307,7 +365,11 @@ namespace SLApp_Beta
 			{
 				if ((this._Rating != value))
 				{
+					this.OnRatingChanging(value);
+					this.SendPropertyChanging();
 					this._Rating = value;
+					this.SendPropertyChanged("Rating");
+					this.OnRatingChanged();
 				}
 			}
 		}
@@ -323,7 +385,11 @@ namespace SLApp_Beta
 			{
 				if ((this._Email != value))
 				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
 					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
 				}
 			}
 		}
@@ -339,7 +405,11 @@ namespace SLApp_Beta
 			{
 				if ((this._City != value))
 				{
+					this.OnCityChanging(value);
+					this.SendPropertyChanging();
 					this._City = value;
+					this.SendPropertyChanged("City");
+					this.OnCityChanged();
 				}
 			}
 		}
@@ -355,7 +425,11 @@ namespace SLApp_Beta
 			{
 				if ((this._State != value))
 				{
+					this.OnStateChanging(value);
+					this.SendPropertyChanging();
 					this._State = value;
+					this.SendPropertyChanged("State");
+					this.OnStateChanged();
 				}
 			}
 		}
@@ -371,7 +445,11 @@ namespace SLApp_Beta
 			{
 				if ((this._Zip != value))
 				{
+					this.OnZipChanging(value);
+					this.SendPropertyChanging();
 					this._Zip = value;
+					this.SendPropertyChanged("Zip");
+					this.OnZipChanged();
 				}
 			}
 		}
@@ -387,8 +465,32 @@ namespace SLApp_Beta
 			{
 				if ((this._Phone != value))
 				{
+					this.OnPhoneChanging(value);
+					this.SendPropertyChanging();
 					this._Phone = value;
+					this.SendPropertyChanged("Phone");
+					this.OnPhoneChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -639,8 +741,10 @@ namespace SLApp_Beta
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Community_Partnership_Agreement")]
-	public partial class Community_Partnership_Agreement
+	public partial class Community_Partnership_Agreement : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private System.Nullable<System.DateTime> _DateSigned;
 		
@@ -648,8 +752,25 @@ namespace SLApp_Beta
 		
 		private System.Data.Linq.Binary _PDF;
 		
+		private string _AgencyName;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnDateSignedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateSignedChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
+    partial void OnPDFChanging(System.Data.Linq.Binary value);
+    partial void OnPDFChanged();
+    partial void OnAgencyNameChanging(string value);
+    partial void OnAgencyNameChanged();
+    #endregion
+		
 		public Community_Partnership_Agreement()
 		{
+			OnCreated();
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateSigned", DbType="Date")]
@@ -663,7 +784,11 @@ namespace SLApp_Beta
 			{
 				if ((this._DateSigned != value))
 				{
+					this.OnDateSignedChanging(value);
+					this.SendPropertyChanging();
 					this._DateSigned = value;
+					this.SendPropertyChanged("DateSigned");
+					this.OnDateSignedChanged();
 				}
 			}
 		}
@@ -679,7 +804,11 @@ namespace SLApp_Beta
 			{
 				if ((this._Notes != value))
 				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
 					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
 				}
 			}
 		}
@@ -695,145 +824,31 @@ namespace SLApp_Beta
 			{
 				if ((this._PDF != value))
 				{
+					this.OnPDFChanging(value);
+					this.SendPropertyChanging();
 					this._PDF = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Completion_of_Hours")]
-	public partial class Completion_of_Hour : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Student_ID;
-		
-		private System.Nullable<bool> _ConfirmedHours;
-		
-		private System.Nullable<bool> _LiabilityWaver;
-		
-		private System.Nullable<bool> _ProjectAgreement;
-		
-		private System.Nullable<bool> _TimeLog;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnStudent_IDChanging(int value);
-    partial void OnStudent_IDChanged();
-    partial void OnConfirmedHoursChanging(System.Nullable<bool> value);
-    partial void OnConfirmedHoursChanged();
-    partial void OnLiabilityWaverChanging(System.Nullable<bool> value);
-    partial void OnLiabilityWaverChanged();
-    partial void OnProjectAgreementChanging(System.Nullable<bool> value);
-    partial void OnProjectAgreementChanged();
-    partial void OnTimeLogChanging(System.Nullable<bool> value);
-    partial void OnTimeLogChanged();
-    #endregion
-		
-		public Completion_of_Hour()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Student_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Student_ID
-		{
-			get
-			{
-				return this._Student_ID;
-			}
-			set
-			{
-				if ((this._Student_ID != value))
-				{
-					this.OnStudent_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Student_ID = value;
-					this.SendPropertyChanged("Student_ID");
-					this.OnStudent_IDChanged();
+					this.SendPropertyChanged("PDF");
+					this.OnPDFChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConfirmedHours", DbType="Bit")]
-		public System.Nullable<bool> ConfirmedHours
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AgencyName", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string AgencyName
 		{
 			get
 			{
-				return this._ConfirmedHours;
+				return this._AgencyName;
 			}
 			set
 			{
-				if ((this._ConfirmedHours != value))
+				if ((this._AgencyName != value))
 				{
-					this.OnConfirmedHoursChanging(value);
+					this.OnAgencyNameChanging(value);
 					this.SendPropertyChanging();
-					this._ConfirmedHours = value;
-					this.SendPropertyChanged("ConfirmedHours");
-					this.OnConfirmedHoursChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LiabilityWaver", DbType="Bit")]
-		public System.Nullable<bool> LiabilityWaver
-		{
-			get
-			{
-				return this._LiabilityWaver;
-			}
-			set
-			{
-				if ((this._LiabilityWaver != value))
-				{
-					this.OnLiabilityWaverChanging(value);
-					this.SendPropertyChanging();
-					this._LiabilityWaver = value;
-					this.SendPropertyChanged("LiabilityWaver");
-					this.OnLiabilityWaverChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectAgreement", DbType="Bit")]
-		public System.Nullable<bool> ProjectAgreement
-		{
-			get
-			{
-				return this._ProjectAgreement;
-			}
-			set
-			{
-				if ((this._ProjectAgreement != value))
-				{
-					this.OnProjectAgreementChanging(value);
-					this.SendPropertyChanging();
-					this._ProjectAgreement = value;
-					this.SendPropertyChanged("ProjectAgreement");
-					this.OnProjectAgreementChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeLog", DbType="Bit")]
-		public System.Nullable<bool> TimeLog
-		{
-			get
-			{
-				return this._TimeLog;
-			}
-			set
-			{
-				if ((this._TimeLog != value))
-				{
-					this.OnTimeLogChanging(value);
-					this.SendPropertyChanging();
-					this._TimeLog = value;
-					this.SendPropertyChanged("TimeLog");
-					this.OnTimeLogChanged();
+					this._AgencyName = value;
+					this.SendPropertyChanged("AgencyName");
+					this.OnAgencyNameChanged();
 				}
 			}
 		}
@@ -1005,11 +1020,19 @@ namespace SLApp_Beta
 		
 		private string _Semester;
 		
-		private int _Year;
+		private System.Nullable<int> _Year;
 		
-		private int _TotalHours;
+		private System.Nullable<int> _TotalHours;
 		
 		private string _TypeofLearning;
+		
+		private System.Nullable<bool> _ConfirmedHours;
+		
+		private System.Nullable<bool> _LiabilityWaiver;
+		
+		private System.Nullable<bool> _ProjectAgreement;
+		
+		private System.Nullable<bool> _TimeLog;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1021,12 +1044,20 @@ namespace SLApp_Beta
     partial void OnCourseNumberChanged();
     partial void OnSemesterChanging(string value);
     partial void OnSemesterChanged();
-    partial void OnYearChanging(int value);
+    partial void OnYearChanging(System.Nullable<int> value);
     partial void OnYearChanged();
-    partial void OnTotalHoursChanging(int value);
+    partial void OnTotalHoursChanging(System.Nullable<int> value);
     partial void OnTotalHoursChanged();
     partial void OnTypeofLearningChanging(string value);
     partial void OnTypeofLearningChanged();
+    partial void OnConfirmedHoursChanging(System.Nullable<bool> value);
+    partial void OnConfirmedHoursChanged();
+    partial void OnLiabilityWaiverChanging(System.Nullable<bool> value);
+    partial void OnLiabilityWaiverChanged();
+    partial void OnProjectAgreementChanging(System.Nullable<bool> value);
+    partial void OnProjectAgreementChanged();
+    partial void OnTimeLogChanging(System.Nullable<bool> value);
+    partial void OnTimeLogChanged();
     #endregion
 		
 		public Learning_Experience()
@@ -1094,8 +1125,8 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Year", DbType="Int NOT NULL")]
-		public int Year
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Year", DbType="Int")]
+		public System.Nullable<int> Year
 		{
 			get
 			{
@@ -1114,8 +1145,8 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalHours", DbType="Int NOT NULL")]
-		public int TotalHours
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalHours", DbType="Int")]
+		public System.Nullable<int> TotalHours
 		{
 			get
 			{
@@ -1154,6 +1185,86 @@ namespace SLApp_Beta
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConfirmedHours", DbType="Bit")]
+		public System.Nullable<bool> ConfirmedHours
+		{
+			get
+			{
+				return this._ConfirmedHours;
+			}
+			set
+			{
+				if ((this._ConfirmedHours != value))
+				{
+					this.OnConfirmedHoursChanging(value);
+					this.SendPropertyChanging();
+					this._ConfirmedHours = value;
+					this.SendPropertyChanged("ConfirmedHours");
+					this.OnConfirmedHoursChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LiabilityWaiver", DbType="Bit")]
+		public System.Nullable<bool> LiabilityWaiver
+		{
+			get
+			{
+				return this._LiabilityWaiver;
+			}
+			set
+			{
+				if ((this._LiabilityWaiver != value))
+				{
+					this.OnLiabilityWaiverChanging(value);
+					this.SendPropertyChanging();
+					this._LiabilityWaiver = value;
+					this.SendPropertyChanged("LiabilityWaiver");
+					this.OnLiabilityWaiverChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectAgreement", DbType="Bit")]
+		public System.Nullable<bool> ProjectAgreement
+		{
+			get
+			{
+				return this._ProjectAgreement;
+			}
+			set
+			{
+				if ((this._ProjectAgreement != value))
+				{
+					this.OnProjectAgreementChanging(value);
+					this.SendPropertyChanging();
+					this._ProjectAgreement = value;
+					this.SendPropertyChanged("ProjectAgreement");
+					this.OnProjectAgreementChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeLog", DbType="Bit")]
+		public System.Nullable<bool> TimeLog
+		{
+			get
+			{
+				return this._TimeLog;
+			}
+			set
+			{
+				if ((this._TimeLog != value))
+				{
+					this.OnTimeLogChanging(value);
+					this.SendPropertyChanging();
+					this._TimeLog = value;
+					this.SendPropertyChanged("TimeLog");
+					this.OnTimeLogChanged();
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1187,7 +1298,7 @@ namespace SLApp_Beta
 		
 		private string _LastName;
 		
-		private int _GraduationYear;
+		private System.Nullable<int> _GraduationYear;
 		
 		private string _Email;
 		
@@ -1201,7 +1312,7 @@ namespace SLApp_Beta
     partial void OnFirstNameChanged();
     partial void OnLastNameChanging(string value);
     partial void OnLastNameChanged();
-    partial void OnGraduationYearChanging(int value);
+    partial void OnGraduationYearChanging(System.Nullable<int> value);
     partial void OnGraduationYearChanged();
     partial void OnEmailChanging(string value);
     partial void OnEmailChanged();
@@ -1272,8 +1383,8 @@ namespace SLApp_Beta
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GraduationYear", DbType="Int NOT NULL")]
-		public int GraduationYear
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GraduationYear", DbType="Int")]
+		public System.Nullable<int> GraduationYear
 		{
 			get
 			{

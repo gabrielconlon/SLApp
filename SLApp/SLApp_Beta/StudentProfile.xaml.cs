@@ -20,6 +20,7 @@ namespace SLApp_Beta
 	{
 		private Student student = new Student();
 		private bool isEdit;
+		DatabaseMethods dbMethods = new DatabaseMethods();
 
 		public StudentProfile(bool isAdmin)
 		{
@@ -39,36 +40,42 @@ namespace SLApp_Beta
 			}
 			student = stud;
 			isEdit = IsEdit;
+			
 
 			this.studentFirstName_TB.Text = stud.FirstName;
 			this.studentLastName_TB.Text = stud.LastName;
 			this.studentID_TB.Text = stud.Student_ID.ToString();
 			this.studentemail_TB.Text = stud.Email;
 			this.graduationYear_TB.Text = stud.GraduationYear.ToString();
-			using (PubsDataContext db = new PubsDataContext())
+			if (dbMethods.CheckDatabaseConnection())
 			{
-				Completion_of_Hour completion = (from s in db.Completion_of_Hours
-												 where s.Student_ID == stud.Student_ID
-												 select s).Single();
-				if (completion.LiabilityWaver == true)
+				using (PubsDataContext db = new PubsDataContext())
 				{
-					this.liabilityWaiver_RBTN.IsChecked = true;
+					var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+					                                  where s.Student_ID == stud.Student_ID
+					                                  select s);
+					var completion = completionList.Single();
+					if (completion.LiabilityWaiver == true)
+					{
+						this.liabilityWaiver_RBTN.IsChecked = true;
+						
+					}
+					if (completion.ConfirmedHours == true)
+					{
+						this.confirmedHours_RBTN.IsChecked = true;
+					}
+					if (completion.ProjectAgreement == true)
+					{
+						this.projectAgreement_RBTN.IsChecked = true;
+					}
+					if (completion.TimeLog == true)
+					{
+						this.timeLog_RBTN.IsChecked = true;
+					}
+					studentLearningExperiences_DataGrid.DataContext = completionList;
 				}
-				if (completion.ConfirmedHours == true)
-				{
-					this.confirmedHours_RBTN.IsChecked = true;
-				}
-				if (completion.ProjectAgreement == true)
-				{
-					this.projectAgreement_RBTN.IsChecked = true;
-				}
-				if (completion.TimeLog == true)
-				{
-					this.timeLog_RBTN.IsChecked = true;
-				}
-
 			}
-			
+
 
 		}
 
@@ -90,125 +97,137 @@ namespace SLApp_Beta
             ///TODO: saves the profile to the database
             ///performs a check if saved properly before closing the window
 			///http://www.c-sharpcorner.com/uploadfile/raj1979/showdeleteedit-data-in-wpf-datagrid-using-linq-to-sql-classes/
-			using (PubsDataContext db = new PubsDataContext())
-			{
-				if (!isEdit)
-				{
-					student.Student_ID = Convert.ToInt32(studentID_TB.Text);
-					student.FirstName = studentFirstName_TB.Text;
-					student.LastName = studentLastName_TB.Text;
-					student.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
-					student.Email = studentemail_TB.Text;
+
+	        if (dbMethods.CheckDatabaseConnection())
+	        {
+		        using (PubsDataContext db = new PubsDataContext())
+		        {
+			        if (!isEdit)
+			        {
+				        student.Student_ID = Convert.ToInt32(studentID_TB.Text);
+				        student.FirstName = studentFirstName_TB.Text;
+				        student.LastName = studentLastName_TB.Text;
+				        student.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
+				        student.Email = studentemail_TB.Text;
 
 
-                    //HACK possibly move completion of paperwork fields into the learning_experience table to simplify?
-					Completion_of_Hour coh = new Completion_of_Hour();
-					coh.Student_ID = Convert.ToInt32(studentID_TB.Text);
-					if (confirmedHours_RBTN.IsChecked == true)
-					{
-						coh.ConfirmedHours = true;
-					}
-					else
-					{
-						coh.ConfirmedHours = false;
-					}
-					if (liabilityWaiver_RBTN.IsChecked == true)
-					{
-						coh.LiabilityWaver = true;
-					}
-					else
-					{
-						coh.LiabilityWaver = false;
-					}
-					if (projectAgreement_RBTN.IsChecked == true)
-					{
-						coh.ProjectAgreement = true;
-					}
-					else
-					{
-						coh.ProjectAgreement = false;
-					}
-					if (timeLog_RBTN.IsChecked == true)
-					{
-						coh.TimeLog = true;
-					}
-					else
-					{
-						coh.TimeLog = false;
-					}
-					db.Students.InsertOnSubmit(student);
-					db.Completion_of_Hours.InsertOnSubmit(coh);
-					db.SubmitChanges();
-				}
-				else
-				{
-					Student stud = (from s in db.Students
-									where s.Student_ID == student.Student_ID
-									select s).Single();
-					stud.Student_ID = Convert.ToInt32(studentID_TB.Text);
-					stud.FirstName = studentFirstName_TB.Text;
-					stud.LastName = studentLastName_TB.Text;
-					stud.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
-					stud.Email = studentemail_TB.Text;
+				        //HACK possibly move completion of paperwork fields into the learning_experience table to simplify?
+				        Learning_Experience coh = new Learning_Experience();
+				        coh.Student_ID = Convert.ToInt32(studentID_TB.Text);
+				        if (confirmedHours_RBTN.IsChecked == true)
+				        {
+					        coh.ConfirmedHours = true;
+				        }
+				        else
+				        {
+					        coh.ConfirmedHours = false;
+				        }
+				        if (liabilityWaiver_RBTN.IsChecked == true)
+				        {
+					        coh.LiabilityWaiver = true;
+				        }
+				        else
+				        {
+					        coh.LiabilityWaiver = false;
+				        }
+				        if (projectAgreement_RBTN.IsChecked == true)
+				        {
+					        coh.ProjectAgreement = true;
+				        }
+				        else
+				        {
+					        coh.ProjectAgreement = false;
+				        }
+				        if (timeLog_RBTN.IsChecked == true)
+				        {
+					        coh.TimeLog = true;
+				        }
+				        else
+				        {
+					        coh.TimeLog = false;
+				        }
+				        db.Students.InsertOnSubmit(student);
+				        db.Learning_Experiences.InsertOnSubmit(coh);
+				        db.SubmitChanges();
+			        }
+			        else
+			        {
+				        Student stud = (from s in db.Students
+				                        where s.Student_ID == student.Student_ID
+				                        select s).Single();
+				        stud.Student_ID = Convert.ToInt32(studentID_TB.Text);
+				        stud.FirstName = studentFirstName_TB.Text;
+				        stud.LastName = studentLastName_TB.Text;
+				        stud.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
+				        stud.Email = studentemail_TB.Text;
 
-					Completion_of_Hour coh = (from s in db.Completion_of_Hours
-					                          where s.Student_ID == student.Student_ID
-					                          select s).Single();
-					if (confirmedHours_RBTN.IsChecked == true)
-					{
-						coh.ConfirmedHours = true;
-					}
-					else
-					{
-						coh.ConfirmedHours = false;
-					}
-					if (liabilityWaiver_RBTN.IsChecked == true)
-					{
-						coh.LiabilityWaver = true;
-					}
-					else
-					{
-						coh.LiabilityWaver = false;
-					}
-					if (projectAgreement_RBTN.IsChecked == true)
-					{
-						coh.ProjectAgreement = true;
-					}
-					else
-					{
-						coh.ProjectAgreement = false;
-					}
-					if (timeLog_RBTN.IsChecked == true)
-					{
-						coh.TimeLog = true;
-					}
-					else
-					{
-						coh.TimeLog = false;
-					}
+				        Learning_Experience coh = (from s in db.Learning_Experiences
+				                                   where s.Student_ID == student.Student_ID
+				                                   select s).Single();
+				        if (confirmedHours_RBTN.IsChecked == true)
+				        {
+					        coh.ConfirmedHours = true;
+				        }
+				        else
+				        {
+					        coh.ConfirmedHours = false;
+				        }
+				        if (liabilityWaiver_RBTN.IsChecked == true)
+				        {
+					        coh.LiabilityWaiver = true;
+				        }
+				        else
+				        {
+					        coh.LiabilityWaiver = false;
+				        }
+				        if (projectAgreement_RBTN.IsChecked == true)
+				        {
+					        coh.ProjectAgreement = true;
+				        }
+				        else
+				        {
+					        coh.ProjectAgreement = false;
+				        }
+				        if (timeLog_RBTN.IsChecked == true)
+				        {
+					        coh.TimeLog = true;
+				        }
+				        else
+				        {
+					        coh.TimeLog = false;
+				        }
 
-					db.SubmitChanges();
-				}
-				
-			}
-            this.Close();
+				        db.SubmitChanges();
+			        }
+
+		        }
+	        }
+	        this.Close();
         }
 
 		private void delete_BTN_Click(object sender, RoutedEventArgs e)
 		{
-			if (MessageBox.Show("Are you sure you want to delete this student?", "Confirm Delete!", MessageBoxButton.YesNo) ==
-				  MessageBoxResult.Yes)
+			if (dbMethods.CheckDatabaseConnection())
 			{
-				using (PubsDataContext db = new PubsDataContext())
+				if (MessageBox.Show("Are you sure you want to delete this student?", "Confirm Delete!", MessageBoxButton.YesNo) ==
+				    MessageBoxResult.Yes)
 				{
-					Student stud = (from s in db.Students
-									where s.Student_ID == student.Student_ID
-									select s).Single();
-					db.Students.DeleteOnSubmit(stud);
-					db.SubmitChanges();
+					using (PubsDataContext db = new PubsDataContext())
+					{
+						Student stud = (from s in db.Students
+						                where s.Student_ID == student.Student_ID
+						                select s).Single();
+						Learning_Experience exp = (from ex in db.Learning_Experiences
+						                           where ex.Student_ID == student.Student_ID
+						                           select ex).Single();
+						db.Students.DeleteOnSubmit(stud);
+						db.Learning_Experiences.DeleteOnSubmit(exp);
+						db.SubmitChanges();
+						this.Close();
+					}
 				}
 			}
-			this.Close();
+			
 		}
 	}
 }

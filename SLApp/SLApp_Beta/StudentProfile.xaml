@@ -21,7 +21,9 @@
         <Label Content="Graduation Year" Height="28" HorizontalAlignment="Left" Margin="116,10,0,0" Name="studentGraduationYear_LBL" VerticalAlignment="Top" />
         <Label Content="Email" Height="28" HorizontalAlignment="Left" Margin="262,73,0,0" Name="studentMiddleName_LBL" VerticalAlignment="Top" />
         <Label Content="First Name" Height="28" HorizontalAlignment="Left" Margin="136,73,0,0" Name="studentFirstName_LBL" VerticalAlignment="Top" />
-        <DataGrid AutoGenerateColumns="False" Margin="0,323,0,0" Name="studentNotes_DataGrid" />
+        <DataGrid AutoGenerateColumns="True" Margin="0,323,0,0" Name="studentNotes_DataGrid" ItemsSource="{Binding}" />
 		<Button Content="Delete" Height="23" Margin="0,294,93,0" Name="delete_BTN" VerticalAlignment="Top" Click="delete_BTN_Click" HorizontalAlignment="Right" Width="75" />
+		<DataGrid AutoGenerateColumns="True" Margin="187,151,20,207" Name="studentLearningExperiences_DataGrid" ItemsSource="{Binding}" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Visibility="Visible">
+		</DataGrid>
 	</Grid>
 </Window>

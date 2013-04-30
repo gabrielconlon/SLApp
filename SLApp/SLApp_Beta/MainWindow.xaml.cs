@@ -8,7 +8,29 @@ using System.Windows.Input;
 
 namespace SLApp_Beta
 {
+	public class DatabaseMethods
+	{
+		public bool CheckDatabaseConnection()
+		{
+			Mouse.SetCursor(Cursors.Wait);
+			using (PubsDataContext db = new PubsDataContext())
+			{
+				if (db.DatabaseExists())
+				{
+					Mouse.SetCursor(Cursors.Arrow);
+					return true;
+				}
+				else
+				{
+					MessageBox.Show("Database connection is down.", "Database Connection Error", MessageBoxButton.OK,
+					                MessageBoxImage.Error);
+					Mouse.SetCursor(Cursors.Arrow);
+					return false;
+				}
+			}
+		}
 
+	}
 
 
 	/// <summary>
@@ -31,6 +53,7 @@ namespace SLApp_Beta
 
 		#endregion
 
+		private DatabaseMethods dbMethods = new DatabaseMethods();
 		
 
 		public MainWindow()
@@ -46,6 +69,7 @@ namespace SLApp_Beta
 
 
 			InitializeComponent();
+			DatabaseMethods dbMethods = new DatabaseMethods();
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -100,33 +124,39 @@ namespace SLApp_Beta
             /// HACK BUG: Need to properly link the database so the SQL works
             /// </summary>
             /// 
-            using (PubsDataContext db = new PubsDataContext())
-            {
-	            var allStudents = (from stud in db.Students
-                                   from course in db.Courses
-                                   from experience in db.Learning_Experiences
-								   where 
-                                   //student search section
-									(studentFirstName_TB.Text.Length == 0 || studentFirstName_TB.Text == stud.FirstName) &&
-	                                 (studentLastName_TB.Text.Length == 0 || studentLastName_TB.Text == stud.LastName) &&
-									 (studentID_TB.Text.Length == 0 || studentID_TB.Text == stud.Student_ID.ToString()) &&
-									(graduationYear_TB.Text.Length == 0 || graduationYear_TB.Text == stud.GraduationYear.ToString()) &&
-	
-                                    //course search section
-                                    (course_TB.Text.Length == 0 || course_TB.Text == course.CourseName) &&
-                                    (semester_CBX.SelectedIndex != 0 || semester_CBX.SelectedIndex.ToString() == experience.Semester) &&
-                                    (year_TB.Text.Length == 0 || year_TB.Text == experience.Year.ToString()) &&
-                                    (professor_TB.Text.Length == 0 || professor_TB.Text == course.Professor) &&
+			if(dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					var allStudents = (from stud in db.Students
+					                   //from course in db.Courses
+					                   //from experience in db.Learning_Experiences
+					                   where
+						                   //student search section
+						                   (studentFirstName_TB.Text.Length == 0 || studentFirstName_TB.Text == stud.FirstName) &&
+						                   (studentLastName_TB.Text.Length == 0 || studentLastName_TB.Text == stud.LastName) &&
+						                   (studentID_TB.Text.Length == 0 || studentID_TB.Text == stud.Student_ID.ToString()) &&
+						                   (graduationYear_TB.Text.Length == 0 ||
+						                    graduationYear_TB.Text == stud.GraduationYear.ToString())
 
-                                    //service and hours section
-                                    //HACK not sure about this one...
-                                    (serviceType_CBX.SelectedIndex != 0 || serviceType_CBX.SelectedIndex.ToString() == experience.TypeofLearning)
-	                                 
-	                               select stud);
-	            studentSearch_DataGrid.DataContext = allStudents;
-            }
-                                                      
-            
+					                   ////course search section
+					                   //(course_TB.Text.Length == 0 || course_TB.Text == course.CourseName) &&
+					                   //(semester_CBX.SelectedIndex != 0 ||
+					                   // semester_CBX.SelectedIndex.ToString() == experience.Semester) &&
+					                   //(year_TB.Text.Length == 0 || year_TB.Text == experience.Year.ToString()) &&
+					                   //(professor_TB.Text.Length == 0 || professor_TB.Text == course.Professor) 
+
+					                   //                       ////service and hours section
+					                   //                       ////HACK not sure about this one...
+					                   //                       //(serviceType_CBX.SelectedIndex != 0 ||
+					                   //                       // serviceType_CBX.SelectedIndex.ToString() == experience.TypeofLearning)
+
+					                   select stud);
+					studentSearch_DataGrid.DataContext = allStudents;
+				}
+			}
+
+
         }
 
 		/// <summary>
