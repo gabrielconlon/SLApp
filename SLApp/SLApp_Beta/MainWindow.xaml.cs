@@ -46,6 +46,15 @@ namespace SLApp_Beta
 
 			InitializeComponent();
 			DatabaseMethods dbMethods = new DatabaseMethods();
+
+            if (dbMethods.CheckDatabaseConnection())
+            {
+                using (PubsDataContext db = new PubsDataContext())
+                {
+                    serviceType_CBX.DataContext = from service in db.Types_of_Services
+                                                  select service;
+                }
+            }
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -54,7 +63,7 @@ namespace SLApp_Beta
             ///will need to check against the database, so the database must
             ///be open and a 'users' table exists with the App login present
 			this.IsEnabled = false;
-			LoginWindow lgn = new LoginWindow(IsAdmin);
+			LoginWindow lgn = new LoginWindow(ref IsAdmin);
 			lgn.Closed += new EventHandler(lgn_Closed);
 			lgn.ShowDialog();
 		}
@@ -96,8 +105,6 @@ namespace SLApp_Beta
             ///if a box has no txt entered then it is not included in the query generation
             ///
             /// Fields are: studentID_TB, studentLastName_TB, studentMiddleName_TB, graduatinoYear_TB
-            /// HACK FIX THIS CODE: all matching needs to be reset to match the database (i.e. stud.First_Name)
-            /// HACK BUG: Need to properly link the database so the SQL works
             /// </summary>
             /// 
 			if(dbMethods.CheckDatabaseConnection())

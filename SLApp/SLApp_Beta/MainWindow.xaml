@@ -60,7 +60,7 @@
                     <Label Content="Type of Service" Height="28" HorizontalAlignment="Left" Margin="132,191,0,0" Name="serviceType_LBL" VerticalAlignment="Top" />
                     <TextBox Height="23" HorizontalAlignment="Left" IsEnabled="True" Margin="6,217,0,0" Name="course_TB" VerticalAlignment="Top" Width="120" MaxLength="50" />
                     <TextBox Height="23" HorizontalAlignment="Left" IsEnabled="True" Margin="232,162,0,0" Name="year_TB" VerticalAlignment="Top" Width="120" />
-                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="132,217,0,0" Name="serviceType_CBX" VerticalAlignment="Top" Width="120">
+                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="132,217,0,0" Name="serviceType_CBX" VerticalAlignment="Top" Width="120" DataContext="{Binding}">
                         <ComboBoxItem Content="None" IsSelected="True" />
                     </ComboBox>
                     <Label Content="Professor" Height="28" HorizontalAlignment="Left" Margin="258,191,0,0" Name="professor_LBL" VerticalAlignment="Top" />

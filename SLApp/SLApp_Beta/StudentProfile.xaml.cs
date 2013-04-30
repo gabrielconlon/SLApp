@@ -54,7 +54,7 @@ namespace SLApp_Beta
 				using (PubsDataContext db = new PubsDataContext())
 				{
 					var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
-					                                  where s.Student_ID == stud.Student_ID
+					                                  where s.Student_ID == student.Student_ID
 					                                  select s);
 					var completion = completionList.Single();
 					if (completion.LiabilityWaiver == true)
@@ -143,7 +143,6 @@ namespace SLApp_Beta
 				        student.Email = studentemail_TB.Text;
 
 
-				        //HACK possibly move completion of paperwork fields into the learning_experience table to simplify?
 				        Learning_Experience exp = new Learning_Experience();
 				        exp.Student_ID = Convert.ToInt32(studentID_TB.Text);
                         setLearningExperience(exp);

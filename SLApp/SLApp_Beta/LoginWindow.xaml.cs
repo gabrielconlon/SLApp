@@ -20,7 +20,8 @@ namespace SLApp_Beta
 	{
 		 private bool isAdmin;
 
-		public LoginWindow(bool IsAdmin)
+        //TODO: Disable user from using the X button to skirt the login
+		public LoginWindow(ref bool IsAdmin)
 		{
 			InitializeComponent();
 			isAdmin = IsAdmin;
