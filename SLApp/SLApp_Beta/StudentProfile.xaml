@@ -3,17 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Student Profile" Height="517" Width="510" WindowStartupLocation="CenterOwner">
     <Grid>
-        <Label Content="Completion of Paperwork" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="10,155,0,0" Name="label1" VerticalAlignment="Top" />
-        <Label Content="Notes" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="10,289,0,0" Name="label2" VerticalAlignment="Top" />
-        <Button Content="Save" Height="23" Margin="0,294,12,0" Name="save_BTN" VerticalAlignment="Top" Click="save_BTN_Click" HorizontalAlignment="Right" Width="75" />
-		<Button Content="Cancel" Height="23" HorizontalAlignment="Right" Margin="0,294,174,0" Name="cancel_BTN" VerticalAlignment="Top" Width="75" Click="cancel_BTN_Click" />
-		<CheckBox Content="Liability Waiver" Height="16" HorizontalAlignment="Left" Margin="23,189,0,0" Name="liabilityWaiver_RBTN" VerticalAlignment="Top" />
-		<CheckBox Content="Project Agreement" Height="16" HorizontalAlignment="Left" Margin="23,211,0,0" Name="projectAgreement_RBTN" VerticalAlignment="Top" />
-		<CheckBox Content="Time Log" Height="16" HorizontalAlignment="Left" Margin="23,233,0,0" Name="timeLog_RBTN" VerticalAlignment="Top" />
-		<CheckBox Content="Confirmed Hours" Height="16" HorizontalAlignment="Left" Margin="23,255,0,0" Name="confirmedHours_RBTN" VerticalAlignment="Top" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="10,107,0,0" Name="studentLastName_TB" VerticalAlignment="Top" Width="120" TabIndex="2" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="136,107,0,0" Name="studentFirstName_TB" VerticalAlignment="Top" Width="120" TabIndex="3" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="262,107,0,0" Name="studentemail_TB" VerticalAlignment="Top" Width="120" TabIndex="4" />
+        <Label Content="Completion of Paperwork" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="10,137,0,0" Name="label1" VerticalAlignment="Top" />
+        <Label Content="Notes" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="10,260,0,0" Name="label2" VerticalAlignment="Top" />
+        <Button Content="Save" Height="23" Margin="0,455,0,0" Name="save_BTN" VerticalAlignment="Top" Click="save_BTN_Click" HorizontalAlignment="Right" Width="75" />
+		<Button Content="Cancel" Height="23" HorizontalAlignment="Right" Margin="0,455,162,0" Name="cancel_BTN" VerticalAlignment="Top" Width="75" Click="cancel_BTN_Click" />
+		<CheckBox Content="Liability Waiver" Height="16" HorizontalAlignment="Left" Margin="23,171,0,0" Name="liabilityWaiver_RBTN" VerticalAlignment="Top" />
+		<CheckBox Content="Project Agreement" Height="16" HorizontalAlignment="Left" Margin="23,193,0,0" Name="projectAgreement_RBTN" VerticalAlignment="Top" />
+		<CheckBox Content="Time Log" Height="16" HorizontalAlignment="Left" Margin="23,215,0,0" Name="timeLog_RBTN" VerticalAlignment="Top" />
+		<CheckBox Content="Confirmed Hours" Height="16" HorizontalAlignment="Left" Margin="23,237,0,0" Name="confirmedHours_RBTN" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="10,107,0,0" Name="studentLastName_TB" VerticalAlignment="Top" Width="120" TabIndex="2" MaxLength="50" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="136,107,0,0" Name="studentFirstName_TB" VerticalAlignment="Top" Width="120" TabIndex="3" MaxLength="50" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="262,107,0,0" Name="studentemail_TB" VerticalAlignment="Top" Width="120" TabIndex="4" MaxLength="50" />
         <TextBox DataContext="{Binding}" Height="23" HorizontalAlignment="Left" Margin="10,44,0,0" Name="studentID_TB" VerticalAlignment="Top" Width="100" TabIndex="0" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="116,44,0,0" Name="graduationYear_TB" VerticalAlignment="Top" Width="96" TabIndex="1" />
         <Label Content="Student ID" Height="28" HorizontalAlignment="Left" Margin="10,10,0,0" Name="studentID_LBL" VerticalAlignment="Top" />
@@ -21,9 +21,18 @@
         <Label Content="Graduation Year" Height="28" HorizontalAlignment="Left" Margin="116,10,0,0" Name="studentGraduationYear_LBL" VerticalAlignment="Top" />
         <Label Content="Email" Height="28" HorizontalAlignment="Left" Margin="262,73,0,0" Name="studentMiddleName_LBL" VerticalAlignment="Top" />
         <Label Content="First Name" Height="28" HorizontalAlignment="Left" Margin="136,73,0,0" Name="studentFirstName_LBL" VerticalAlignment="Top" />
-        <DataGrid AutoGenerateColumns="True" Margin="0,323,0,0" Name="studentNotes_DataGrid" ItemsSource="{Binding}" />
-		<Button Content="Delete" Height="23" Margin="0,294,93,0" Name="delete_BTN" VerticalAlignment="Top" Click="delete_BTN_Click" HorizontalAlignment="Right" Width="75" />
-		<DataGrid AutoGenerateColumns="True" Margin="187,151,20,207" Name="studentLearningExperiences_DataGrid" ItemsSource="{Binding}" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Visibility="Visible">
-		</DataGrid>
-	</Grid>
+        <DataGrid AutoGenerateColumns="True" Margin="0,294,0,29" Name="studentNotes_DataGrid" ItemsSource="{Binding}" />
+		<Button Content="Delete" Height="23" Margin="0,455,81,0" Name="delete_BTN" VerticalAlignment="Top" Click="delete_BTN_Click" HorizontalAlignment="Right" Width="75" />
+        <DataGrid AutoGenerateColumns="True" Margin="187,151,20,207" Name="studentLearningExperiences_DataGrid" ItemsSource="{Binding}"
+                  HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" 
+                  MouseRightButtonDown="studentLearningExperiences_DataGrid_MouseRightButtonDown">
+            <DataGrid.ContextMenu>
+                <ContextMenu Name="studentLearningExperiences_ContextMenu">
+                    <MenuItem Header="Add" Click="Add_MenuItem_Click" />
+                    <MenuItem Header="Edit" Click="Edit_MenuItem_Click" />
+                    <MenuItem Header="Delete" Click="Delete_MenuItem_Click" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+    </Grid>
 </Window>

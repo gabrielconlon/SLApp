@@ -47,6 +47,8 @@ namespace SLApp_Beta
 			this.studentID_TB.Text = stud.Student_ID.ToString();
 			this.studentemail_TB.Text = stud.Email;
 			this.graduationYear_TB.Text = stud.GraduationYear.ToString();
+
+
 			if (dbMethods.CheckDatabaseConnection())
 			{
 				using (PubsDataContext db = new PubsDataContext())
@@ -75,8 +77,6 @@ namespace SLApp_Beta
 					studentLearningExperiences_DataGrid.DataContext = completionList;
 				}
 			}
-
-
 		}
 
         public bool areStudentNotesLocked()
@@ -87,6 +87,42 @@ namespace SLApp_Beta
                 return false;
         }
 
+        private void setLearningExperience(Learning_Experience coh)
+        {
+            if (confirmedHours_RBTN.IsChecked == true)
+            {
+                coh.ConfirmedHours = true;
+            }
+            else
+            {
+                coh.ConfirmedHours = false;
+            }
+            if (liabilityWaiver_RBTN.IsChecked == true)
+            {
+                coh.LiabilityWaiver = true;
+            }
+            else
+            {
+                coh.LiabilityWaiver = false;
+            }
+            if (projectAgreement_RBTN.IsChecked == true)
+            {
+                coh.ProjectAgreement = true;
+            }
+            else
+            {
+                coh.ProjectAgreement = false;
+            }
+            if (timeLog_RBTN.IsChecked == true)
+            {
+                coh.TimeLog = true;
+            }
+            else
+            {
+                coh.TimeLog = false;
+            }
+        }
+
         private void cancel_BTN_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -94,10 +130,6 @@ namespace SLApp_Beta
 
         private void save_BTN_Click(object sender, RoutedEventArgs e)
         {
-            ///TODO: saves the profile to the database
-            ///performs a check if saved properly before closing the window
-			///http://www.c-sharpcorner.com/uploadfile/raj1979/showdeleteedit-data-in-wpf-datagrid-using-linq-to-sql-classes/
-
 	        if (dbMethods.CheckDatabaseConnection())
 	        {
 		        using (PubsDataContext db = new PubsDataContext())
@@ -112,42 +144,11 @@ namespace SLApp_Beta
 
 
 				        //HACK possibly move completion of paperwork fields into the learning_experience table to simplify?
-				        Learning_Experience coh = new Learning_Experience();
-				        coh.Student_ID = Convert.ToInt32(studentID_TB.Text);
-				        if (confirmedHours_RBTN.IsChecked == true)
-				        {
-					        coh.ConfirmedHours = true;
-				        }
-				        else
-				        {
-					        coh.ConfirmedHours = false;
-				        }
-				        if (liabilityWaiver_RBTN.IsChecked == true)
-				        {
-					        coh.LiabilityWaiver = true;
-				        }
-				        else
-				        {
-					        coh.LiabilityWaiver = false;
-				        }
-				        if (projectAgreement_RBTN.IsChecked == true)
-				        {
-					        coh.ProjectAgreement = true;
-				        }
-				        else
-				        {
-					        coh.ProjectAgreement = false;
-				        }
-				        if (timeLog_RBTN.IsChecked == true)
-				        {
-					        coh.TimeLog = true;
-				        }
-				        else
-				        {
-					        coh.TimeLog = false;
-				        }
+				        Learning_Experience exp = new Learning_Experience();
+				        exp.Student_ID = Convert.ToInt32(studentID_TB.Text);
+                        setLearningExperience(exp);
 				        db.Students.InsertOnSubmit(student);
-				        db.Learning_Experiences.InsertOnSubmit(coh);
+				        db.Learning_Experiences.InsertOnSubmit(exp);
 				        db.SubmitChanges();
 			        }
 			        else
@@ -161,41 +162,10 @@ namespace SLApp_Beta
 				        stud.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
 				        stud.Email = studentemail_TB.Text;
 
-				        Learning_Experience coh = (from s in db.Learning_Experiences
+				        Learning_Experience exp = (from s in db.Learning_Experiences
 				                                   where s.Student_ID == student.Student_ID
 				                                   select s).Single();
-				        if (confirmedHours_RBTN.IsChecked == true)
-				        {
-					        coh.ConfirmedHours = true;
-				        }
-				        else
-				        {
-					        coh.ConfirmedHours = false;
-				        }
-				        if (liabilityWaiver_RBTN.IsChecked == true)
-				        {
-					        coh.LiabilityWaiver = true;
-				        }
-				        else
-				        {
-					        coh.LiabilityWaiver = false;
-				        }
-				        if (projectAgreement_RBTN.IsChecked == true)
-				        {
-					        coh.ProjectAgreement = true;
-				        }
-				        else
-				        {
-					        coh.ProjectAgreement = false;
-				        }
-				        if (timeLog_RBTN.IsChecked == true)
-				        {
-					        coh.TimeLog = true;
-				        }
-				        else
-				        {
-					        coh.TimeLog = false;
-				        }
+                        setLearningExperience(exp);
 
 				        db.SubmitChanges();
 			        }
@@ -226,8 +196,32 @@ namespace SLApp_Beta
 						this.Close();
 					}
 				}
-			}
-			
+			}	
 		}
+
+        private void studentLearningExperiences_DataGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //ContextMenu m = new ContextMenu();
+            //MenuItem item1 = new MenuItem();
+            //item1.Name = "Add";
+            //m.Items.Add(item1);
+            //studentLearningExperiences_DataGrid.ContextMenu = m;
+
+        }
+
+        private void Delete_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Add_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Edit_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 	}
 }
