@@ -189,7 +189,7 @@ namespace SLApp_Beta
             myWidth = this.Width;
 
             this.Width += 200;
-            this.Height += 200;
+            this.Height += 100;
         }
 
         private void Delete_MenuItem_Click(object sender, RoutedEventArgs e)
@@ -221,7 +221,8 @@ namespace SLApp_Beta
 
 		private void learningExperienceSave_BTN_Click(object sender, RoutedEventArgs e)
 		{
-			if (studentLearningExperiences_DataGrid.SelectedValue.Equals(null))
+			Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
+			if (expROW == null)
 			{
 				MessageBox.Show("You must first select a row before saving.",
 				                "Datagrid Row Selection Error", MessageBoxButton.OK,
@@ -234,7 +235,6 @@ namespace SLApp_Beta
 				{
 					using (PubsDataContext db = new PubsDataContext())
 					{
-						Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
 						//Learning_Experience exp = (from s in db.Learning_Experiences
 						//                           where s.Student_ID == expROW.Student_ID
 						//                           select s);
@@ -263,28 +263,37 @@ namespace SLApp_Beta
 
 		private void learningExperienceAdd_BTN_Click(object sender, RoutedEventArgs e)
 		{
-			if (dbMethods.CheckDatabaseConnection())
+			Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
+			if (expROW == null)
 			{
-				using (PubsDataContext db = new PubsDataContext())
+				MessageBox.Show("You must first select a row before adding.",
+				                "Datagrid Row Selection Error", MessageBoxButton.OK,
+				                MessageBoxImage.Exclamation);
+			}
+			else
+			{
+				if (dbMethods.CheckDatabaseConnection())
 				{
-					Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
-					Learning_Experience exp = new Learning_Experience();
+					using (PubsDataContext db = new PubsDataContext())
+					{
+						Learning_Experience exp = new Learning_Experience();
 
-					//HACK works accept student_ID cannot be the key
-					exp.Student_ID = student.Student_ID;
-					exp.ConfirmedHours = expROW.ConfirmedHours;
-					exp.CourseNumber = expROW.CourseNumber;
-					exp.LiabilityWaiver = expROW.LiabilityWaiver;
-					exp.ProjectAgreement = expROW.ProjectAgreement;
-					exp.Semester = expROW.Semester;
-					exp.Year = expROW.Year;
-					exp.TimeLog = expROW.TimeLog;
-					exp.TotalHours = expROW.TotalHours;
-					exp.TypeofLearning = expROW.TypeofLearning;
+						//HACK works accept student_ID cannot be the key
+						exp.Student_ID = student.Student_ID;
+						exp.ConfirmedHours = expROW.ConfirmedHours;
+						exp.CourseNumber = expROW.CourseNumber;
+						exp.LiabilityWaiver = expROW.LiabilityWaiver;
+						exp.ProjectAgreement = expROW.ProjectAgreement;
+						exp.Semester = expROW.Semester;
+						exp.Year = expROW.Year;
+						exp.TimeLog = expROW.TimeLog;
+						exp.TotalHours = expROW.TotalHours;
+						exp.TypeofLearning = expROW.TypeofLearning;
 
-					db.Learning_Experiences.InsertOnSubmit(exp);
-					db.SubmitChanges();
-					LoadStudentLearningExperiences();
+						db.Learning_Experiences.InsertOnSubmit(exp);
+						db.SubmitChanges();
+						LoadStudentLearningExperiences();
+					}
 				}
 			}
 
@@ -310,6 +319,12 @@ namespace SLApp_Beta
 					}
 				}
 			}
+		}
+
+		private void SaveAndClose_BTN_Click(object sender, RoutedEventArgs e)
+		{
+			save_BTN_Click(sender, e);
+			this.Close();
 		}
 	}
 }

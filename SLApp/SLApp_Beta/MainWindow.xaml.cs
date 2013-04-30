@@ -49,11 +49,18 @@ namespace SLApp_Beta
 
             if (dbMethods.CheckDatabaseConnection())
             {
-                using (PubsDataContext db = new PubsDataContext())
-                {
-                    serviceType_CBX.DataContext = from service in db.Types_of_Services
-                                                  select service;
-                }
+	            try
+	            {
+		            using (PubsDataContext db = new PubsDataContext())
+		            {
+			            serviceType_CBX.DataContext = from service in db.Types_of_Services
+			                                          select service;
+		            }
+	            }
+	            catch (Exception ex)
+	            {
+		            ;
+	            }
             }
 		}
 
@@ -81,24 +88,23 @@ namespace SLApp_Beta
         private void menuCreateStudent_Click(object sender, RoutedEventArgs e)
         {
             StudentProfile Studentform = new StudentProfile(IsAdmin);
-            Studentform.Closed += new EventHandler(stnt_Closed);
+			Studentform.Closed += new EventHandler((s0, e0) => { studentSearch_BTN_Click(s0, null); });
             Studentform.Show();
         }
 
         private void stnt_Closed(object sender, EventArgs e)
         {
-            studentSearch_BTN_Click(sender, (RoutedEventArgs)e);
+            studentSearch_BTN_Click(sender, null);
 
-            //if(dbMethods.CheckDatabaseConnection())
-            //{
-            //    using(PubsDataContext db = new PubsDataContext())
-            //    {
-            //         var allStudents = from stud in db.Students
-            //                           select stud;
-            //        studentSearch_DataGrid.DataContext = allStudents;
-            //    }
-            //}
-
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					var allStudents = from stud in db.Students
+									  select stud;
+					studentSearch_DataGrid.DataContext = allStudents;
+				}
+			}
         }
 
         private void menuCreateAgency_Click(object sender, RoutedEventArgs e)
@@ -112,6 +118,7 @@ namespace SLApp_Beta
         private void newStudentProfile_BTN_Click(object sender, RoutedEventArgs e)
         {
             StudentProfile form = new StudentProfile(IsAdmin);
+			form.Closed += new EventHandler((s0, e0) => studentSearch_BTN_Click(s0, null));
             form.Show();
         }
 
@@ -178,6 +185,7 @@ namespace SLApp_Beta
 				                select s).Single();
 
 				StudentProfile studentForm = new StudentProfile(stud, IsAdmin, true);
+				studentForm.Closed += new EventHandler((s0, e0) => studentSearch_BTN_Click(s0, null));
 				studentForm.Show();
 			}
 		}
