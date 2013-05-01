@@ -81,7 +81,24 @@ namespace SLApp_Beta
         private void menuCreateStudent_Click(object sender, RoutedEventArgs e)
         {
             StudentProfile Studentform = new StudentProfile(IsAdmin);
+            Studentform.Closed += new EventHandler(stnt_Closed);
             Studentform.Show();
+        }
+
+        private void stnt_Closed(object sender, EventArgs e)
+        {
+            studentSearch_BTN_Click(sender, (RoutedEventArgs)e);
+
+            //if(dbMethods.CheckDatabaseConnection())
+            //{
+            //    using(PubsDataContext db = new PubsDataContext())
+            //    {
+            //         var allStudents = from stud in db.Students
+            //                           select stud;
+            //        studentSearch_DataGrid.DataContext = allStudents;
+            //    }
+            //}
+
         }
 
         private void menuCreateAgency_Click(object sender, RoutedEventArgs e)

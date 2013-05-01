@@ -23,6 +23,9 @@ namespace SLApp_Beta
 		private bool isEdit;
 		DatabaseMethods dbMethods = new DatabaseMethods();
 
+        private double myWidth;
+        private double myHeight;
+
 		public StudentProfile(bool isAdmin)
 		{
 			InitializeComponent();
@@ -147,7 +150,7 @@ namespace SLApp_Beta
 
 		        }
 	        }
-	        this.Close();
+            //this.Close();
         }
 
 		private void delete_BTN_Click(object sender, RoutedEventArgs e)
@@ -174,10 +177,19 @@ namespace SLApp_Beta
 			}	
 		}
 
-        private void studentLearningExperiences_DataGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void expanderCollapsedMinimizeWindow(object sender, RoutedEventArgs e)
         {
+            this.Width = myWidth;
+            this.Height = myHeight;
+        }
 
+        private void expanderExpandedOpenWindow(object sender, RoutedEventArgs e)
+        {
+            myHeight = this.Height;
+            myWidth = this.Width;
 
+            this.Width += 200;
+            this.Height += 200;
         }
 
         private void Delete_MenuItem_Click(object sender, RoutedEventArgs e)
