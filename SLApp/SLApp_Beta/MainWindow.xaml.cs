@@ -44,7 +44,7 @@ namespace SLApp_Beta
             ///accessed without a user ID (e.g. Ross or student worker putting in a university login)
             ///
 
-
+			
 			InitializeComponent();
 			DatabaseMethods dbMethods = new DatabaseMethods();
 
@@ -96,7 +96,8 @@ namespace SLApp_Beta
 
         private void manualMenuItem_Click(object sender, RoutedEventArgs e)
         {
-             
+             UserDocumentation manual = new UserDocumentation();
+			manual.Show();
         }
 
         private void menuCreateStudent_Click(object sender, RoutedEventArgs e)
@@ -106,28 +107,13 @@ namespace SLApp_Beta
             Studentform.Show();
         }
 
+		private void menuCreateAgency_Click(object sender, RoutedEventArgs e)
+		{
+			AgencyProfile Agencyform = new AgencyProfile();
+			Agencyform.Show();
+		}
+
         #endregion
-
-        private void stnt_Closed(object sender, EventArgs e)
-        {
-            studentSearch_BTN_Click(sender, null);
-
-			if (dbMethods.CheckDatabaseConnection())
-			{
-				using (PubsDataContext db = new PubsDataContext())
-				{
-					var allStudents = from stud in db.Students
-									  select stud;
-					studentSearch_DataGrid.DataContext = allStudents;
-				}
-			}
-        }
-
-        private void menuCreateAgency_Click(object sender, RoutedEventArgs e)
-        {
-            AgencyProfile Agencyform = new AgencyProfile();
-            Agencyform.Show();
-        }
 
         #region Student Tab
 
@@ -152,28 +138,32 @@ namespace SLApp_Beta
 				using (PubsDataContext db = new PubsDataContext())
 				{
 					var allStudents = (from stud in db.Students
-									   //from course in db.Courses
-					                   //from experience in db.Learning_Experiences
+					                   join experience in db.Learning_Experiences on stud.Student_ID equals experience.Student_ID
+
+									   //TODO: almost works, the join forces students to come up who have a course that matches an experience
+									   //join course in db.Courses on experience.CourseNumber equals course.CourseNumber
+
 					                   where
 						                   //student search section
-						                   (studentFirstName_TB.Text.Length == 0 || studentFirstName_TB.Text == stud.FirstName) &&
-						                   (studentLastName_TB.Text.Length == 0 || studentLastName_TB.Text == stud.LastName) &&
+									   //NOW ABLE TO SEARCH FOR PARTIALS, accept for the ints
+										   (studentFirstName_TB.Text.Length == 0 || stud.FirstName.Contains(studentFirstName_TB.Text)) && //studentFirstName_TB.Text == stud.FirstName
+						                   (studentLastName_TB.Text.Length == 0 || stud.LastName.Contains(studentLastName_TB.Text)) && //studentLastName_TB.Text == stud.LastName
 						                   (studentID_TB.Text.Length == 0 || studentID_TB.Text == stud.Student_ID.ToString()) &&
-						                   (graduationYear_TB.Text.Length == 0 || graduationYear_TB.Text == stud.GraduationYear.ToString())
+										   //TODO graduation year duplicates
+						                   (graduationYear_TB.Text.Length == 0 || graduationYear_TB.Text == stud.GraduationYear.ToString()) &&
 
-										   ////course search section
+										   //course search section
+										   //TODO: need to input data that matches the course up
 										   //(course_TB.Text.Length == 0 || course_TB.Text == course.CourseName) &&
-										   //(semester_CBX.SelectedIndex != 0 ||
-										   // semester_CBX.SelectedIndex.ToString() == experience.Semester) &&
-										   //(year_TB.Text.Length == 0 || year_TB.Text == experience.Year.ToString()) &&
-										   //(professor_TB.Text.Length == 0 || professor_TB.Text == course.Professor)
+										   //(professor_TB.Text.Length == 0 || professor_TB.Text == course.Professor) &&
 
-					                   //                       ////service and hours section
-					                   //                       ////HACK not sure about this one...
-					                   //                       //(serviceType_CBX.SelectedIndex != 0 ||
-					                   //                       // serviceType_CBX.SelectedIndex.ToString() == experience.TypeofLearning)
+										   //service and hours section
+										   //HACK Combo Boxes do not work
+										   //(serviceType_CBX.SelectedIndex != 0 ||  serviceType_CBX.SelectedIndex.ToString() == experience.TypeofLearning) &&
+										   //(semester_CBX.SelectedIndex != 0 || semester_CBX.SelectedIndex.ToString() == experience.Semester) &&
+										   (year_TB.Text.Length == 0 || year_TB.Text == experience.Year.ToString()) 
 
-					                   select stud );
+					                   select stud);
 					studentSearch_DataGrid.DataContext = allStudents;
 				}
 			}

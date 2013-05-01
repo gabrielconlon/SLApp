@@ -105,3 +105,9 @@ C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\AboutWind
 C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\CommunityPartnershipAgreementWindow.baml
 C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\AboutWindow.g.cs
 C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\CommunityPartnershipAgreementWindow.g.cs
+\\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\AboutWindow.baml
+\\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\CommunityPartnershipAgreementWindow.baml
+\\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\AboutWindow.g.cs
+\\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\CommunityPartnershipAgreementWindow.g.cs
+\\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\UserDocumentation.baml
+\\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\UserDocumentation.g.cs
