@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Documents;
 
@@ -193,6 +194,18 @@ namespace SLApp_Beta
 				StudentProfile studentForm = new StudentProfile(stud, IsAdmin, true);
 				studentForm.Closed += new EventHandler((s0, e0) => studentSearch_BTN_Click(s0, null));
 				studentForm.Show();
+			}
+		}
+
+		private void clear_BTN_Click(object sender, RoutedEventArgs e)
+		{
+			for (int i = 0; i < grdStudentTab.Children.Count; i++)
+			{
+				UIElement u = grdStudentTab.Children[i];
+				if (u is TextBox)
+					((TextBox)u).Clear();
+				else if (u is ComboBox)
+					((ComboBox)u).Text = "";
 			}
 		}
 

@@ -219,43 +219,72 @@ namespace SLApp_Beta
 			//}
 		}
 
+		private bool learningExperienceFieldsCheck(Learning_Experience expROW)
+		{
+			if (expROW == null)
+			{
+				MessageBox.Show("You must first select a valid row before adding, saving, or deleting.",
+								"Datagrid Row Selection Error", MessageBoxButton.OK,
+								MessageBoxImage.Exclamation);
+				return false;
+			}
+			else if (expROW.Semester != "Fall" && expROW.Semester != "Jan" && expROW.Semester != "Spring" && expROW.Semester != "")
+			{
+				MessageBox.Show("Entry in Semester column invalid. Valid entries are blank, 'Fall', 'Jan', or 'Spring'.",
+								"Datagrid Row Error", MessageBoxButton.OK,
+								MessageBoxImage.Exclamation);
+				return false;
+			}
+			else if (expROW.TypeofLearning != "Discipline-Based" && expROW.TypeofLearning != "Problem-Based" &&
+					 expROW.TypeofLearning != "Pure Service" && expROW.TypeofLearning != "Service Internship" &&
+					 expROW.TypeofLearning != "Community Based Research" && expROW.TypeofLearning != "Capstone Class"
+				&& expROW.TypeofLearning != "")
+			{
+				MessageBox.Show("Entry in Type of Learning column invalid.\n" +
+					"Valid entries are blank, 'Discipline-Based', 'Problem-Based', 'Pure Service',\n" +
+				"'Service Internship', 'Community Based Research', or 'Capstone Class'",
+								"Datagrid Row Error", MessageBoxButton.OK,
+								MessageBoxImage.Exclamation);
+				return false;
+			}
+			return true;
+		}
+
 		private void learningExperienceSave_BTN_Click(object sender, RoutedEventArgs e)
 		{
 			Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
-			if (expROW == null)
+			if(learningExperienceFieldsCheck(expROW))
 			{
-				MessageBox.Show("You must first select a row before saving.",
-				                "Datagrid Row Selection Error", MessageBoxButton.OK,
-				                MessageBoxImage.Exclamation);
-			}
-			else
-			{
-
-				if (dbMethods.CheckDatabaseConnection())
+				if (learningExperienceFieldsCheck(expROW))
 				{
-					using (PubsDataContext db = new PubsDataContext())
+
+					if (dbMethods.CheckDatabaseConnection())
 					{
-						//Learning_Experience exp = (from s in db.Learning_Experiences
-						//                           where s.Student_ID == expROW.Student_ID
-						//                           select s);
-						var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
-						                                                   where s.ID == expROW.ID
-						                                                   select s);
-						var completion = completionList.First();
-						completion.Student_ID = student.Student_ID;
-						completion.ConfirmedHours = expROW.ConfirmedHours;
-						completion.CourseNumber = expROW.CourseNumber;
-						completion.LiabilityWaiver = expROW.LiabilityWaiver;
-						completion.ProjectAgreement = expROW.ProjectAgreement;
-						completion.Semester = expROW.Semester;
-						completion.Year = expROW.Year;
-						completion.TimeLog = expROW.TimeLog;
-						completion.TotalHours = expROW.TotalHours;
-						completion.TypeofLearning = expROW.TypeofLearning;
+						using (PubsDataContext db = new PubsDataContext())
+						{
+							//Learning_Experience exp = (from s in db.Learning_Experiences
+							//                           where s.Student_ID == expROW.Student_ID
+							//                           select s);
+							var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+							                                                   where s.ID == expROW.ID
+							                                                   select s);
+								var completion = completionList.First();
+								completion.Student_ID = student.Student_ID;
+								completion.ConfirmedHours = expROW.ConfirmedHours;
+								completion.CourseNumber = expROW.CourseNumber;
+								completion.LiabilityWaiver = expROW.LiabilityWaiver;
+								completion.ProjectAgreement = expROW.ProjectAgreement;
+								completion.Semester = expROW.Semester;
+								completion.Year = expROW.Year;
+								completion.TimeLog = expROW.TimeLog;
+								completion.TotalHours = expROW.TotalHours;
+								completion.TypeofLearning = expROW.TypeofLearning;
 
-						db.SubmitChanges();
-						LoadStudentLearningExperiences();
+								db.SubmitChanges();
+								LoadStudentLearningExperiences();
 
+
+						}
 					}
 				}
 			}
@@ -264,13 +293,7 @@ namespace SLApp_Beta
 		private void learningExperienceAdd_BTN_Click(object sender, RoutedEventArgs e)
 		{
 			Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
-			if (expROW == null)
-			{
-				MessageBox.Show("You must first select a row before adding.",
-				                "Datagrid Row Selection Error", MessageBoxButton.OK,
-				                MessageBoxImage.Exclamation);
-			}
-			else
+			if (learningExperienceFieldsCheck(expROW))
 			{
 				if (dbMethods.CheckDatabaseConnection())
 				{
@@ -309,13 +332,16 @@ namespace SLApp_Beta
 					using (PubsDataContext db = new PubsDataContext())
 					{
 						Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
-						var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
-																		   where s.ID == expROW.ID
-																		   select s);
-						var completion = completionList.First();
-						db.Learning_Experiences.DeleteOnSubmit(completion);
-						db.SubmitChanges();
-						LoadStudentLearningExperiences();
+						if (learningExperienceFieldsCheck(expROW))
+						{
+							var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+							                                                   where s.ID == expROW.ID
+							                                                   select s);
+							var completion = completionList.First();
+							db.Learning_Experiences.DeleteOnSubmit(completion);
+							db.SubmitChanges();
+							LoadStudentLearningExperiences();
+						}
 					}
 				}
 			}

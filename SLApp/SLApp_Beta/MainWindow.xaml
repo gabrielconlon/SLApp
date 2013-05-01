@@ -33,7 +33,7 @@
         </Menu>
 		<TabControl HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Stretch" DataContext="{Binding}" TabStripPlacement="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Margin="-1,5,1,-5" Grid.ColumnSpan="2">
 			<TabItem Header="Student" Name="student_tab">
-				<Grid>
+				<Grid x:Name="grdStudentTab">
 					<TextBox Height="23" HorizontalAlignment="Left" Margin="6,44,0,0" Name="studentID_TB" VerticalAlignment="Top" Width="100"
 							 DataContext="{Binding}" MaxLength="7" TabIndex="0">
 					</TextBox>
@@ -65,7 +65,14 @@
                     <Label Content="Type of Service" Height="28" HorizontalAlignment="Left" Margin="132,191,0,0" Name="serviceType_LBL" VerticalAlignment="Top" />
                     <TextBox Height="23" HorizontalAlignment="Left" IsEnabled="True" Margin="6,217,0,0" Name="course_TB" VerticalAlignment="Top" Width="120" MaxLength="50" TabIndex="7" />
                     <TextBox Height="23" HorizontalAlignment="Left" IsEnabled="True" Margin="232,162,0,0" Name="year_TB" VerticalAlignment="Top" Width="120" TabIndex="6" />
-                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="132,217,0,0" Name="serviceType_CBX" VerticalAlignment="Top" Width="120" DataContext="{Binding}" TabIndex="8" IsEditable="True"></ComboBox>
+                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="132,217,0,0" Name="serviceType_CBX" VerticalAlignment="Top" Width="120" DataContext="{Binding}" TabIndex="8" IsEditable="True">
+						<ComboBoxItem Content="Capstone Class" />
+						<ComboBoxItem Content="Community Based Research" />
+						<ComboBoxItem Content="Discipline-based" />
+						<ComboBoxItem Content="Problem-based" />
+						<ComboBoxItem Content="Pure Service" />
+						<ComboBoxItem Content="Service Internship" />
+					</ComboBox>
                     <Label Content="Professor" Height="28" HorizontalAlignment="Left" Margin="258,191,0,0" Name="professor_LBL" VerticalAlignment="Top" />
                     <TextBox Height="23" HorizontalAlignment="Left" IsEnabled="True" Margin="258,217,0,0" Name="professor_TB" VerticalAlignment="Top" Width="120" MaxLength="50" TabIndex="9" />
                     <ComboBox Height="23" HorizontalAlignment="Left" Margin="108,162,0,0" Name="semester_CBX" VerticalAlignment="Top" Width="120" TabIndex="5" IsEditable="True">
@@ -73,7 +80,8 @@
                         <ComboBoxItem Content="Jan" />
                         <ComboBoxItem Content="Spring" />
                     </ComboBox>
-                    <!--TODO: adjust the datagrid to change size with the window,
+					<Button Content="Clear All" Height="23" HorizontalAlignment="Right" Margin="0,257,87,0" Name="clear_BTN" TabIndex="10" VerticalAlignment="Top" Width="75" Click="clear_BTN_Click" />
+					<!--TODO: adjust the datagrid to change size with the window,
                     THIS MIGHT BE WORKING, needs more testing-->
                 </Grid>
 			</TabItem>
