@@ -111,3 +111,5 @@ C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\Community
 \\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\CommunityPartnershipAgreementWindow.g.cs
 \\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\UserDocumentation.baml
 \\cs1\cs_students\gconlon13\CS472\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\UserDocumentation.g.cs
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\UserDocumentation.baml
+C:\Users\Gabriel\Documents\GitHub\SLApp\SLApp\SLApp_Beta\obj\x86\Debug\UserDocumentation.g.cs
