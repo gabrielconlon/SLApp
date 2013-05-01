@@ -33,5 +33,11 @@ namespace SLApp_Beta
         {
             this.Close();
         }
+
+        private void communityPartnershipAgreement_LBL_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            CommunityPartnershipAgreementWindow form = new CommunityPartnershipAgreementWindow();
+            form.ShowDialog();
+        }
     }
 }

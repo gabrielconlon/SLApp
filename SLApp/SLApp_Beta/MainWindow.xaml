@@ -12,11 +12,11 @@
 			<RowDefinition Height="*"/>
 	    </Grid.RowDefinitions>
 
-		<Menu Height="23" Name="mainWindowMenu" Grid.ColumnSpan="2">
-			<MenuItem Header="File">
+            <Menu Height="23" Name="mainWindowMenu" Grid.ColumnSpan="2">
+			<MenuItem Header="_File">
 				<MenuItem Header="Exit" Click="menuExit_Click" />
 			</MenuItem>
-			<MenuItem Header="Profile">
+			<MenuItem Header="_Profile">
 				<MenuItem Header="Create Profile" Click="menuCreateStudent_Click">
 				</MenuItem>
 				<MenuItem Header="Edit Profile">
@@ -25,9 +25,12 @@
 				<MenuItem Header="Create Agency Profile" Click="menuCreateAgency_Click" />
 				<MenuItem Header="Edit Agency Profile" />
 			</MenuItem>
-			<MenuItem Header="Options" />
-			<MenuItem Header="Help" />
-		</Menu>
+			<MenuItem Header="_Options" />
+            <MenuItem Header="_Help" >
+                <MenuItem Name="manualMenuItem" Header="Learn About SLApp" Click="manualMenuItem_Click" />
+                <MenuItem Name="aboutMenuItem" Header="About" Click="aboutMenuItem_Click" />
+            </MenuItem>
+        </Menu>
 		<TabControl HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Stretch" DataContext="{Binding}" TabStripPlacement="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Margin="-1,5,1,-5" Grid.ColumnSpan="2">
 			<TabItem Header="Student" Name="student_tab">
 				<Grid>
@@ -36,7 +39,7 @@
 					<TextBox Height="23" HorizontalAlignment="Left" Margin="258,107,0,0" Name="studentEmail_TB" VerticalAlignment="Top" Width="120" IsEnabled="True" MaxLength="50" TabIndex="3" />
 					<TextBox Height="23" HorizontalAlignment="Left" Margin="6,44,0,0" Name="studentID_TB" VerticalAlignment="Top" Width="100" DataContext="{Binding}" MaxLength="7" TabIndex="0" />
 					<TextBox Height="23" HorizontalAlignment="Left" Margin="6,162,0,0" Name="graduationYear_TB" VerticalAlignment="Top" Width="96" TabIndex="4" />
-					<Button Content="Create New" Height="23" HorizontalAlignment="Right" Margin="0,11,6,0" Name="newStudentProfile_BTN" VerticalAlignment="Top" Width="75" Click="newStudentProfile_BTN_Click" />
+					<Button Content="_Create New" Height="23" HorizontalAlignment="Right" Margin="0,11,6,0" Name="newStudentProfile_BTN" VerticalAlignment="Top" Width="75" Click="newStudentProfile_BTN_Click" />
 					<Label Content="Student ID" Height="28" HorizontalAlignment="Left" Margin="6,10,0,0" Name="studentID_LBL" VerticalAlignment="Top" />
                     <Label Content="Last Name" Height="28" HorizontalAlignment="Left" Margin="6,73,0,0" Name="studentLastName_LBL" VerticalAlignment="Top" />
                     <Label Content="Graduation Year" Height="28" HorizontalAlignment="Left" Margin="6,136,0,0" Name="studentGraduationYear_LBL" VerticalAlignment="Top" />
@@ -101,8 +104,8 @@
                     <TextBox Height="23" Margin="348,166,0,0" Name="agencyAddressState_TB" VerticalAlignment="Top" HorizontalAlignment="Left" Width="50" MaxLength="50" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="408,166,0,0" Name="agencyAddressZipcode_TB" VerticalAlignment="Top" Width="75" MaxLength="50" />
                     <DataGrid AutoGenerateColumns="True" Margin="0,286,0,0" Name="agencySearch_DataGrid" />
-                    <Button Content="Search" Height="23" Margin="0,257,6,0" Name="agencySearch_BTN" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="agencySearch_BTN_Click" />
-                    <Button Content="Create New" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="newAgencyProfile_BTN" VerticalAlignment="Top" Width="75" Click="newAgencyProfile_BTN_Click" />
+                    <Button Content="_Search" Height="23" Margin="0,257,6,0" Name="agencySearch_BTN" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="agencySearch_BTN_Click" />
+                    <Button Content="_Create New" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="newAgencyProfile_BTN" VerticalAlignment="Top" Width="75" Click="newAgencyProfile_BTN_Click" />
                 </Grid>
             </TabItem>
 			<TabItem Header="Faculty" IsEnabled="False" Name="faculty_tab" />

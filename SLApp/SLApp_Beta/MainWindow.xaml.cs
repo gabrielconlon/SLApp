@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Documents;
 
 namespace SLApp_Beta
 {
@@ -80,9 +81,22 @@ namespace SLApp_Beta
 			this.IsEnabled = true;
 		}
 
+        #region Menu
+
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void aboutMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
+        }
+
+        private void manualMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+             
         }
 
         private void menuCreateStudent_Click(object sender, RoutedEventArgs e)
@@ -91,6 +105,8 @@ namespace SLApp_Beta
 			Studentform.Closed += new EventHandler((s0, e0) => { studentSearch_BTN_Click(s0, null); });
             Studentform.Show();
         }
+
+        #endregion
 
         private void stnt_Closed(object sender, EventArgs e)
         {

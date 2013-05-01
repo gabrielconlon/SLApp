@@ -1,0 +1,10 @@
+﻿<Window x:Class="SLApp_Beta.CommunityPartnershipAgreementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CommunityPartnershipAgreementWindow" Height="500" Width="500">
+    <Grid>
+        <DocumentViewer Name="documentViewer1" Margin="0,0,0,46" />
+        <DatePicker Height="25" HorizontalAlignment="Left" Margin="12,0,0,12" Name="expirationDate_DatePicker" VerticalAlignment="Bottom" Width="115" />
+        <Button Content="Save" Height="23" HorizontalAlignment="Right" Margin="0,0,12,12" Name="save_BTN" VerticalAlignment="Bottom" Width="75" />
+    </Grid>
+</Window>
