@@ -159,8 +159,8 @@ namespace SLApp_Beta
 
 										   //service and hours section
 										   //HACK Combo Boxes do not work
-										   //(serviceType_CBX.SelectedIndex != 0 ||  serviceType_CBX.SelectedIndex.ToString() == experience.TypeofLearning) &&
-										   //(semester_CBX.SelectedIndex != 0 || semester_CBX.SelectedIndex.ToString() == experience.Semester) &&
+										   (serviceType_CBX.Text.Length == 0 || experience.TypeofLearning.Contains(serviceType_CBX.Text) ) && //serviceType_CBX.Text == experience.TypeofLearning
+										   (semester_CBX.Text.Length == 0 || experience.Semester.Contains(semester_CBX.Text)) && //semester_CBX.Text == experience.Semester
 										   (year_TB.Text.Length == 0 || year_TB.Text == experience.Year.ToString()) 
 
 					                   select stud);
