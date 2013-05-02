@@ -42,5 +42,15 @@ namespace SLApp_Beta.Properties {
                 return ((string)(this["SLDatabase_HomeConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=GABRIEL-PC;Initial Catalog=SLDatabase_Home;Integrated Security=True")]
+        public string SLDatabase_HomeConnectionString1 {
+            get {
+                return ((string)(this["SLDatabase_HomeConnectionString1"]));
+            }
+        }
     }
 }

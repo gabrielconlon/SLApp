@@ -49,21 +49,21 @@ namespace SLApp_Beta
 			InitializeComponent();
 			DatabaseMethods dbMethods = new DatabaseMethods();
 
-            if (dbMethods.CheckDatabaseConnection())
-            {
-	            try
-	            {
-		            using (PubsDataContext db = new PubsDataContext())
-		            {
-			            serviceType_CBX.DataContext = from service in db.Types_of_Services
-			                                          select service;
-		            }
-	            }
-	            catch (Exception ex)
-	            {
-		            ;
-	            }
-            }
+            //if (dbMethods.CheckDatabaseConnection())
+            //{
+            //    try
+            //    {
+            //        using (PubsDataContext db = new PubsDataContext())
+            //        {
+            //            serviceType_CBX.DataContext = from service in db.Types_of_Services
+            //                                          select service;
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        ;
+            //    }
+            //}
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -216,15 +216,15 @@ namespace SLApp_Beta
 
         private void agencySearch_BTN_Click(object sender, RoutedEventArgs e)
         {
-            using (PubsDataContext db = new PubsDataContext())
-            {
-                var allAgency = (from agency in db.Agencies
-                                   where
-                                 (agencyName_TB.Text.Length == 0 || agencyName_TB.Text == agency.Name)
+            //using (PubsDataContext db = new PubsDataContext())
+            //{
+            //    var allAgency = (from agency in db.Agencies
+            //                       where
+            //                     (agencyName_TB.Text.Length == 0 || agencyName_TB.Text == agency.Name)
 
-                                   select agency);
-                agencySearch_DataGrid.DataContext = allAgency;
-            }
+            //                       select agency);
+            //    agencySearch_DataGrid.DataContext = allAgency;
+            //}
         }
 
         private void newAgencyProfile_BTN_Click(object sender, RoutedEventArgs e)

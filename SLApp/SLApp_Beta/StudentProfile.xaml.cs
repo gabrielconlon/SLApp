@@ -146,11 +146,38 @@ namespace SLApp_Beta
 						var completion = completionList.First();
 
 				        db.SubmitChanges();
-			        }
 
+			        }
+                    //HACK works but forces user to select a row before saving, even if they didnt edit experiences
+                    Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
+                    if (learningExperienceFieldsCheck(expROW))
+                    {
+                        var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+                                                                           where s.ID == expROW.ID
+                                                                           select s);
+                        var completion = completionList.First();
+                        completion.Student_ID = student.Student_ID;
+                        completion.ConfirmedHours = expROW.ConfirmedHours;
+                        completion.CourseNumber = expROW.CourseNumber;
+                        completion.LiabilityWaiver = expROW.LiabilityWaiver;
+                        completion.ProjectAgreement = expROW.ProjectAgreement;
+                        completion.Semester = expROW.Semester;
+                        completion.Year = expROW.Year;
+                        completion.TimeLog = expROW.TimeLog;
+                        completion.TotalHours = expROW.TotalHours;
+                        completion.TypeofLearning = expROW.TypeofLearning;
+
+                        db.SubmitChanges();
+                        LoadStudentLearningExperiences();
+                    }
 		        }
 	        }
             //this.Close();
+        }
+        private void SaveAndClose_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            save_BTN_Click(sender, e);
+            this.Close();
         }
 
 		private void delete_BTN_Click(object sender, RoutedEventArgs e)
@@ -345,12 +372,6 @@ namespace SLApp_Beta
 					}
 				}
 			}
-		}
-
-		private void SaveAndClose_BTN_Click(object sender, RoutedEventArgs e)
-		{
-			save_BTN_Click(sender, e);
-			this.Close();
 		}
 	}
 }
