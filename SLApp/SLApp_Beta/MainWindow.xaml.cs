@@ -164,7 +164,7 @@ namespace SLApp_Beta
 										   (semester_CBX.Text.Length == 0 || experience.Semester.Contains(semester_CBX.Text)) && //semester_CBX.Text == experience.Semester
 										   (year_TB.Text.Length == 0 || year_TB.Text == experience.Year.ToString()) 
 
-					                   select stud);
+					                   select stud).Distinct();
 					studentSearch_DataGrid.DataContext = allStudents;
 				}
 			}

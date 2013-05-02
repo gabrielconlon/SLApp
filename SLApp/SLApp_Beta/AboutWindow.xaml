@@ -4,7 +4,7 @@
         Title="About" Height="300" Width="300" MaxWidth="300" MaxHeight="300" MinWidth="300" MinHeight="300">
     <Grid>
         <Grid Name="grid1" Margin="0,0,0,161" Background="#FF990000">
-            <Image Height="80" HorizontalAlignment="Left" Margin="6,6,0,0" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="80" />
+            <Image Source="slap.jpg"  Height="80" HorizontalAlignment="Left" Margin="6,6,0,0" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="80" />
             <Label Content="SLApp" Height="80" FontSize="36" HorizontalAlignment="Left" Margin="92,6,0,0" Name="label1" VerticalAlignment="Top" Foreground="White" Width="174" />
         </Grid>
         <TextBox Margin="12,106,12,0" Name="textBox1" IsReadOnly="True" AcceptsReturn="True"
