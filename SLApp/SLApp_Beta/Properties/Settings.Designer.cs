@@ -63,5 +63,15 @@ namespace SLApp_Beta.Properties {
                 return ((string)(this["SLDatabaseConnectionString1"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=cs1;Initial Catalog=SLTestDB;Integrated Security=True")]
+        public string SLTestDBConnectionString {
+            get {
+                return ((string)(this["SLTestDBConnectionString"]));
+            }
+        }
     }
 }

@@ -286,6 +286,12 @@ namespace SLApp_Beta
 
         #endregion
 
+		private void button1_Click(object sender, RoutedEventArgs e)
+		{
+			UserProfileWindow user = new UserProfileWindow();
+			user.Show();
+		}
+
 
     }
 }

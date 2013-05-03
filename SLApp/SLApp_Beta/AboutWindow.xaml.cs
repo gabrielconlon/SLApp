@@ -21,9 +21,9 @@ namespace SLApp_Beta
         public About()
         {
             InitializeComponent();
-            this.textBox1.Text = "Severice Learning Application (SLApp)\n " +
-                "Version 1.0 - Beta\n\n" + 
-                "This application has been created and maintained by the Computer Science students of Whitworth University.";
+            this.textBox1.Text = "Severice Learning Application (SLApp)\n" +
+				"Version 1.0 - Beta" + "\n© 2013\n\n" +
+				"This application has been created and maintained by the Computer Science students of Whitworth University.";
         }
     }
 }

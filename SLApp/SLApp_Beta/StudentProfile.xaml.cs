@@ -111,7 +111,10 @@ namespace SLApp_Beta
 	        {
 		        using (PubsDataContext db = new PubsDataContext())
 		        {
-			        if (!isEdit)
+			        var CheckExists = (from s in db.Students
+			                            where s.Student_ID == Convert.ToInt32(studentID_TB.Text)
+			                            select s);
+			        if (CheckExists.Count() == 0)
 			        {
                         try
                         {
@@ -134,6 +137,11 @@ namespace SLApp_Beta
                             MessageBox.Show("SLApp apologizes for the inconvenience, but at this time all fields must contain data before saving.","Save Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
 			        }
+					else if (CheckExists.Count() > 0)
+					{
+						MessageBox.Show("The Student ID already exists in the database.", "Submit Error!", MessageBoxButton.OK,
+						                MessageBoxImage.Exclamation);
+					}
 			        else
 			        {
 				        Student stud = (from s in db.Students
