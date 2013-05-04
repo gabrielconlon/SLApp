@@ -113,18 +113,26 @@ namespace SLApp_Beta
 		        {
 			        if (!isEdit)
 			        {
-				        student.Student_ID = Convert.ToInt32(studentID_TB.Text);
-				        student.FirstName = studentFirstName_TB.Text;
-				        student.LastName = studentLastName_TB.Text;
-				        student.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
-				        student.Email = studentemail_TB.Text;
+                        try
+                        {
+
+                            student.Student_ID = Convert.ToInt32(studentID_TB.Text);
+                            student.FirstName = studentFirstName_TB.Text;
+                            student.LastName = studentLastName_TB.Text;
+                            student.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
+                            student.Email = studentemail_TB.Text;
 
 
-				        Learning_Experience exp = new Learning_Experience();
-				        exp.Student_ID = Convert.ToInt32(studentID_TB.Text);
-				        db.Students.InsertOnSubmit(student);
-				        db.Learning_Experiences.InsertOnSubmit(exp);
-				        db.SubmitChanges();
+                            Learning_Experience exp = new Learning_Experience();
+                            exp.Student_ID = Convert.ToInt32(studentID_TB.Text);
+                            db.Students.InsertOnSubmit(student);
+                            db.Learning_Experiences.InsertOnSubmit(exp);
+                            db.SubmitChanges();
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("SLApp apologizes for the inconvenience, but at this time all fields must contain data before saving.","Save Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
 			        }
 			        else
 			        {
@@ -145,31 +153,40 @@ namespace SLApp_Beta
 																		   select s);
 						var completion = completionList.First();
 
-				        db.SubmitChanges();
+                        Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
+                        if (expROW != null)
+                        {
+                            learningExperienceFieldsCheck(expROW);
+                            var completionList2 = new List<Learning_Experience>(from s in db.Learning_Experiences
+                                                                               where s.ID == expROW.ID
+                                                                               select s);
+                            try
+                            {
+
+                                var completion2 = completionList2.First();
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("Oops! Looks like you did not Add the Learning Experience yet.", "Button Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                            }
+                            completion.Student_ID = student.Student_ID;
+                            completion.ConfirmedHours = expROW.ConfirmedHours;
+                            completion.CourseNumber = expROW.CourseNumber;
+                            completion.LiabilityWaiver = expROW.LiabilityWaiver;
+                            completion.ProjectAgreement = expROW.ProjectAgreement;
+                            completion.Semester = expROW.Semester;
+                            completion.Year = expROW.Year;
+                            completion.TimeLog = expROW.TimeLog;
+                            completion.TotalHours = expROW.TotalHours;
+                            completion.TypeofLearning = expROW.TypeofLearning;
+
+                            LoadStudentLearningExperiences();
+                        }
+                        db.SubmitChanges();
+
 
 			        }
                     //HACK works but forces user to select a row before saving, even if they didnt edit experiences
-                    Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
-                    if (learningExperienceFieldsCheck(expROW))
-                    {
-                        var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
-                                                                           where s.ID == expROW.ID
-                                                                           select s);
-                        var completion = completionList.First();
-                        completion.Student_ID = student.Student_ID;
-                        completion.ConfirmedHours = expROW.ConfirmedHours;
-                        completion.CourseNumber = expROW.CourseNumber;
-                        completion.LiabilityWaiver = expROW.LiabilityWaiver;
-                        completion.ProjectAgreement = expROW.ProjectAgreement;
-                        completion.Semester = expROW.Semester;
-                        completion.Year = expROW.Year;
-                        completion.TimeLog = expROW.TimeLog;
-                        completion.TotalHours = expROW.TotalHours;
-                        completion.TypeofLearning = expROW.TypeofLearning;
-
-                        db.SubmitChanges();
-                        LoadStudentLearningExperiences();
-                    }
 		        }
 	        }
             //this.Close();
