@@ -113,6 +113,7 @@ namespace SLApp_Beta
                             db.Students.InsertOnSubmit(student);
                             db.Learning_Experiences.InsertOnSubmit(exp);
                             db.SubmitChanges();
+							LoadStudentLearningExperiences();
                         }
                         catch (Exception)
                         {
@@ -176,9 +177,9 @@ namespace SLApp_Beta
 
                         learningExperienceSave_BTN_Click(sender, e);
 
-                        db.SubmitChanges();
+				        db.SubmitChanges();
 			        }
-                    LoadStudentLearningExperiences();
+                    
 
 		        }
 	        }
@@ -227,11 +228,8 @@ namespace SLApp_Beta
         private void learningExperienceSave_BTN_Click(object sender, RoutedEventArgs e)
         {
             Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
-            if (learningExperienceFieldsCheck(expROW))
-            {
                 if (learningExperienceFieldsCheck(expROW))
                 {
-
                     if (dbMethods.CheckDatabaseConnection())
                     {
                         using (PubsDataContext db = new PubsDataContext())
@@ -285,7 +283,6 @@ namespace SLApp_Beta
                         }
                     }
                 }
-            }
         }
 
         //currently hidden and disabled, testing the new save/add combo button
@@ -331,15 +328,20 @@ namespace SLApp_Beta
                     using (PubsDataContext db = new PubsDataContext())
                     {
                         Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
-                        if (expROW != null)
+
+	                        var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+	                                                                           where s.ID == expROW.ID
+	                                                                           select s);
+						if (expROW != null && completionList.Any())
+						{
+	                        var completion = completionList.First();
+	                        db.Learning_Experiences.DeleteOnSubmit(completion);
+	                        db.SubmitChanges();
+	                        LoadStudentLearningExperiences();
+                        }
+                        else
                         {
-                            var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
-                                                                               where s.ID == expROW.ID
-                                                                               select s);
-                            var completion = completionList.First();
-                            db.Learning_Experiences.DeleteOnSubmit(completion);
-                            db.SubmitChanges();
-                            LoadStudentLearningExperiences();
+	                        LoadStudentLearningExperiences();
                         }
                     }
                 }

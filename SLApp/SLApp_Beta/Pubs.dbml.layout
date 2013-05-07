@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 15.375, 11.5" name="Pubs">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 11.5" name="Pubs">
   <DataContextMoniker Name="/PubsDataContext" />
   <nestedChildShapes>
     <classShape Id="bd09f5c4-b659-4dae-a88e-b1636f73df85" absoluteBounds="0.75, 0.75, 2, 1.3862939453125">
@@ -38,10 +38,10 @@
         <elementListCompartment Id="980a2738-45c0-4095-a789-72618557a541" absoluteBounds="0.765, 9.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="8f4fdd1b-0595-4803-8b90-eba16e5c6609" absoluteBounds="13.125, 3, 2, 3.5016097005208326">
+    <classShape Id="8f4fdd1b-0595-4803-8b90-eba16e5c6609" absoluteBounds="7.75, 3.125, 2, 3.5016097005208326">
       <DataClassMoniker Name="/PubsDataContext/Learning_Experience" />
       <nestedChildShapes>
-        <elementListCompartment Id="f9761aa9-c11c-4cd1-8597-fb21b05b3d00" absoluteBounds="13.14, 3.46, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="f9761aa9-c11c-4cd1-8597-fb21b05b3d00" absoluteBounds="7.7650000000000006, 3.585, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
