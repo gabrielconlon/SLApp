@@ -34,52 +34,20 @@ namespace SLApp_Beta
 		private DatabaseMethods dbMethods = new DatabaseMethods();
 		
 
-		public MainWindow()
+		public MainWindow(bool isAdmin)
 		{
             ///http://msdn.microsoft.com/en-us/library/aa969773.aspx messagebox info
             ///http://msdn.microsoft.com/en-us/library/bb386876.aspx OLE DB info
             ///http://msdn.microsoft.com/en-us/library/bb399398.aspx more OLE DB info
             ///http://msdn.microsoft.com/en-us/library/aa288452%28v=vs.71%29.aspx OLE DB tutorial from MS
 			/// http://www.codeproject.com/Tips/362436/Data-binding-in-WPF-DataGrid-control datagrid info and binding
-            ///TODO: create a login for the app, so the database can be
-            ///accessed without a user ID (e.g. Ross or student worker putting in a university login)
             ///
 
 			
 			InitializeComponent();
+            IsAdmin = isAdmin;
 			DatabaseMethods dbMethods = new DatabaseMethods();
 
-            //if (dbMethods.CheckDatabaseConnection())
-            //{
-            //    try
-            //    {
-            //        using (PubsDataContext db = new PubsDataContext())
-            //        {
-            //            serviceType_CBX.DataContext = from service in db.Types_of_Services
-            //                                          select service;
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        ;
-            //    }
-            //}
-		}
-
-		private void Window_Loaded(object sender, RoutedEventArgs e)
-		{
-            ///TODO: setup for a check in the login window
-            ///will need to check against the database, so the database must
-            ///be open and a 'users' table exists with the App login present
-			this.IsEnabled = false;
-			LoginWindow lgn = new LoginWindow(ref IsAdmin);
-			lgn.Closed += new EventHandler(lgn_Closed);
-			lgn.ShowDialog();
-		}
-
-		private void lgn_Closed(object sender, EventArgs e)
-		{
-			this.IsEnabled = true;
 		}
 
         #region Menu
@@ -138,33 +106,38 @@ namespace SLApp_Beta
 			{
 				using (PubsDataContext db = new PubsDataContext())
 				{
-					var allStudents = (from stud in db.Students
-					                   join experience in db.Learning_Experiences on stud.Student_ID equals experience.Student_ID
+                    //HACK BUG - for some reason user profiles are lost if the last learning experience is deleted.
+                    var allStudents = (//HACK this makes the experience appear, not the student
+                                       //from stud in db.Students
+                                       //join experiences in db.Learning_Experiences on stud.Student_ID equals experiences.Student_ID into experience
+                                       //from item in experience.DefaultIfEmpty()
+                                       from experience in db.Learning_Experiences
+                                       join students in db.Students on experience.Student_ID equals students.Student_ID into studs
+                                       from stud in studs.DefaultIfEmpty()
 
-									   //TODO: almost works, the join forces students to come up who have a course that matches an experience
-									   //join course in db.Courses on experience.CourseNumber equals course.CourseNumber
+                                       //TODO: almost works, the join forces students to come up who have a course that matches an experience
+                                       ///HACK got this working by searcing the course number from the experiences table do we actually need a "course" table?
+                                       ///add section and professor to the experiences table? combine again?
+                                       //join course in db.Courses on experience.CourseNumber equals course.CourseNumber
 
-					                   where
-						                   //student search section
-									   //NOW ABLE TO SEARCH FOR PARTIALS, accept for the ints
-										   (studentFirstName_TB.Text.Length == 0 || stud.FirstName.Contains(studentFirstName_TB.Text)) && //studentFirstName_TB.Text == stud.FirstName
-						                   (studentLastName_TB.Text.Length == 0 || stud.LastName.Contains(studentLastName_TB.Text)) && //studentLastName_TB.Text == stud.LastName
-						                   (studentID_TB.Text.Length == 0 || studentID_TB.Text == stud.Student_ID.ToString()) &&
-										   //TODO graduation year duplicates
-						                   (graduationYear_TB.Text.Length == 0 || graduationYear_TB.Text == stud.GraduationYear.ToString()) &&
+                                       where
+                                           //student search section
+                                           //NOW ABLE TO SEARCH FOR PARTIALS, accept for the ints
+                                           (studentFirstName_TB.Text.Length == 0 || stud.FirstName.Contains(studentFirstName_TB.Text)) && //studentFirstName_TB.Text == stud.FirstName
+                                           (studentLastName_TB.Text.Length == 0 || stud.LastName.Contains(studentLastName_TB.Text)) && //studentLastName_TB.Text == stud.LastName
+                                           (studentID_TB.Text.Length == 0 || stud.Student_ID.ToString().Contains(studentID_TB.Text)) && //== stud.Student_ID.ToString()) &&
+                                           (graduationYear_TB.Text.Length == 0 || stud.GraduationYear.ToString().Contains(graduationYear_TB.Text)) &&
 
-										   //course search section
-										   //TODO: need to input data that matches the course up
-										   //(course_TB.Text.Length == 0 || course_TB.Text == course.CourseName) &&
-										   //(professor_TB.Text.Length == 0 || professor_TB.Text == course.Professor) &&
+                                           //course search section
+                                           (course_TB.Text.Length == 0 || experience.CourseNumber.Contains(course_TB.Text)) &&
+                                           //(professor_TB.Text.Length == 0 || professor_TB.Text == course.Professor) &&
 
-										   //service and hours section
-										   //HACK Combo Boxes do not work
-										   (serviceType_CBX.Text.Length == 0 || experience.TypeofLearning.Contains(serviceType_CBX.Text) ) && //serviceType_CBX.Text == experience.TypeofLearning
-										   (semester_CBX.Text.Length == 0 || experience.Semester.Contains(semester_CBX.Text)) && //semester_CBX.Text == experience.Semester
-										   (year_TB.Text.Length == 0 || year_TB.Text == experience.Year.ToString()) 
+                                           //service and hours section
+                                           (serviceType_CBX.Text.Length == 0 || experience.TypeofLearning.Contains(serviceType_CBX.Text)) && //serviceType_CBX.Text == experience.TypeofLearning
+                                           (semester_CBX.Text.Length == 0 || experience.Semester.Contains(semester_CBX.Text)) && //semester_CBX.Text == experience.Semester
+                                           (year_TB.Text.Length == 0 || experience.Year.ToString().Contains(year_TB.Text))
 
-					                   select stud).Distinct();
+                                       select stud).Distinct();
 					studentSearch_DataGrid.DataContext = allStudents;
 				}
 			}
@@ -288,8 +261,8 @@ namespace SLApp_Beta
 
 		private void button1_Click(object sender, RoutedEventArgs e)
 		{
-			UserProfileWindow user = new UserProfileWindow();
-			user.Show();
+            //UserProfileWindow user = new UserProfileWindow();
+            //user.Show();
 		}
 
 

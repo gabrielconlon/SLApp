@@ -21,14 +21,13 @@
                    CanUserAddRows="True">
             <DataGrid.ContextMenu>
                 <ContextMenu Name="studentLearningExperiences_ContextMenu">
-                    <MenuItem Header="Add" Click="Add_MenuItem_Click" />
-                    <MenuItem Header="Edit" MouseRightButtonUp="Edit_MenuItem_Click" />
+                    <!--HACK BUG - currently does not work with the button click <MenuItem Header="Save" Click="learningExperienceSave_BTN_Click" /> -->
                     <MenuItem Header="Delete" Click="Delete_MenuItem_Click" />
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-		<Button Content="Save" Height="23" HorizontalAlignment="Right" Margin="0,0,1,178" Name="learningExperienceSave_BTN" VerticalAlignment="Bottom" Width="75" Click="learningExperienceSave_BTN_Click" />
-		<Button Content="Add" Height="23" HorizontalAlignment="Right" Margin="0,0,81,178" Name="learningExperienceAdd_BTN" VerticalAlignment="Bottom" Width="75" Click="learningExperienceAdd_BTN_Click"/>
+		<Button Content="Save" Height="23" HorizontalAlignment="Right" Margin="0,0,1,178" Name="learningExperienceSave_BTN" VerticalAlignment="Bottom" Width="75" Click="learningExperienceSave_BTN_Click" IsEnabled="False" Visibility="Hidden" />
+		<Button Content="Add" Height="23" HorizontalAlignment="Right" Margin="0,0,81,178" Name="learningExperienceAdd_BTN" VerticalAlignment="Bottom" Width="75" Click="learningExperienceAdd_BTN_Click" IsEnabled="False" Visibility="Hidden" />
 		<Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="12,0,0,178" Name="learningExperienceDelete_BTN" VerticalAlignment="Bottom" Width="75" Click="learningExperienceDelete_BTN_Click" />
         <Expander Header="Notes" Margin="5,0,0,29" Name="studentNotes_Expander" Expanded="expanderExpandedOpenWindow" Collapsed="expanderCollapsedMinimizeWindow" Height="100" VerticalAlignment="Bottom">
             <Grid>

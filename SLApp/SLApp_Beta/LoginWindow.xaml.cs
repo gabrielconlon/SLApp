@@ -10,30 +10,57 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Security;
 
 namespace SLApp_Beta
 {
 	/// <summary>
 	/// Interaction logic for LoginWindow.xaml
 	/// </summary>
+    /// HACK MAJOR MAJOR BUG!!!!!!!!!!!!!!!!
+    /// User can use 'alt+F4' to close the login window, they now have full access to the application but did not login
 	public partial class LoginWindow : Window
 	{
 		 private bool isAdmin;
+         DatabaseMethods dbMethods = new DatabaseMethods();
+         private int loginAttempts = 0;
 
-        //TODO: Disable user from using the X button to skirt the login
-		public LoginWindow(ref bool IsAdmin)
-		{
-			InitializeComponent();
-			isAdmin = IsAdmin;
-		}
+        public LoginWindow()
+        {
+            InitializeComponent();
+        }
 
 		private void login_BTN_Click(object sender, RoutedEventArgs e)
 		{
-			if (username_TB.Text == "admin")
-			{
-				isAdmin = true;
-			}
-			Close();
+            if (dbMethods.CheckDatabaseConnection())
+            {
+                using(PubsDataContext db = new PubsDataContext())
+                {
+                    var users = (from u in db.Application_Users
+                                 where u.Username == username_TB.Text && u.Password == password_TB.Password
+                                 select u).Distinct();
+                    if (users.Count() > 0)
+                    {
+                        //HACK BUG BROKEN! IsAdmin needs to be altered to be a NOT NULL bit
+                        ///alter tabler Application_Users
+                        ///alter column IsAdmin bit NOT NULL
+                        //isAdmin = users.First().IsAdmin;
+                        MainWindow main = new MainWindow(isAdmin);
+                        main.Show();
+                        Close();
+                    }
+                    else if (loginAttempts >= 5)
+                    {
+                        ;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Username or Password does not match!", "Login Error", MessageBoxButton.OK, MessageBoxImage.Stop);
+                        loginAttempts++;
+                    }
+
+                }
+            }
 		}
 	}
 }
