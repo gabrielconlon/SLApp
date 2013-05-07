@@ -130,7 +130,9 @@ namespace SLApp_Beta
 
                                            //course search section
                                            (course_TB.Text.Length == 0 || experience.CourseNumber.Contains(course_TB.Text)) &&
-                                           //(professor_TB.Text.Length == 0 || professor_TB.Text == course.Professor) &&
+                                           (professor_TB.Text.Length == 0 || experience.Professor.Contains(professor_TB.Text)) &&
+										   (CourseName_TB.Text.Length == 0 || experience.CourseName.Contains(CourseName_TB.Text)) &&
+										   (Section_TB.Text.Length == 0 || experience.Section.ToString().Contains(Section_TB.Text)) &&
 
                                            //service and hours section
                                            (serviceType_CBX.Text.Length == 0 || experience.TypeofLearning.Contains(serviceType_CBX.Text)) && //serviceType_CBX.Text == experience.TypeofLearning

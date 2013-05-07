@@ -256,6 +256,9 @@ namespace SLApp_Beta
                                 completion.TimeLog = expROW.TimeLog;
                                 completion.TotalHours = expROW.TotalHours;
                                 completion.TypeofLearning = expROW.TypeofLearning;
+	                            completion.Section = expROW.Section;
+	                            completion.Professor = expROW.Professor;
+	                            completion.CourseName = expROW.CourseName;
 
                                 db.SubmitChanges();
                                 LoadStudentLearningExperiences();

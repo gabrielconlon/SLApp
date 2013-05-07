@@ -1,0 +1,21 @@
+﻿<Window x:Class="SLApp_Beta.UserProfileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="UserProfileWindow" Height="394" Width="433" ResizeMode="NoResize">
+    <Grid>
+		<Button Content="Save" Height="23" Margin="0,0,12,12" Name="save_BTN" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" />
+		<Label Content="First Name" Height="28" HorizontalAlignment="Left" Margin="146,12,0,0" Name="userFirstName_LBL" VerticalAlignment="Top" />
+		<Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="12,0,0,12" Name="delete_BTN" VerticalAlignment="Bottom" Width="75" />
+		<TextBox Height="23" HorizontalAlignment="Left" Margin="146,46,0,0" Name="userFirstName_TB" VerticalAlignment="Top" Width="120" />
+		<TextBox Height="23" HorizontalAlignment="Left" Margin="12,46,0,0" Name="userLastName_TB" VerticalAlignment="Top" Width="120" />
+		<Label Content="Birthday" Height="28" HorizontalAlignment="Left" Margin="12,83,0,0" Name="userBirthday_LBL" VerticalAlignment="Top" />
+		<Label Content="Last Name" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="userLastName_LBL" VerticalAlignment="Top" />
+		<TextBox Height="23" HorizontalAlignment="Left" Margin="12,117,0,0" Name="userBirthday_TB" VerticalAlignment="Top" Width="120" />
+		<TextBox Height="23" HorizontalAlignment="Left" Margin="146,117,0,0" Name="userEmail_TB" VerticalAlignment="Top" Width="120" />
+		<Label Content="Email" Height="28" HorizontalAlignment="Left" Margin="146,83,0,0" Name="userEmail_LBL" VerticalAlignment="Top" />
+		<TextBox Height="23" HorizontalAlignment="Left" Margin="12,281,0,0" Name="lastLogin_TB" VerticalAlignment="Top" Width="120" />
+		<TextBox Height="23" HorizontalAlignment="Left" Margin="280,117,0,0" Name="userPhone_TB" VerticalAlignment="Top" Width="120" />
+		<Label Content="Phone" Height="28" HorizontalAlignment="Left" Margin="280,83,0,0" Name="userPhone_LBL" VerticalAlignment="Top" />
+		<Label Content="Last Login" Height="28" HorizontalAlignment="Left" Margin="12,247,0,0" VerticalAlignment="Top" Name="lastLogin_LBL" />
+	</Grid>
+</Window>

@@ -41,10 +41,7 @@ namespace SLApp_Beta
                                  select u).Distinct();
                     if (users.Count() > 0)
                     {
-                        //HACK BUG BROKEN! IsAdmin needs to be altered to be a NOT NULL bit
-                        ///alter tabler Application_Users
-                        ///alter column IsAdmin bit NOT NULL
-                        //isAdmin = users.First().IsAdmin;
+                        isAdmin = users.First().IsAdmin;
                         MainWindow main = new MainWindow(isAdmin);
                         main.Show();
                         Close();
