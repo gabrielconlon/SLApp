@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SLDatabase" Class="PubsDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=GABRIEL-PC;Initial Catalog=SLDatabase;Integrated Security=True" SettingsObjectName="SLApp_Beta.Properties.Settings" SettingsPropertyName="SLDatabaseConnectionString2" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=cs1;Initial Catalog=SLDatabase;Integrated Security=True" SettingsObjectName="SLApp_Beta.Properties.Settings" SettingsPropertyName="SLDatabaseConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Agency" Member="Agencies">
     <Type Name="Agency">
       <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />

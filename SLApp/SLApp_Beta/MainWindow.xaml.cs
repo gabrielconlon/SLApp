@@ -226,6 +226,21 @@ namespace SLApp_Beta
             Agencyform.Show();
         }
 
+		private void AgencySearch_DataGrid_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			using (PubsDataContext datab = new PubsDataContext())
+			{
+				Agency agencyRow = agencySearch_DataGrid.SelectedItem as Agency;
+				Agency agent = (from s in datab.Agencies
+								where s.Name == agencyRow.Name
+								select s).Single();
+
+				AgencyProfile agentForm = new AgencyProfile(agent, IsAdmin, true);
+				agentForm.Closed += new EventHandler((s0, e0) => agencySearch_BTN_Click(s0, null));
+				agentForm.Show();
+			}
+		}
+
         #endregion
 
         #region Admin Tab
@@ -343,17 +358,6 @@ namespace SLApp_Beta
         }
 
         #endregion
-
-        private void users_DataGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void users_DataGrid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
 
 
     }
