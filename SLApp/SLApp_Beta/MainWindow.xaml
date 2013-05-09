@@ -114,15 +114,25 @@
                     <TextBox Height="23" Margin="222,166,0,0" Name="agencyAddressCity_TB" VerticalAlignment="Top" MaxLength="50" HorizontalAlignment="Left" Width="120" />
                     <TextBox Height="23" Margin="348,166,0,0" Name="agencyAddressState_TB" VerticalAlignment="Top" HorizontalAlignment="Left" Width="50" MaxLength="50" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="408,166,0,0" Name="agencyAddressZipcode_TB" VerticalAlignment="Top" Width="75" MaxLength="50" />
-                    <DataGrid AutoGenerateColumns="True" Margin="0,286,0,0" Name="agencySearch_DataGrid" />
+                    <DataGrid AutoGenerateColumns="True" Margin="0,286,0,0" Name="agencySearch_DataGrid" ItemsSource="{Binding}" />
                     <Button Content="_Search" Height="23" Margin="0,257,6,0" Name="agencySearch_BTN" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="agencySearch_BTN_Click" />
                     <Button Content="_Create New" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="newAgencyProfile_BTN" VerticalAlignment="Top" Width="75" Click="newAgencyProfile_BTN_Click" />
+                    <Label Content="Fax" Height="28" HorizontalAlignment="Left" Margin="637,69,0,0" Name="agencyFax_LBL" VerticalAlignment="Top" />
+                    <TextBox Height="23" HorizontalAlignment="Left" Margin="637,103,0,0" MaxLength="50" Name="agencyFax_TB" VerticalAlignment="Top" Width="100" />
                 </Grid>
             </TabItem>
 			<TabItem Header="Faculty" IsEnabled="False" Name="faculty_tab" />
-			<TabItem Header="Admin" Name="admin_tab">
-				<Button Content="Button" Height="23" Name="button1" Width="75" Click="button1_Click" />
-			</TabItem>
+			<TabItem Header="Admin" Name="admin_tab" GotFocus="admin_tab_GotFocus">
+                <Grid>
+                    <Grid Name="grdAminTab" Margin="0,0,710,-1">        
+                        <Button Content="Save" Height="23" Name="saveNewUser_BTN" Width="75" Click="saveUser_BTN_Click" HorizontalAlignment="Left" Margin="177,298,0,0" VerticalAlignment="Top" />
+                        <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="6,298,0,0" Name="deleteUser_BTN" VerticalAlignment="Top" Width="75" />
+                        <DataGrid AutoGenerateColumns="True" Margin="6,6,6,215" Name="users_DataGrid" 
+                                  CanUserAddRows="True" ItemsSource="{Binding}" Height="286" Width="246"
+                                  MouseLeftButtonDown="users_DataGrid_MouseLeftButtonDown" MouseDown="users_DataGrid_MouseDown"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

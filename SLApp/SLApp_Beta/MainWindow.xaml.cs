@@ -8,6 +8,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Documents;
 
+using System.Collections;
+using System.Collections.Generic;
+
 namespace SLApp_Beta
 {
 
@@ -46,6 +49,10 @@ namespace SLApp_Beta
 			
 			InitializeComponent();
             IsAdmin = isAdmin;
+            if(!isAdmin)
+            {
+                admin_tab.IsEnabled = false;
+            }
 			DatabaseMethods dbMethods = new DatabaseMethods();
 
 		}
@@ -191,15 +198,26 @@ namespace SLApp_Beta
 
         private void agencySearch_BTN_Click(object sender, RoutedEventArgs e)
         {
-            //using (PubsDataContext db = new PubsDataContext())
-            //{
-            //    var allAgency = (from agency in db.Agencies
-            //                       where
-            //                     (agencyName_TB.Text.Length == 0 || agencyName_TB.Text == agency.Name)
+            using (PubsDataContext db = new PubsDataContext())
+                  
+            
+            
+            {
+                var allAgency = (from agency in db.Agencies
+                                 where (agencyName_TB.Text.Length == 0 || agency.Name.Contains(agencyName_TB.Text)) &&
+                                 (agencyPhone_TB.Text.Length == 0 || agency.Phone.Contains(agencyPhone_TB.Text)) &&
+                                 (agencyFax_TB.Text.Length == 0 || agency.FaxNumber.Contains(agencyFax_TB.Text)) &&
+                                 (agencyRating_TB.Text.Length == 0||agency.Rating.ToString().Contains(agencyRating_TB.Text)) &&
+                                 (agencyWebsite_TB.Text.Length == 0 || agency.WebsiteLink.Contains(agencyWebsite_TB.Text)) &&
+                                 (agencyCoordinatorName_TB.Text.Length == 0 || agency.CoordinatorName.Contains(agencyCoordinatorName_TB.Text)) &&
+                                 (agencyAddressStreet_TB.Text.Length == 0 || agency.StreetAddress.Contains(agencyAddressStreet_TB.Text)) &&
+                                 (agencyAddressCity_TB.Text.Length == 0 || agency.City.Contains(agencyAddressCity_TB.Text)) &&
+                                 (agencyAddressState_TB.Text.Length == 0 || agency.State.Contains(agencyAddressState_TB.Text)) &&
+                                 (agencyAddressZipcode_TB.Text.Length == 0 || agency.Zip.Contains(agencyAddressZipcode_TB.Text))
 
-            //                       select agency);
-            //    agencySearch_DataGrid.DataContext = allAgency;
-            //}
+                                 select agency);
+                agencySearch_DataGrid.DataContext = allAgency;
+            }
         }
 
         private void newAgencyProfile_BTN_Click(object sender, RoutedEventArgs e)
@@ -210,6 +228,71 @@ namespace SLApp_Beta
 
         #endregion
 
+        #region Admin Tab
+
+        private void admin_tab_GotFocus(object sender, RoutedEventArgs e)
+        {
+            LoadUsers();
+        }
+
+        private void LoadUsers()
+        {
+            if (dbMethods.CheckDatabaseConnection())
+            {
+                using (PubsDataContext db = new PubsDataContext())
+                {
+                    var Allusers = new List<Application_User>(from users in db.Application_Users
+                                                              select users);
+                    users_DataGrid.DataContext = Allusers;
+                }
+            }
+        }
+
+        private void saveUser_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            Application_User userROW = users_DataGrid.SelectedItem as Application_User;
+            if (userROW != null)
+            {
+                if (dbMethods.CheckDatabaseConnection())
+                {
+                    using (PubsDataContext db = new PubsDataContext())
+                    {
+                        var completionList = new List<Application_User>(from s in db.Application_Users
+                                                                           where s.Username == userROW.Username
+                                                                           select s);
+                        if (completionList.Count > 0)
+                        {
+
+                            var completion = completionList.First();
+                            completion.Username = userROW.Username;
+                            completion.Password = userROW.Password;
+                            completion.LastName = userROW.LastName;
+                            completion.IsAdmin = userROW.IsAdmin;
+                            completion.FirstName = userROW.FirstName;
+
+                            db.SubmitChanges();
+                            LoadUsers();
+                        }
+                        else
+                        {
+                            Application_User exp = new Application_User();
+
+                            exp.Username = userROW.Username;
+                            exp.Password = userROW.Password;
+                            exp.LastName = userROW.LastName;
+                            exp.IsAdmin = userROW.IsAdmin;
+                            exp.FirstName = userROW.FirstName;
+
+                            db.Application_Users.InsertOnSubmit(exp);
+                            db.SubmitChanges();
+                            LoadUsers();
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion
 
         #region ContextMenu
 
@@ -261,11 +344,16 @@ namespace SLApp_Beta
 
         #endregion
 
-		private void button1_Click(object sender, RoutedEventArgs e)
-		{
-            //UserProfileWindow user = new UserProfileWindow();
-            //user.Show();
-		}
+        private void users_DataGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void users_DataGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
 
 
     }
