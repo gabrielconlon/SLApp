@@ -14,8 +14,10 @@
 
             <Menu Height="23" Name="mainWindowMenu" Grid.ColumnSpan="2">
 			<MenuItem Header="_File">
+                <MenuItem Name="logoffMenuItem" Header="LogOff" Click="logoffMenuItem_Click" />
 				<MenuItem Header="Exit" Click="menuExit_Click" />
 			</MenuItem>
+                <!--
 			<MenuItem Header="_Profile">
 				<MenuItem Header="Create Profile" Click="menuCreateStudent_Click">
 				</MenuItem>
@@ -25,6 +27,7 @@
 				<MenuItem Header="Create Agency Profile" Click="menuCreateAgency_Click" />
 				<MenuItem Header="Edit Agency Profile" />
 			</MenuItem>
+                -->
 			<MenuItem Header="_Options" />
             <MenuItem Header="_Help" >
                 <MenuItem Name="manualMenuItem" Header="Learn About SLApp" Click="manualMenuItem_Click" />
@@ -85,7 +88,7 @@
 					<TextBox Height="23" HorizontalAlignment="Left" IsEnabled="True" Margin="384,217,0,0" MaxLength="50" Name="Section_TB" TabIndex="9" VerticalAlignment="Top" Width="120" />
 					<Label Content="Course Name" Height="28" HorizontalAlignment="Left" IsEnabled="True" Margin="132,191,0,0" Name="CourseName_LBL" VerticalAlignment="Top" />
 					<TextBox Height="23" HorizontalAlignment="Left" IsEnabled="True" Margin="132,217,0,0" MaxLength="50" Name="CourseName_TB" TabIndex="9" VerticalAlignment="Top" Width="120" />
-					<!--TODO: adjust the datagrid to change size with the window,
+                    <!--TODO: adjust the datagrid to change size with the window,
                     THIS MIGHT BE WORKING, needs more testing-->
                 </Grid>
 			</TabItem>
@@ -123,13 +126,13 @@
                 </Grid>
             </TabItem>
 			<TabItem Header="Faculty" IsEnabled="False" Name="faculty_tab" />
-			
-			
-			<TabItem Header="Admin" Name="admin_tab" GotFocus="admin_tab_GotFocus">
+            
+            
+            <TabItem Header="Admin" Name="admin_tab" >
                 <Grid>
                     <Grid Name="grdAminTab" Margin="0,0,710,-1">        
                         <Button Content="Save" Height="23" Name="saveNewUser_BTN" Width="75" Click="saveUser_BTN_Click" HorizontalAlignment="Left" Margin="177,298,0,0" VerticalAlignment="Top" />
-                        <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="6,298,0,0" Name="deleteUser_BTN" VerticalAlignment="Top" Width="75" />
+                        <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="6,298,0,0" Name="deleteUser_BTN" VerticalAlignment="Top" Width="75" Click="deleteUser_BTN_Click" />
                         <DataGrid AutoGenerateColumns="True" Margin="6,6,6,215" Name="users_DataGrid" 
                                   CanUserAddRows="True" ItemsSource="{Binding}" Height="286" Width="246" />
 					</Grid>

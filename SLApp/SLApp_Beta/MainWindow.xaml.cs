@@ -54,6 +54,7 @@ namespace SLApp_Beta
                 admin_tab.IsEnabled = false;
             }
 			DatabaseMethods dbMethods = new DatabaseMethods();
+            LoadUsers(users_DataGrid);
 
 		}
 
@@ -88,6 +89,14 @@ namespace SLApp_Beta
 			AgencyProfile Agencyform = new AgencyProfile();
 			Agencyform.Show();
 		}
+
+        private void logoffMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow lgn = new LoginWindow();
+            lgn.Show();
+            this.Close();
+
+        }
 
         #endregion
 
@@ -245,12 +254,12 @@ namespace SLApp_Beta
 
         #region Admin Tab
 
-        private void admin_tab_GotFocus(object sender, RoutedEventArgs e)
-        {
-            LoadUsers();
-        }
+        //private void admin_tab_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    LoadUsers(users_DataGrid);
+        //}
 
-        private void LoadUsers()
+        private void LoadUsers(DataGrid dg)
         {
             if (dbMethods.CheckDatabaseConnection())
             {
@@ -258,7 +267,7 @@ namespace SLApp_Beta
                 {
                     var Allusers = new List<Application_User>(from users in db.Application_Users
                                                               select users);
-                    users_DataGrid.DataContext = Allusers;
+                    dg.DataContext = Allusers;
                 }
             }
         }
@@ -286,7 +295,7 @@ namespace SLApp_Beta
                             completion.FirstName = userROW.FirstName;
 
                             db.SubmitChanges();
-                            LoadUsers();
+                            LoadUsers(users_DataGrid);
                         }
                         else
                         {
@@ -300,7 +309,37 @@ namespace SLApp_Beta
 
                             db.Application_Users.InsertOnSubmit(exp);
                             db.SubmitChanges();
-                            LoadUsers();
+                            LoadUsers(users_DataGrid);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void deleteUser_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            if (dbMethods.CheckDatabaseConnection())
+            {
+                if (MessageBox.Show("Are you sure you want to delete this user?", "Confirm Delete!", MessageBoxButton.YesNo) ==
+                    MessageBoxResult.Yes)
+                {
+                    using (PubsDataContext db = new PubsDataContext())
+                    {
+                        Application_User expROW = users_DataGrid.SelectedItem as Application_User;
+
+                        var completionList = new List<Application_User>(from s in db.Application_Users
+                                                                        where s.Username == expROW.Username
+                                                                        select s);
+                        if (expROW != null && completionList.Any())
+                        {
+                            var completion = completionList.First();
+                            db.Application_Users.DeleteOnSubmit(completion);
+                            db.SubmitChanges();
+                            LoadUsers(users_DataGrid);
+                        }
+                        else
+                        {
+                            LoadUsers(users_DataGrid);
                         }
                     }
                 }
@@ -358,6 +397,10 @@ namespace SLApp_Beta
         }
 
         #endregion
+
+        
+
+        
 
 
     }
