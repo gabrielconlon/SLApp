@@ -15,6 +15,7 @@ namespace SLApp_Beta
 {
     /// <summary>
     /// Interaction logic for AgencyProfile.xaml
+    /// TODO - Adjust Database, Types of servie bits are allowing nulls
     /// </summary>
     public partial class AgencyProfile : Window
     {
@@ -33,10 +34,19 @@ namespace SLApp_Beta
 	        this.agent = agent;
 
             this.agencyName_TB.Text = agent.Name;
+            this.agencyAlternateName_TB.Text = agent.AlternateContact;
             this.agencyEmail_TB.Text = agent.Email;
             this.agencyCoordinatorName_TB.Text = agent.CoordinatorName;
             this.agencyRating_TB.Text = agent.Rating.ToString();
             this.agencyPhone_TB.Text = agent.Phone;
+            this.agencyFax_TB.Text = agent.FaxNumber;
+            this.agencyAddressCity_TB.Text = agent.City;
+            this.agencyAddressState_TB.Text = agent.State;
+            this.agencyAddressStreet_TB.Text = agent.StreetAddress;
+            this.agencyAddressZipcode_TB.Text = agent.Zip;
+            this.agencyWebsite_TB.Text = agent.WebsiteLink;
+
+            //HACK BUG - description???
 
         }
 
@@ -70,10 +80,9 @@ namespace SLApp_Beta
                     if (CheckExists.Count() == 0)
                     {
                             agent.Name = agencyName_TB.Text;
-                            //HACK DATABASE - need to add textbox for AlternateContact, description to AgencyProfile
-                            //agency.AlternateContact = agencyCoordinatorName_TB;
                             agent.City = agencyAddressCity_TB.Text;
                             agent.CoordinatorName = agencyCoordinatorName_TB.Text;
+                            //HACK DATABASE - description to AgencyProfile
                             //agency.Description;
                             agent.Email = agencyEmail_TB.Text;
                             agent.FaxNumber = agencyFax_TB.Text;
@@ -83,6 +92,7 @@ namespace SLApp_Beta
                             agent.StreetAddress = agencyAddressStreet_TB.Text;
                             agent.WebsiteLink = agencyWebsite_TB.Text;
                             agent.Zip = agencyAddressZipcode_TB.Text;
+                            agent.AlternateContact = agencyAlternateName_TB.Text;
 
                             db.Agencies.InsertOnSubmit(agent);
                             db.SubmitChanges();
@@ -106,6 +116,7 @@ namespace SLApp_Beta
                         agency.StreetAddress = agencyAddressStreet_TB.Text;
                         agency.WebsiteLink = agencyWebsite_TB.Text;
                         agency.Zip = agencyAddressZipcode_TB.Text;
+                        agency.AlternateContact = agencyAlternateName_TB.Text;
 
                         db.SubmitChanges();
                     }
@@ -113,6 +124,12 @@ namespace SLApp_Beta
 
                 }
             }
+        }
+
+        private void saveAndClose_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            save_BTN_Click(sender, e);
+            this.Close();
         }
     }
 }

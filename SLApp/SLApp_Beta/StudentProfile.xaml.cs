@@ -16,6 +16,7 @@ namespace SLApp_Beta
 {
 	/// <summary>
 	/// Interaction logic for CreateStudentProfile.xaml
+    /// TODO - adjust database, types of notes allows nulls, add column of text to hold the actual note
 	/// </summary>
 	public partial class StudentProfile : Window
 	{
@@ -32,10 +33,20 @@ namespace SLApp_Beta
             {
                 using (PubsDataContext db = new PubsDataContext())
                 {
+                    
                     var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
                                                                        where s.Student_ID == student.Student_ID
                                                                        select s);
-                    studentLearningExperiences_DataGrid.DataContext = completionList;
+                    if (!completionList.Any())
+                    {
+                        Learning_Experience exp = new Learning_Experience();
+                        exp.Student_ID = student.Student_ID;
+                        db.Learning_Experiences.InsertOnSubmit(exp);
+                        db.SubmitChanges();
+                        completionList.Add(exp);
+                    }
+                        studentLearningExperiences_DataGrid.DataContext = completionList;
+
                 }
             }
         }
@@ -138,42 +149,7 @@ namespace SLApp_Beta
 																		   select s);
 						
 
-                        //saves experience of the selected row, will do nothing if the row is now selected
-                        #region old code, testing new code
-                        //HACK BUG - break right here if the user tries to delete the last item in the list
-                        //var completion = completionList.First();
-
-                        //Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
-                        //if (expROW != null)
-                        //{
-                            
-                        //    learningExperienceFieldsCheck(expROW);
-                        //    var experiencesList = new List<Learning_Experience>(from s in db.Learning_Experiences
-                        //                                                       where s.ID == expROW.ID
-                        //                                                       select s);
-                        //    try
-                        //    {
-
-                        //        var experiences = experiencesList.First();
-                        //    }
-                        //    catch (Exception)
-                        //    {
-                        //        MessageBox.Show("Oops! Looks like you did not Add the Learning Experience yet.", "Button Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                        //    }
-                        //    completion.Student_ID = student.Student_ID;
-                        //    completion.ConfirmedHours = expROW.ConfirmedHours;
-                        //    completion.CourseNumber = expROW.CourseNumber;
-                        //    completion.LiabilityWaiver = expROW.LiabilityWaiver;
-                        //    completion.ProjectAgreement = expROW.ProjectAgreement;
-                        //    completion.Semester = expROW.Semester;
-                        //    completion.Year = expROW.Year;
-                        //    completion.TimeLog = expROW.TimeLog;
-                        //    completion.TotalHours = expROW.TotalHours;
-                        //    completion.TypeofLearning = expROW.TypeofLearning;
-
-                        //    LoadStudentLearningExperiences();
-                        //}
-                        #endregion
+                        //saves experience by calling the save experiences button event
 
                         learningExperienceSave_BTN_Click(sender, e);
 
@@ -332,16 +308,30 @@ namespace SLApp_Beta
 	                        var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
 	                                                                           where s.ID == expROW.ID
 	                                                                           select s);
-						if (expROW != null && completionList.Any())
-						{
-	                        var completion = completionList.First();
-	                        db.Learning_Experiences.DeleteOnSubmit(completion);
-	                        db.SubmitChanges();
-	                        LoadStudentLearningExperiences();
+                        //if (expROW != null && completionList.Count() == 1)
+                        //{
+                        //    var completion = completionList.First();
+                        //    db.Learning_Experiences.DeleteOnSubmit(completion);
+
+                        //    Learning_Experience exp = new Learning_Experience();
+                        //    exp.Student_ID = student.Student_ID;
+                        //    db.Learning_Experiences.InsertOnSubmit(exp);
+                        //    db.SubmitChanges();
+                        //    LoadStudentLearningExperiences();
+
+                        //    db.SubmitChanges();
+                        //}
+                        //else 
+                        if (expROW != null && completionList.Any())
+                        {
+                            var completion = completionList.First();
+                            db.Learning_Experiences.DeleteOnSubmit(completion);
+                            db.SubmitChanges();
+                            LoadStudentLearningExperiences();
                         }
                         else
                         {
-	                        LoadStudentLearningExperiences();
+                            LoadStudentLearningExperiences();
                         }
                     }
                 }

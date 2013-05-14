@@ -17,8 +17,6 @@ namespace SLApp_Beta
 	/// <summary>
 	/// Interaction logic for LoginWindow.xaml
 	/// </summary>
-    /// HACK MAJOR MAJOR BUG!!!!!!!!!!!!!!!!
-    /// User can use 'alt+F4' to close the login window, they now have full access to the application but did not login
 	public partial class LoginWindow : Window
 	{
 		 private bool isAdmin;

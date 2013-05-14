@@ -122,19 +122,8 @@ namespace SLApp_Beta
 			{
 				using (PubsDataContext db = new PubsDataContext())
 				{
-                    //HACK BUG - for some reason user profiles are lost if the last learning experience is deleted.
-                    var allStudents = (//HACK this makes the experience appear, not the student
-                                       //from stud in db.Students
-                                       //join experiences in db.Learning_Experiences on stud.Student_ID equals experiences.Student_ID into experience
-                                       //from item in experience.DefaultIfEmpty()
-                                       from experience in db.Learning_Experiences
-                                       join students in db.Students on experience.Student_ID equals students.Student_ID into studs
-                                       from stud in studs.DefaultIfEmpty()
-
-                                       //TODO: almost works, the join forces students to come up who have a course that matches an experience
-                                       ///HACK got this working by searcing the course number from the experiences table do we actually need a "course" table?
-                                       ///add section and professor to the experiences table? combine again?
-                                       //join course in db.Courses on experience.CourseNumber equals course.CourseNumber
+                    var allStudents = (from stud in db.Students
+                                       from experience in db.Learning_Experiences.Where(a => a.Student_ID == stud.Student_ID).DefaultIfEmpty()
 
                                        where
                                            //student search section
@@ -208,8 +197,6 @@ namespace SLApp_Beta
         private void agencySearch_BTN_Click(object sender, RoutedEventArgs e)
         {
             using (PubsDataContext db = new PubsDataContext())
-                  
-            
             
             {
                 var allAgency = (from agency in db.Agencies
@@ -249,6 +236,18 @@ namespace SLApp_Beta
 				agentForm.Show();
 			}
 		}
+
+        private void agency_clear_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < grdAgencyTab.Children.Count; i++)
+            {
+                UIElement u = grdAgencyTab.Children[i];
+                if (u is TextBox)
+                    ((TextBox)u).Clear();
+                else if (u is ComboBox)
+                    ((ComboBox)u).Text = "";
+            }
+        }
 
         #endregion
 
