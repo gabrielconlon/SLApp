@@ -127,10 +127,10 @@ namespace SLApp_Beta
 
                                        where
                                            //student search section
-                                           //NOW ABLE TO SEARCH FOR PARTIALS, accept for the ints
-                                           (studentFirstName_TB.Text.Length == 0 || stud.FirstName.Contains(studentFirstName_TB.Text)) && //studentFirstName_TB.Text == stud.FirstName
-                                           (studentLastName_TB.Text.Length == 0 || stud.LastName.Contains(studentLastName_TB.Text)) && //studentLastName_TB.Text == stud.LastName
-                                           (studentID_TB.Text.Length == 0 || stud.Student_ID.ToString().Contains(studentID_TB.Text)) && //== stud.Student_ID.ToString()) &&
+                                           //ABLE TO SEARCH FOR PARTIALS
+                                           (studentFirstName_TB.Text.Length == 0 || stud.FirstName.Contains(studentFirstName_TB.Text)) && 
+                                           (studentLastName_TB.Text.Length == 0 || stud.LastName.Contains(studentLastName_TB.Text)) && 
+                                           (studentID_TB.Text.Length == 0 || stud.Student_ID.ToString().Contains(studentID_TB.Text)) && 
                                            (graduationYear_TB.Text.Length == 0 || stud.GraduationYear.ToString().Contains(graduationYear_TB.Text)) &&
 
                                            //course search section
@@ -140,8 +140,8 @@ namespace SLApp_Beta
 										   (Section_TB.Text.Length == 0 || experience.Section.ToString().Contains(Section_TB.Text)) &&
 
                                            //service and hours section
-                                           (serviceType_CBX.Text.Length == 0 || experience.TypeofLearning.Contains(serviceType_CBX.Text)) && //serviceType_CBX.Text == experience.TypeofLearning
-                                           (semester_CBX.Text.Length == 0 || experience.Semester.Contains(semester_CBX.Text)) && //semester_CBX.Text == experience.Semester
+                                           (serviceType_CBX.Text.Length == 0 || experience.TypeofLearning.Contains(serviceType_CBX.Text)) && 
+                                           (semester_CBX.Text.Length == 0 || experience.Semester.Contains(semester_CBX.Text)) && 
                                            (year_TB.Text.Length == 0 || experience.Year.ToString().Contains(year_TB.Text))
 
                                        select stud).Distinct();
@@ -149,18 +149,6 @@ namespace SLApp_Beta
 				}
 			}
         }
-
-		/// <summary>
-		/// http://stackoverflow.com/questions/11070873/how-to-get-value-of-a-cell-from-datagrid-in-wpf
-		/// http://stackoverflow.com/questions/5549321/how-to-read-value-from-a-cell-from-a-wpf-datagrid
-		/// http://www.scottlogic.co.uk/blog/colin/2008/12/wpf-datagrid-detecting-clicked-cell-and-row/
-		/// http://www.codeproject.com/Articles/24192/Simple-Demo-of-Binding-to-a-Database-in-WPF-using
-		/// http://www.codeproject.com/Articles/46422/A-LINQ-Tutorial-Adding-Updating-Deleting-Data
-		/// http://stackoverflow.com/questions/3913580/get-selected-row-item-in-datagrid-wpf
-		/// http://www.youtube.com/watch?v=LCfvcBObX8k
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
 
 		private void StudentSearch_DataGrid_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
@@ -190,7 +178,6 @@ namespace SLApp_Beta
 		}
 
         #endregion
-
 
         #region Agency Tab
 

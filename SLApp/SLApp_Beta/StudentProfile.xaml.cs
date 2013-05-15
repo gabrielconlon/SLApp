@@ -19,8 +19,11 @@ namespace SLApp_Beta
     /// TODO - adjust database, types of notes allows nulls, add column of text to hold the actual note
 	/// </summary>
 	public partial class StudentProfile : Window
-	{
-		private Student student = new Student();
+    {
+
+        #region Database Methods, Formatting Methods, Members
+
+        private Student student = new Student();
 		private bool isEdit;
 		DatabaseMethods dbMethods = new DatabaseMethods();
 
@@ -51,7 +54,24 @@ namespace SLApp_Beta
             }
         }
 
-		public StudentProfile(bool isAdmin)
+        private void expanderCollapsedMinimizeWindow(object sender, RoutedEventArgs e)
+        {
+            this.Width = myWidth;
+            this.Height = myHeight;
+        }
+
+        private void expanderExpandedOpenWindow(object sender, RoutedEventArgs e)
+        {
+            myHeight = this.Height;
+            myWidth = this.Width;
+
+            this.Width += 200;
+            this.Height += 100;
+        }
+
+        #endregion
+
+        public StudentProfile(bool isAdmin)
 		{
 			InitializeComponent();
             if (isAdmin == false)
@@ -82,15 +102,7 @@ namespace SLApp_Beta
 			
 		}
 
-        public bool areStudentNotesLocked()
-        {
-            if (studentNotes_DataGrid.IsEnabled)
-                return true;
-            else
-                return false;
-        }
-
-      
+        #region Student Buttons
 
         private void cancel_BTN_Click(object sender, RoutedEventArgs e)
         {
@@ -161,11 +173,40 @@ namespace SLApp_Beta
 	        }
             //this.Close();
         }
+
         private void SaveAndClose_BTN_Click(object sender, RoutedEventArgs e)
         {
             save_BTN_Click(sender, e);
             this.Close();
         }
+
+        private void delete_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            if (dbMethods.CheckDatabaseConnection())
+            {
+                if (MessageBox.Show("Are you sure you want to delete this student?", "Confirm Delete!", MessageBoxButton.YesNo) ==
+                    MessageBoxResult.Yes)
+                {
+                    using (PubsDataContext db = new PubsDataContext())
+                    {
+                        Student stud = (from s in db.Students
+                                        where s.Student_ID == student.Student_ID
+                                        select s).Single();
+                        var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+                                                                           where s.Student_ID == student.Student_ID
+                                                                           select s);
+                        db.Students.DeleteOnSubmit(stud);
+                        db.Learning_Experiences.DeleteAllOnSubmit(completionList);
+                        db.SubmitChanges();
+                        this.Close();
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region Learning Experiences
 
         private bool learningExperienceFieldsCheck(Learning_Experience expROW)
         {
@@ -338,48 +379,18 @@ namespace SLApp_Beta
             }
         }
 
-		private void delete_BTN_Click(object sender, RoutedEventArgs e)
-		{
-			if (dbMethods.CheckDatabaseConnection())
-			{
-				if (MessageBox.Show("Are you sure you want to delete this student?", "Confirm Delete!", MessageBoxButton.YesNo) ==
-				    MessageBoxResult.Yes)
-				{
-					using (PubsDataContext db = new PubsDataContext())
-					{
-						Student stud = (from s in db.Students
-						                where s.Student_ID == student.Student_ID
-						                select s).Single();
-						var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
-																		   where s.Student_ID == student.Student_ID
-																		   select s);
-						db.Students.DeleteOnSubmit(stud);
-						db.Learning_Experiences.DeleteAllOnSubmit(completionList);
-						db.SubmitChanges();
-						this.Close();
-					}
-				}
-			}	
-		}
-
-        private void expanderCollapsedMinimizeWindow(object sender, RoutedEventArgs e)
-        {
-            this.Width = myWidth;
-            this.Height = myHeight;
-        }
-
-        private void expanderExpandedOpenWindow(object sender, RoutedEventArgs e)
-        {
-            myHeight = this.Height;
-            myWidth = this.Width;
-
-            this.Width += 200;
-            this.Height += 100;
-        }
-
         private void Delete_MenuItem_Click(object sender, RoutedEventArgs e)
         {
             learningExperienceDelete_BTN_Click(sender, e);
         }
-	}
+
+        #endregion
+
+        #region Notes
+
+        
+
+        #endregion
+
+    }
 }

@@ -29,9 +29,9 @@
 		<Button Content="Save" Height="23" HorizontalAlignment="Right" Margin="0,0,1,178" Name="learningExperienceSave_BTN" VerticalAlignment="Bottom" Width="75" Click="learningExperienceSave_BTN_Click" IsEnabled="False" Visibility="Hidden" />
 		<Button Content="Add" Height="23" HorizontalAlignment="Right" Margin="0,0,81,178" Name="learningExperienceAdd_BTN" VerticalAlignment="Bottom" Width="75" Click="learningExperienceAdd_BTN_Click" IsEnabled="False" Visibility="Hidden" />
 		<Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="12,0,0,178" Name="learningExperienceDelete_BTN" VerticalAlignment="Bottom" Width="75" Click="learningExperienceDelete_BTN_Click" />
-        <Expander Header="Notes" Margin="5,0,0,29" Name="studentNotes_Expander" Expanded="expanderExpandedOpenWindow" Collapsed="expanderCollapsedMinimizeWindow" Height="100" VerticalAlignment="Bottom">
+        <Expander Header="Notes" Margin="4,0,1,29" Name="studentNotes_Expander" Expanded="expanderExpandedOpenWindow" Collapsed="expanderCollapsedMinimizeWindow" Height="143" VerticalAlignment="Bottom">
             <Grid>
-                <DataGrid AutoGenerateColumns="True" Margin="-11,0,0,6" Name="studentNotes_DataGrid" ItemsSource="{Binding}" />
+                <DataGrid AutoGenerateColumns="True" Margin="-4,0,0,6" Name="studentNotes_DataGrid" ItemsSource="{Binding}" />
             </Grid>
         </Expander>
 		<Button Content="Save &amp; Close" Height="23" HorizontalAlignment="Right" Name="saveAndClose_BTN" VerticalAlignment="Bottom" Width="75" Click="SaveAndClose_BTN_Click" />
