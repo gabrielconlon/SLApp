@@ -462,7 +462,7 @@ namespace SLApp_Beta
 																   where
 														  (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
 														  (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
-															   select e).GroupBy(x => x.CourseNumber).Distinct();
+															   select e).GroupBy(x => String.Format("{0}-{1}", x.CourseNumber, x.Section)).Distinct();
 
 					courseCount_TB.Text = allcourses.Count().ToString();
 				}
@@ -572,6 +572,11 @@ namespace SLApp_Beta
         }
 
         #endregion
+
+		private void coursesByType_Datagrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+
+		}
 
         
 

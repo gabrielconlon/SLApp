@@ -153,7 +153,7 @@
 						<Label Content="Course Count" Height="28" HorizontalAlignment="Left" Margin="6,151,0,0" Name="label6" VerticalAlignment="Top" />
 						<Label Content="Students per Class" Height="28" HorizontalAlignment="Left" Margin="164,185,0,0" Name="label7" VerticalAlignment="Top" />
 						<Label Content="Courses by Type" Height="28" HorizontalAlignment="Left" Margin="6,185,0,0" Name="label8" VerticalAlignment="Top" />
-						<DataGrid AutoGenerateColumns="True" Height="200" HorizontalAlignment="Left" Margin="6,219,0,0" Name="coursesByType_Datagrid" VerticalAlignment="Top" Width="155" ItemsSource="{Binding}" />
+						<DataGrid AutoGenerateColumns="True" Height="200" HorizontalAlignment="Left" Margin="6,219,0,0" Name="coursesByType_Datagrid" VerticalAlignment="Top" Width="155" ItemsSource="{Binding}" SelectionChanged="coursesByType_Datagrid_SelectionChanged" />
 						<DataGrid AutoGenerateColumns="True" Height="200" HorizontalAlignment="Left" Margin="164,219,0,0" Name="dataGrid2" VerticalAlignment="Top" Width="156" ItemsSource="{Binding}" />
 						<TextBox Height="23" HorizontalAlignment="Left" Margin="201,442,0,0" Name="queryYear_TB" VerticalAlignment="Top" Width="120" />
 						<ComboBox Height="23" HorizontalAlignment="Left" Margin="6,442,0,0" Name="querySemester_ComboBox" VerticalAlignment="Top" Width="120" IsEditable="True">
