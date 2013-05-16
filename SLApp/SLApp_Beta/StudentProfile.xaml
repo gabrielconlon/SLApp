@@ -18,7 +18,7 @@
         <Button Content="Delete Profile" Height="23" Margin="1,0,0,0" Name="delete_BTN" VerticalAlignment="Bottom" Click="delete_BTN_Click" HorizontalAlignment="Left" Width="83" />
         <DataGrid AutoGenerateColumns="True" Margin="1,136,1,207" Name="studentLearningExperiences_DataGrid" ItemsSource="{Binding}"
                   HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" 
-                   CanUserAddRows="True" AutoGeneratingColumn="StudentLearningExperiences_DataGrid_OnAutoGeneratingColumn">
+                   CanUserAddRows="True" AutoGeneratingColumn="StudentLearningExperiences_DataGrid_OnAutoGeneratingColumn" >
             <DataGrid.ContextMenu>
                 <ContextMenu Name="studentLearningExperiences_ContextMenu">
                     <!--HACK BUG - currently does not work with the button click <MenuItem Header="Save" Click="learningExperienceSave_BTN_Click" /> -->

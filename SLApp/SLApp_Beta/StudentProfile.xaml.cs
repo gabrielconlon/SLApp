@@ -145,12 +145,6 @@ namespace SLApp_Beta
 							stud.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
 							stud.Email = studentemail_TB.Text;
 
-							//get list of learning experiences
-							var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
-							                                                   where s.Student_ID == student.Student_ID
-							                                                   select s);
-
-
 							//saves experience by calling the save experiences button event
 
 							learningExperienceSave_BTN_Click(sender, e);
@@ -258,6 +252,11 @@ namespace SLApp_Beta
                                 MessageBoxImage.Exclamation);
                 return false;
             }
+			else if (expROW.Section.Equals(null))
+			{
+				MessageBox.Show("Must enter course section!", "Datagrid Row Error", MessageBoxButton.OK,
+				                MessageBoxImage.Exclamation);
+			}
             return true;
         }
 

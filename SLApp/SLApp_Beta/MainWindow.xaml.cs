@@ -184,6 +184,59 @@ namespace SLApp_Beta
 			}
 		}
 
+		#region ContextMenu
+
+		private void Add_MenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			StudentProfile form = new StudentProfile(IsAdmin);
+			form.Show();
+		}
+
+		private void Edit_MenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext datab = new PubsDataContext())
+				{
+					Student studentRow = studentSearch_DataGrid.SelectedItem as Student;
+					Student stud = (from s in datab.Students
+					                where s.Student_ID == studentRow.Student_ID
+					                select s).Single();
+
+					StudentProfile studentForm = new StudentProfile(stud, IsAdmin, true);
+					studentForm.Show();
+				}
+			}
+		}
+
+		private void Delete_MenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				if (MessageBox.Show("Are you sure you want to delete this student?", "Confirm Delete!", MessageBoxButton.YesNo) ==
+					MessageBoxResult.Yes)
+				{
+
+					using (PubsDataContext db = new PubsDataContext())
+					{
+						Student studentRow = studentSearch_DataGrid.SelectedItem as Student;
+						Student stud = (from s in db.Students
+										where s.Student_ID == studentRow.Student_ID
+										select s).Single();
+						Learning_Experience exp = (from ex in db.Learning_Experiences
+												   where ex.Student_ID == stud.Student_ID
+												   select ex).Single();
+						db.Students.DeleteOnSubmit(stud);
+						db.Learning_Experiences.DeleteOnSubmit(exp);
+						db.SubmitChanges();
+					}
+				}
+			}
+			studentSearch_BTN_Click(sender, e);
+		}
+
+		#endregion
+
         #endregion
 
         #region Agency Tab
@@ -246,11 +299,59 @@ namespace SLApp_Beta
             }
         }
 
-        #endregion
+		#region context menu
 
-        #region Admin Tab
+		private void Add_agency_MenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			//newAgencyProfile_BTN_Click(sender, e);
+		}
 
-        //private void admin_tab_GotFocus(object sender, RoutedEventArgs e)
+		private void Delete_agency_MenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			//if (dbMethods.CheckDatabaseConnection())
+			//{
+			//    if (MessageBox.Show("Are you sure you want to delete this agency?", "Confirm Delete!", MessageBoxButton.YesNo) ==
+			//        MessageBoxResult.Yes)
+			//    {
+
+			//        using (PubsDataContext db = new PubsDataContext())
+			//        {
+			//            Agency agentRow = studentSearch_DataGrid.SelectedItem as Agency;
+			//            Agency stud = (from a in db.Agencies
+			//                            where a.Name == agentRow.Name
+			//                            select a).Single();
+
+			//            db.Agencies.DeleteOnSubmit(stud);
+			//            db.SubmitChanges();
+			//        }
+			//    }
+			//}
+		}
+
+		private void Edit_agency_MenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			//if (dbMethods.CheckDatabaseConnection())
+			//{
+			//    using (PubsDataContext db = new PubsDataContext())
+			//    {
+			//        Agency agentRow = studentSearch_DataGrid.SelectedItem as Agency;
+			//        Agency stud = (from a in db.Agencies
+			//                       where a.Name == agentRow.Name
+			//                       select a).Single();
+
+			//        AgencyProfile agentForm = new AgencyProfile(stud, IsAdmin, true);
+			//        agentForm.Show();
+			//    }
+			//}
+		}
+
+		#endregion
+
+		#endregion
+
+		#region Admin Tab
+
+		//private void admin_tab_GotFocus(object sender, RoutedEventArgs e)
         //{
         //    LoadUsers(users_DataGrid);
         //}
@@ -475,28 +576,13 @@ namespace SLApp_Beta
 			{
 				using (PubsDataContext db = new PubsDataContext())
 				{
-					var coursesbysection = (from s in db.Students
-											from e in db.Learning_Experiences
-											where s.Student_ID == e.Student_ID &&
-														  (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
-														  (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
-											group e by e.Section into grp
-											select new {Section = grp.Key, Count = grp.Select(x => x.Student_ID).Distinct().Count()});
-
-					//BUG BROKEN - the let portion of this code appears to do nothing
-					var students = (from s in db.Students
-					                from e in db.Learning_Experiences
-									where s.Student_ID == e.Student_ID &&
-														  (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
-														  (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
-					                group e by e.CourseNumber
-					                into grp
-										let sections =
-										from e2 in grp
-										select e2.Section
-					                select new {Class = grp.Key, Section = sections.Distinct() , Count = grp.Select(x => x.Student_ID).Distinct().Count()});
-
-					dataGrid2.DataContext = students;
+					var grps = from s in db.Students
+					            from e in db.Learning_Experiences
+					            where s.Student_ID == e.Student_ID &&
+					                  (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
+					                  (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
+					            group e by new {e.CourseNumber, e.Section} into grp select new { Class = grp.Key.CourseNumber, Section = grp.Key.Section, Count = grp.Select(x => x.Student_ID).Distinct().Count() };
+					dataGrid2.DataContext = grps;
 				}
 			}
 		}
@@ -523,60 +609,7 @@ namespace SLApp_Beta
 
 		#endregion
 
-		#region ContextMenu
 
-		private void Add_MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            StudentProfile form = new StudentProfile(IsAdmin);
-            form.Show();
-        }
-
-        private void Edit_MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            using (PubsDataContext datab = new PubsDataContext())
-            {
-                Student studentRow = studentSearch_DataGrid.SelectedItem as Student;
-                Student stud = (from s in datab.Students
-                                where s.Student_ID == studentRow.Student_ID
-                                select s).Single();
-
-                StudentProfile studentForm = new StudentProfile(stud, IsAdmin, true);
-                studentForm.Show();
-            }
-        }
-
-        private void Delete_MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (dbMethods.CheckDatabaseConnection())
-            {
-                if (MessageBox.Show("Are you sure you want to delete this student?", "Confirm Delete!", MessageBoxButton.YesNo) ==
-                    MessageBoxResult.Yes)
-                {
-                    
-                    using (PubsDataContext db = new PubsDataContext())
-                    {
-                        Student studentRow = studentSearch_DataGrid.SelectedItem as Student;
-                        Student stud = (from s in db.Students
-                                        where s.Student_ID == studentRow.Student_ID
-                                        select s).Single();
-                        Learning_Experience exp = (from ex in db.Learning_Experiences
-                                                   where ex.Student_ID == stud.Student_ID
-                                                   select ex).Single();
-                        db.Students.DeleteOnSubmit(stud);
-                        db.Learning_Experiences.DeleteOnSubmit(exp);
-                        db.SubmitChanges();
-                    }
-                }
-            }
-			studentSearch_BTN_Click(sender, e);
-        }
-
-        #endregion
-
-		private void coursesByType_Datagrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-
-		}
 
         
 

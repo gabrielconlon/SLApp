@@ -61,8 +61,9 @@ namespace SLApp_Beta
             this.agencyAddressStreet_TB.Text = agent.StreetAddress;
             this.agencyAddressZipcode_TB.Text = agent.Zip;
             this.agencyWebsite_TB.Text = agent.WebsiteLink;
+	        this.description_TB.Text = agent.Description;
 
-            //TODO - description???
+	        //TODO - description???
 
         }
 
@@ -87,8 +88,7 @@ namespace SLApp_Beta
 						agent.Name = agencyName_TB.Text;
 						agent.City = agencyAddressCity_TB.Text;
 						agent.CoordinatorName = agencyCoordinatorName_TB.Text;
-						//HACK DATABASE - description to AgencyProfile
-						//agency.Description;
+						agent.Description = description_TB.Text;
 						agent.Email = agencyEmail_TB.Text;
 						agent.FaxNumber = agencyFax_TB.Text;
 						agent.Phone = agencyPhone_TB.Text;
@@ -109,10 +109,9 @@ namespace SLApp_Beta
 										 where s.Name == agent.Name
 										 select s).Single();
 						agency.Name = agencyName_TB.Text;
-						//agency.AlternateContact = agencyCoordinatorName_TB;
 						agency.City = agencyAddressCity_TB.Text;
 						agency.CoordinatorName = agencyCoordinatorName_TB.Text;
-						//agency.Description;
+						agency.Description = description_TB.Text;
 						agency.Email = agencyEmail_TB.Text;
 						agency.FaxNumber = agencyFax_TB.Text;
 						agency.Phone = agencyPhone_TB.Text;
@@ -181,9 +180,6 @@ namespace SLApp_Beta
 				{
 					using (PubsDataContext db = new PubsDataContext())
 					{
-						//Learning_Experience exp = (from s in db.Learning_Experiences
-						//                           where s.Student_ID == expROW.Student_ID
-						//                           select s);
 						var completionList = new List<Types_of_Service>(from s in db.Types_of_Services
 																		   where s.Agency == expROW.Agency
 																		   select s);
