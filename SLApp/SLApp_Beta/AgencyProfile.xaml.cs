@@ -22,14 +22,30 @@ namespace SLApp_Beta
         DatabaseMethods dbMethods = new DatabaseMethods();
         Agency agent = new Agency();
 
-        public AgencyProfile()
+        public AgencyProfile( bool isAdmin)
         {
             InitializeComponent();
+
+			if (isAdmin == false)
+			{
+				agencyRating_TB.Visibility = Visibility.Hidden;
+				agencyRating_LBL.Visibility = Visibility.Hidden;
+				save_BTN.Visibility = Visibility.Hidden;
+			}
         }
 
         public AgencyProfile(Agency agent, bool isAdmin, bool IsEdit)
         {
             InitializeComponent();
+
+			if (isAdmin == false)
+			{
+				agencyRating_TB.Visibility = Visibility.Hidden;
+				agencyRating_LBL.Visibility = Visibility.Hidden;
+				save_BTN.Visibility = Visibility.Hidden;
+			}
+
+			if(isAdmin)
 
 	        this.agent = agent;
 
@@ -46,7 +62,7 @@ namespace SLApp_Beta
             this.agencyAddressZipcode_TB.Text = agent.Zip;
             this.agencyWebsite_TB.Text = agent.WebsiteLink;
 
-            //HACK BUG - description???
+            //TODO - description???
 
         }
 
@@ -55,6 +71,71 @@ namespace SLApp_Beta
             Expander expdr = (Expander)sender;
             expdr.IsExpanded = false;
         }
+
+		private void save_BTN_Click(object sender, RoutedEventArgs e)
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					var CheckExists = (from s in db.Agencies
+									   where s.Name == agencyName_TB.Text
+									   select s);
+					//if the agency does not exists, application will create a new agency
+					if (CheckExists.Count() == 0)
+					{
+						agent.Name = agencyName_TB.Text;
+						agent.City = agencyAddressCity_TB.Text;
+						agent.CoordinatorName = agencyCoordinatorName_TB.Text;
+						//HACK DATABASE - description to AgencyProfile
+						//agency.Description;
+						agent.Email = agencyEmail_TB.Text;
+						agent.FaxNumber = agencyFax_TB.Text;
+						agent.Phone = agencyPhone_TB.Text;
+						agent.Rating = Convert.ToInt32(agencyRating_TB.Text);
+						agent.State = agencyAddressState_TB.Text;
+						agent.StreetAddress = agencyAddressStreet_TB.Text;
+						agent.WebsiteLink = agencyWebsite_TB.Text;
+						agent.Zip = agencyAddressZipcode_TB.Text;
+						agent.AlternateContact = agencyAlternateName_TB.Text;
+
+						db.Agencies.InsertOnSubmit(agent);
+						db.SubmitChanges();
+					}
+					else
+					{
+						//save agency info
+						Agency agency = (from s in db.Agencies
+										 where s.Name == agent.Name
+										 select s).Single();
+						agency.Name = agencyName_TB.Text;
+						//agency.AlternateContact = agencyCoordinatorName_TB;
+						agency.City = agencyAddressCity_TB.Text;
+						agency.CoordinatorName = agencyCoordinatorName_TB.Text;
+						//agency.Description;
+						agency.Email = agencyEmail_TB.Text;
+						agency.FaxNumber = agencyFax_TB.Text;
+						agency.Phone = agencyPhone_TB.Text;
+						agency.Rating = Convert.ToInt32(agencyRating_TB.Text);
+						agency.State = agencyAddressState_TB.Text;
+						agency.StreetAddress = agencyAddressStreet_TB.Text;
+						agency.WebsiteLink = agencyWebsite_TB.Text;
+						agency.Zip = agencyAddressZipcode_TB.Text;
+						agency.AlternateContact = agencyAlternateName_TB.Text;
+
+						db.SubmitChanges();
+					}
+
+
+				}
+			}
+		}
+
+		private void saveAndClose_BTN_Click(object sender, RoutedEventArgs e)
+		{
+			save_BTN_Click(sender, e);
+			this.Close();
+		}
 
         private void cancel_BTN_Click_1(object sender, RoutedEventArgs e)
         {
@@ -65,71 +146,82 @@ namespace SLApp_Beta
         {
             CommunityPartnershipAgreementWindow form = new CommunityPartnershipAgreementWindow();
             form.ShowDialog();
-        }
+		}
 
-        private void save_BTN_Click(object sender, RoutedEventArgs e)
-        {
-            if (dbMethods.CheckDatabaseConnection())
-            {
-                using (PubsDataContext db = new PubsDataContext())
-                {
-                    var CheckExists = (from s in db.Agencies
-                                       where s.Name == agencyName_TB.Text
-                                       select s);
-                    //if the agency does not exists, application will create a new agency
-                    if (CheckExists.Count() == 0)
-                    {
-                            agent.Name = agencyName_TB.Text;
-                            agent.City = agencyAddressCity_TB.Text;
-                            agent.CoordinatorName = agencyCoordinatorName_TB.Text;
-                            //HACK DATABASE - description to AgencyProfile
-                            //agency.Description;
-                            agent.Email = agencyEmail_TB.Text;
-                            agent.FaxNumber = agencyFax_TB.Text;
-                            agent.Phone = agencyPhone_TB.Text;
-	                        agent.Rating = Convert.ToInt32(agencyRating_TB.Text);
-                            agent.State = agencyAddressState_TB.Text;
-                            agent.StreetAddress = agencyAddressStreet_TB.Text;
-                            agent.WebsiteLink = agencyWebsite_TB.Text;
-                            agent.Zip = agencyAddressZipcode_TB.Text;
-                            agent.AlternateContact = agencyAlternateName_TB.Text;
+		#region Service Opportunities
 
-                            db.Agencies.InsertOnSubmit(agent);
-                            db.SubmitChanges();
-                    }
-                    else
-                    {
-                        //save agency info
-                        Agency agency = (from s in db.Agencies
-                                        where s.Name == agent.Name
-                                        select s).Single();
-                        agency.Name = agencyName_TB.Text;
-                        //agency.AlternateContact = agencyCoordinatorName_TB;
-                        agency.City = agencyAddressCity_TB.Text;
-                        agency.CoordinatorName = agencyCoordinatorName_TB.Text;
-                        //agency.Description;
-                        agency.Email = agencyEmail_TB.Text;
-                        agency.FaxNumber = agencyFax_TB.Text;
-                        agency.Phone = agencyPhone_TB.Text;
-                        agency.Rating = Convert.ToInt32(agencyRating_TB.Text);
-                        agency.State = agencyAddressState_TB.Text;
-                        agency.StreetAddress = agencyAddressStreet_TB.Text;
-                        agency.WebsiteLink = agencyWebsite_TB.Text;
-                        agency.Zip = agencyAddressZipcode_TB.Text;
-                        agency.AlternateContact = agencyAlternateName_TB.Text;
+		private void LongTerm_Expander_OnExpanded(object sender, RoutedEventArgs e)
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
 
-                        db.SubmitChanges();
-                    }
+					var completionList = new List<ServiceOpportunity>(from s in db.Types_of_Services
+																	   where s.Agency == agent.Name
+																	   select new ServiceOpportunity(s.Agency, "Long Term", s.Title, s.Body));
+					if (!completionList.Any())
+					{
+						ServiceOpportunity exp = new ServiceOpportunity();
+						exp.Agency = agent.Name;
+						db.Types_of_Services.InsertOnSubmit(new Types_of_Service());
+						db.SubmitChanges();
+						completionList.Add(exp);
+					}
+					longTerm_DataGrid.DataContext = completionList;
 
+				}
+			}
+		}
 
-                }
-            }
-        }
+		private void AgencyLongTermServiceSave_BTN_OnClick(object sender, RoutedEventArgs e)
+		{
+			Types_of_Service expROW = longTerm_DataGrid.SelectedItem as Types_of_Service;
+				if (dbMethods.CheckDatabaseConnection())
+				{
+					using (PubsDataContext db = new PubsDataContext())
+					{
+						//Learning_Experience exp = (from s in db.Learning_Experiences
+						//                           where s.Student_ID == expROW.Student_ID
+						//                           select s);
+						var completionList = new List<Types_of_Service>(from s in db.Types_of_Services
+																		   where s.Agency == expROW.Agency
+																		   select s);
+						if (completionList.Count > 0)
+						{
 
-        private void saveAndClose_BTN_Click(object sender, RoutedEventArgs e)
-        {
-            save_BTN_Click(sender, e);
-            this.Close();
-        }
+							var completion = completionList.First();
+							completion.Agency = expROW.Agency;
+							completion.Body = expROW.Body;
+							completion.CommunityBasedResearch = expROW.CommunityBasedResearch;
+							completion.LongTerm = expROW.LongTerm;
+							completion.ShortTerm = expROW.ShortTerm;
+							completion.Title = expROW.Title;
+
+							db.SubmitChanges();
+							LongTerm_Expander_OnExpanded(sender, e);
+						}
+						else
+						{
+							Types_of_Service exp = new Types_of_Service();
+
+							exp.Agency = agent.Name;
+							exp.Body = expROW.Body;
+							exp.CommunityBasedResearch = expROW.CommunityBasedResearch;
+							exp.LongTerm = expROW.LongTerm;
+							exp.ShortTerm = expROW.ShortTerm;
+							exp.Title = expROW.Title;
+
+							db.Types_of_Services.InsertOnSubmit(exp);
+							db.SubmitChanges();
+							LongTerm_Expander_OnExpanded(sender, e);
+						}
+					}
+				}
+		}
+
+		#endregion
+
+		
     }
 }

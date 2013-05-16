@@ -210,7 +210,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="slap.jpg" />
+    <SplashScreen Include="slap.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\" />

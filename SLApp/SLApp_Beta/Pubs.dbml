@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SLDatabase" Class="PubsDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=GABRIEL-PC;Initial Catalog=SLDatabase;Integrated Security=True" SettingsObjectName="SLApp_Beta.Properties.Settings" SettingsPropertyName="SLDatabaseConnectionString2" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=cs1;Initial Catalog=SLDatabase;Integrated Security=True" SettingsObjectName="SLApp_Beta.Properties.Settings" SettingsPropertyName="SLDatabaseConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Agency" Member="Agencies">
     <Type Name="Agency">
       <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -19,9 +19,13 @@
   </Table>
   <Table Name="dbo.Types_of_Service" Member="Types_of_Services">
     <Type Name="Types_of_Service">
-      <Column Name="CommunityBasedResearch" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="LongTerm" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ShortTerm" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CommunityBasedResearch" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LongTerm" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ShortTerm" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Body" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Agency" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.Application_Users" Member="Application_Users">
@@ -65,7 +69,7 @@
       <Column Name="Student_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="FirstName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="LastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="GraduationYear" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GraduationYear" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>

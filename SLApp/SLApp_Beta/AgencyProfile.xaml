@@ -8,17 +8,17 @@
                 <SolidColorBrush />
             </Expander.BorderBrush>
             <Grid Height="206" Width="477">
-                <DataGrid AutoGenerateColumns="False" BorderThickness="1" HorizontalAlignment="Stretch" Margin="6,4,0,29" Name="shortTerm_DataGrid" VerticalAlignment="Stretch"/>
+                <DataGrid AutoGenerateColumns="False" BorderThickness="1" HorizontalAlignment="Stretch" Margin="6,4,0,29" Name="shortTerm_DataGrid" VerticalAlignment="Stretch" ItemsSource="{Binding}"/>
                 <Button Content="Add" Height="23" HorizontalAlignment="Right" Name="agencyShortTermServiceAdd_BTN" VerticalAlignment="Bottom" Width="75" />
             </Grid>
         </Expander>
-        <Expander Header="Long Term" Name="longTerm_Expander" LostFocus="collapseExpander" Margin="160,243,159,0">
+        <Expander Header="Long Term" Name="longTerm_Expander" Expanded="LongTerm_Expander_OnExpanded" LostFocus="collapseExpander" Margin="160,243,159,0">
             <Expander.BorderBrush>
                 <SolidColorBrush />
             </Expander.BorderBrush>
             <Grid Height="206" Width="477">
-                <DataGrid AutoGenerateColumns="False" BorderThickness="1" HorizontalAlignment="Stretch" Margin="6,4,0,29" Name="longTerm_DataGrid" VerticalAlignment="Stretch" />
-                <Button Content="Add" Height="23" HorizontalAlignment="Right" Name="agencyLongTermServiceAdd_BTN" VerticalAlignment="Bottom" Width="75" />
+                <DataGrid AutoGenerateColumns="True" BorderThickness="1" HorizontalAlignment="Stretch" Margin="6,4,0,29" Name="longTerm_DataGrid" VerticalAlignment="Stretch" ItemsSource="{Binding}" />
+                <Button Content="Save" Height="23" HorizontalAlignment="Right" Name="agencyLongTermServiceSave_BTN" VerticalAlignment="Bottom" Width="75" Click="AgencyLongTermServiceSave_BTN_OnClick" />
             </Grid>
         </Expander>
         <Expander Header="Community Based Research" Name="CBR_Expander" LostFocus="collapseExpander" Margin="319,243,0,0">
@@ -26,7 +26,7 @@
                 <SolidColorBrush />
             </Expander.BorderBrush>
             <Grid Height="206" Width="477">
-                <DataGrid AutoGenerateColumns="False" BorderThickness="1" HorizontalAlignment="Stretch" Margin="6,4,0,29" Name="CBR_DataGrid" VerticalAlignment="Stretch" />
+                <DataGrid AutoGenerateColumns="False" BorderThickness="1" HorizontalAlignment="Stretch" Margin="6,4,0,29" Name="CBR_DataGrid" VerticalAlignment="Stretch" ItemsSource="{Binding}" />
                 <Button Content="Add" Height="23" HorizontalAlignment="Right" Name="agencyCBRServiceAdd_BTN" VerticalAlignment="Bottom" Width="75" />
             </Grid>
         </Expander>
@@ -50,15 +50,14 @@
         <TextBox Height="23" HorizontalAlignment="Left" Margin="226,170,0,0" Name="agencyAddressCity_TB" VerticalAlignment="Top" Width="120" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="352,170,0,0" Name="agencyAddressState_TB" VerticalAlignment="Top" Width="50" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="412,170,0,0" Name="agencyAddressZipcode_TB" VerticalAlignment="Top" Width="75" />
-        <Button Content="Save" Height="23" HorizontalAlignment="Right" Margin="0,224,93,0" Name="save_BTN" VerticalAlignment="Top" Width="75" Click="save_BTN_Click" />
-        <Button Content="Cancel" Height="23" HorizontalAlignment="Right" Margin="0,224,174,0" Name="cancel_BTN" VerticalAlignment="Top" Width="75" Click="cancel_BTN_Click_1" />
+        <Button Content="Save" Height="23" HorizontalAlignment="Right" Margin="0,214,12,0" Name="save_BTN" VerticalAlignment="Top" Width="75" Click="save_BTN_Click" />
+        <Button Content="Cancel" Height="23" HorizontalAlignment="Right" Margin="0,214,93,0" Name="cancel_BTN" VerticalAlignment="Top" Width="75" Click="cancel_BTN_Click_1" />
         <Label Content="view Community Partnership agreement" Height="28" HorizontalAlignment="Left"
                Margin="591,165,0,0" Name="communityPartnershipAgreement_LBL" VerticalAlignment="Top" Width="225" Foreground="Blue" 
                MouseDown="communityPartnershipAgreement_LBL_MouseDown" />
         <Label Content="Fax" Height="28" HorizontalAlignment="Left" Margin="604,73,0,0" Name="agencyFax_LBL" VerticalAlignment="Top" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="604,107,0,0" Name="agencyFax_TB" VerticalAlignment="Top" Width="100" />
-        <Button Content="Save &amp; Close" Height="23" HorizontalAlignment="Right" Margin="0,224,12,0" Name="saveAndClose_BTN" VerticalAlignment="Top" Width="75" Click="saveAndClose_BTN_Click" />
-        <Label Content="Alternate Contact" Height="28" HorizontalAlignment="Left" Margin="579,10,0,0" Name="agencyAlternateName_LBL" VerticalAlignment="Top" />
+		<Label Content="Alternate Contact" Height="28" HorizontalAlignment="Left" Margin="579,10,0,0" Name="agencyAlternateName_LBL" VerticalAlignment="Top" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="579,44,0,0" Name="agencyAlternateName_TB" VerticalAlignment="Top" Width="220" />
     </Grid>
 </Window>

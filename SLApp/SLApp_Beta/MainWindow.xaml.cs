@@ -52,6 +52,10 @@ namespace SLApp_Beta
             if(!isAdmin)
             {
                 admin_tab.IsEnabled = false;
+				agencyRating_LBL.Visibility = Visibility.Hidden;
+				agencyRating_TB.Visibility = Visibility.Hidden;
+	            newAgencyProfile_BTN.IsEnabled = false;
+	            newAgencyProfile_BTN.Visibility = Visibility.Hidden;
             }
 			DatabaseMethods dbMethods = new DatabaseMethods();
             LoadUsers(users_DataGrid);
@@ -86,7 +90,7 @@ namespace SLApp_Beta
 
 		private void menuCreateAgency_Click(object sender, RoutedEventArgs e)
 		{
-			AgencyProfile Agencyform = new AgencyProfile();
+			AgencyProfile Agencyform = new AgencyProfile(IsAdmin);
 			Agencyform.Show();
 		}
 
@@ -155,13 +159,16 @@ namespace SLApp_Beta
 			using (PubsDataContext datab = new PubsDataContext())
 			{
 				Student studentRow = studentSearch_DataGrid.SelectedItem as Student;
-				Student stud = (from s in datab.Students
-				                where s.Student_ID == studentRow.Student_ID
-				                select s).Single();
+				if (studentRow != null)
+				{
+					Student stud = (from s in datab.Students
+					                where s.Student_ID == studentRow.Student_ID
+					                select s).Single();
 
-				StudentProfile studentForm = new StudentProfile(stud, IsAdmin, true);
-				studentForm.Closed += new EventHandler((s0, e0) => studentSearch_BTN_Click(s0, null));
-				studentForm.Show();
+					StudentProfile studentForm = new StudentProfile(stud, IsAdmin, true);
+					studentForm.Closed += new EventHandler((s0, e0) => studentSearch_BTN_Click(s0, null));
+					studentForm.Show();
+				}
 			}
 		}
 
@@ -205,7 +212,7 @@ namespace SLApp_Beta
 
         private void newAgencyProfile_BTN_Click(object sender, RoutedEventArgs e)
         {
-            AgencyProfile Agencyform = new AgencyProfile();
+			AgencyProfile Agencyform = new AgencyProfile(IsAdmin);
             Agencyform.Show();
         }
 
@@ -214,13 +221,16 @@ namespace SLApp_Beta
 			using (PubsDataContext datab = new PubsDataContext())
 			{
 				Agency agencyRow = agencySearch_DataGrid.SelectedItem as Agency;
-				Agency agent = (from s in datab.Agencies
-								where s.Name == agencyRow.Name
-								select s).Single();
+				if (agencyRow != null)
+				{
+					Agency agent = (from s in datab.Agencies
+					                where s.Name == agencyRow.Name
+					                select s).Single();
 
-				AgencyProfile agentForm = new AgencyProfile(agent, IsAdmin, true);
-				agentForm.Closed += new EventHandler((s0, e0) => agencySearch_BTN_Click(s0, null));
-				agentForm.Show();
+					AgencyProfile agentForm = new AgencyProfile(agent, IsAdmin, true);
+					agentForm.Closed += new EventHandler((s0, e0) => agencySearch_BTN_Click(s0, null));
+					agentForm.Show();
+				}
 			}
 		}
 
@@ -332,11 +342,190 @@ namespace SLApp_Beta
             }
         }
 
-        #endregion
+		#region QUERIES
 
-        #region ContextMenu
+		private void RunQuery_BTN_OnClick(object sender, RoutedEventArgs e)
+		{
+			Mouse.SetCursor(Cursors.Wait);
+			TotalStudents();
+			UnduplicatedStudents();
+			TotalHours();
+			UnduplicatedHours();
+			AvgHoursPerStudent();
+			CourseCount();
+			StudentsPerClass();
+			CoursesByType();
+			Mouse.SetCursor(Cursors.Arrow);
+		}
 
-        private void Add_MenuItem_Click(object sender, RoutedEventArgs e)
+		private void TotalStudents()
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					var totalstudents = new List<Student>(from s in db.Students
+														  from e in db.Learning_Experiences
+														  where e.Student_ID == s.Student_ID &&
+														  (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
+														  (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
+					                                  select s);
+					totalStudents_TB.Text = totalstudents.Count().ToString();
+				}
+			}
+		}
+
+		private void UnduplicatedStudents()
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					var totalstudents = new List<Student>(from s in db.Students
+														  from e in db.Learning_Experiences
+														  where e.Student_ID == s.Student_ID &&
+														  (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
+														  (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
+														  select s).Distinct();
+					unduplicatedStudents_TB.Text = totalstudents.Count().ToString();
+				}
+			}
+		}
+
+		private void TotalHours()
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					var totalhours = new List<Learning_Experience>(from e in db.Learning_Experiences
+																   from s in db.Students
+																   where s.Student_ID == e.Student_ID &&
+																   (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
+																   (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
+																   select e);
+
+					totalHours_TB.Text = totalhours.Sum(i => i.TotalHours.GetValueOrDefault(0)).ToString();
+				}
+			}
+		}
+
+		private void UnduplicatedHours()
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					var totalhours = new List<Learning_Experience>(from e in db.Learning_Experiences
+																   from s in db.Students
+																   where s.Student_ID == e.Student_ID &&
+																   (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
+																   (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
+																   select e).GroupBy(s => s.Student_ID).Select(e => e.MaxBy(x => x.TotalHours));
+
+						unduplicatedHours_TB.Text = totalhours.Sum(i => i.TotalHours.GetValueOrDefault(0)).ToString();
+				}
+			}
+		}
+
+		private void AvgHoursPerStudent()
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					var totalhours = new List<Learning_Experience>(from e in db.Learning_Experiences
+																   where
+																   (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
+																   (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
+																   select e);
+					var totalstudents = new List<Student>(from s in db.Students
+														  from e in db.Learning_Experiences
+														  where e.Student_ID == s.Student_ID &&
+														  (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
+														  (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
+														  select s);
+					double avg_hours;
+					avg_hours = (Convert.ToDouble(totalhours.Sum(i => i.TotalHours.GetValueOrDefault(0))) / Convert.ToDouble(totalstudents.Count()));
+					avgHoursStudent_TB.Text = (Math.Round(avg_hours, 3)).ToString();
+				}
+			}
+		}
+
+		private void CourseCount()
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					var allcourses = new List<Learning_Experience>(from e in db.Learning_Experiences
+																   where
+														  (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
+														  (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
+															   select e).GroupBy(x => x.CourseNumber).Distinct();
+
+					courseCount_TB.Text = allcourses.Count().ToString();
+				}
+			}
+		}
+
+		private void StudentsPerClass()
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					var coursesbysection = (from s in db.Students
+											from e in db.Learning_Experiences
+											where s.Student_ID == e.Student_ID &&
+														  (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
+														  (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
+											group e by e.Section into grp
+											select new {Section = grp.Key, Count = grp.Select(x => x.Student_ID).Distinct().Count()});
+
+					//BUG BROKEN - the let portion of this code appears to do nothing
+					var students = (from s in db.Students
+					                from e in db.Learning_Experiences
+									where s.Student_ID == e.Student_ID &&
+														  (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
+														  (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
+					                group e by e.CourseNumber
+					                into grp
+										let sections =
+										from e2 in grp
+										select e2.Section
+					                select new {Class = grp.Key, Section = sections.Distinct() , Count = grp.Select(x => x.Student_ID).Distinct().Count()});
+
+					dataGrid2.DataContext = students;
+				}
+			}
+		}
+
+		private void CoursesByType()
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					var courses = (from e in db.Learning_Experiences
+								   where (queryYear_TB.Text.Length == 0 || e.Year.ToString() == queryYear_TB.Text) &&
+														  (querySemester_ComboBox.Text.Length == 0 || e.Semester == querySemester_ComboBox.Text)
+								   group e by e.TypeofLearning into grp
+								   select new {Type = grp.Key, Count = grp.Select(x => x.Student_ID).Distinct().Count()} );
+					coursesByType_Datagrid.DataContext = courses;
+				}
+			}
+		}
+
+
+		#endregion
+
+
+		#endregion
+
+		#region ContextMenu
+
+		private void Add_MenuItem_Click(object sender, RoutedEventArgs e)
         {
             StudentProfile form = new StudentProfile(IsAdmin);
             form.Show();
@@ -376,10 +565,10 @@ namespace SLApp_Beta
                         db.Students.DeleteOnSubmit(stud);
                         db.Learning_Experiences.DeleteOnSubmit(exp);
                         db.SubmitChanges();
-                        this.Close();
                     }
                 }
             }
+			studentSearch_BTN_Click(sender, e);
         }
 
         #endregion

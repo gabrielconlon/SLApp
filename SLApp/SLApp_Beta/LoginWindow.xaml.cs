@@ -26,6 +26,7 @@ namespace SLApp_Beta
         public LoginWindow()
         {
             InitializeComponent();
+	        username_TB.Focus();
         }
 
 		private void login_BTN_Click(object sender, RoutedEventArgs e)

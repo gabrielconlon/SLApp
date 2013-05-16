@@ -12,5 +12,9 @@ namespace SLApp_Beta
 	/// </summary>
 	public partial class App : Application
 	{
+		//private void StartupEvent(object sender, StartupEventArgs e)
+		//{
+		//    SplashScreen screen = new SplashScreen("slap.jpg");
+		//}
 	}
 }

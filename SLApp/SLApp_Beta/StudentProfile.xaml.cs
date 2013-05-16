@@ -30,29 +30,7 @@ namespace SLApp_Beta
         private double myWidth;
         private double myHeight;
 
-        public void LoadStudentLearningExperiences()
-        {
-            if (dbMethods.CheckDatabaseConnection())
-            {
-                using (PubsDataContext db = new PubsDataContext())
-                {
-                    
-                    var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
-                                                                       where s.Student_ID == student.Student_ID
-                                                                       select s);
-                    if (!completionList.Any())
-                    {
-                        Learning_Experience exp = new Learning_Experience();
-                        exp.Student_ID = student.Student_ID;
-                        db.Learning_Experiences.InsertOnSubmit(exp);
-                        db.SubmitChanges();
-                        completionList.Add(exp);
-                    }
-                        studentLearningExperiences_DataGrid.DataContext = completionList;
-
-                }
-            }
-        }
+        
 
         private void expanderCollapsedMinimizeWindow(object sender, RoutedEventArgs e)
         {
@@ -102,79 +80,99 @@ namespace SLApp_Beta
 			
 		}
 
-        #region Student Buttons
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					var empty = (from exp in db.Learning_Experiences
+					             where exp.Student_ID == 0
+					             select exp);
+					db.Learning_Experiences.DeleteAllOnSubmit(empty);
+					db.SubmitChanges();
+				}
+			}
+		}
 
-        private void cancel_BTN_Click(object sender, RoutedEventArgs e)
+		#region Student Buttons
+
+			private
+			void cancel_BTN_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        private void save_BTN_Click(object sender, RoutedEventArgs e)
-        {
-	        if (dbMethods.CheckDatabaseConnection())
-	        {
-		        using (PubsDataContext db = new PubsDataContext())
-		        {
-			        var CheckExists = (from s in db.Students
-			                            where s.Student_ID == Convert.ToInt32(studentID_TB.Text)
-			                            select s);
-                    //if the user does not exists, application will create a new user
-			        if (CheckExists.Count() == 0)
-			        {
-                        try
-                        {
-
-                            student.Student_ID = Convert.ToInt32(studentID_TB.Text);
-                            student.FirstName = studentFirstName_TB.Text;
-                            student.LastName = studentLastName_TB.Text;
-                            student.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
-                            student.Email = studentemail_TB.Text;
+		private void save_BTN_Click(object sender, RoutedEventArgs e)
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					if(studentID_TB.Text.Length > 0 && graduationYear_TB.Text.Length > 0)
+					{
+						var CheckExists = (from s in db.Students
+						                   where s.Student_ID == Convert.ToInt32(studentID_TB.Text)
+						                   select s);
+						//if the user does not exists, application will create a new user
+						if (CheckExists.Count() == 0)
+						{
 
 
-                            Learning_Experience exp = new Learning_Experience();
-                            exp.Student_ID = Convert.ToInt32(studentID_TB.Text);
-                            db.Students.InsertOnSubmit(student);
-                            db.Learning_Experiences.InsertOnSubmit(exp);
-                            db.SubmitChanges();
+							student.Student_ID = Convert.ToInt32(studentID_TB.Text);
+							student.FirstName = studentFirstName_TB.Text;
+							student.LastName = studentLastName_TB.Text;
+							student.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
+							student.Email = studentemail_TB.Text;
+
+
+							Learning_Experience exp = new Learning_Experience();
+							exp.Student_ID = Convert.ToInt32(studentID_TB.Text);
+							db.Students.InsertOnSubmit(student);
+							db.Learning_Experiences.InsertOnSubmit(exp);
+							db.SubmitChanges();
 							LoadStudentLearningExperiences();
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("SLApp apologizes for the inconvenience, but at this time all fields must contain data before saving.","Save Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-			        }
-			        else
-			        {
-                        //save student info
-				        Student stud = (from s in db.Students
-				                        where s.Student_ID == student.Student_ID
-				                        select s).Single();
-				        stud.Student_ID = Convert.ToInt32(studentID_TB.Text);
-				        stud.FirstName = studentFirstName_TB.Text;
-				        stud.LastName = studentLastName_TB.Text;
-				        stud.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
-				        stud.Email = studentemail_TB.Text;
+						}
+						else
+						{
+							//save student info
+							Student stud = (from s in db.Students
+							                where s.Student_ID == student.Student_ID
+							                select s).Single();
+							stud.Student_ID = Convert.ToInt32(studentID_TB.Text);
+							stud.FirstName = studentFirstName_TB.Text;
+							stud.LastName = studentLastName_TB.Text;
+							stud.GraduationYear = Convert.ToInt32(graduationYear_TB.Text);
+							stud.Email = studentemail_TB.Text;
 
-                        //get list of learning experiences
-						var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
-																		   where s.Student_ID == student.Student_ID
-																		   select s);
-						
+							//get list of learning experiences
+							var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+							                                                   where s.Student_ID == student.Student_ID
+							                                                   select s);
 
-                        //saves experience by calling the save experiences button event
 
-                        learningExperienceSave_BTN_Click(sender, e);
+							//saves experience by calling the save experiences button event
 
-				        db.SubmitChanges();
-			        }
-                    
+							learningExperienceSave_BTN_Click(sender, e);
 
-		        }
-	        }
-            //this.Close();
-        }
+							db.SubmitChanges();
+						}
 
-        private void SaveAndClose_BTN_Click(object sender, RoutedEventArgs e)
+					}
+					else
+					{
+						MessageBox.Show(
+							"SLApp apologizes for the inconvenience, but at this time all fields must contain data before saving.",
+							"Save Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+					}
+
+					//this.Close();
+				}
+			}
+		}
+
+		private
+	        void SaveAndClose_BTN_Click(object sender, RoutedEventArgs e)
         {
             save_BTN_Click(sender, e);
             this.Close();
@@ -207,6 +205,30 @@ namespace SLApp_Beta
         #endregion
 
         #region Learning Experiences
+
+		public void LoadStudentLearningExperiences()
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+
+					var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
+																	   where s.Student_ID == student.Student_ID
+																	   select s);
+					if (!completionList.Any())
+					{
+						Learning_Experience exp = new Learning_Experience();
+						exp.Student_ID = student.Student_ID;
+						db.Learning_Experiences.InsertOnSubmit(exp);
+						db.SubmitChanges();
+						completionList.Add(exp);
+					}
+					studentLearningExperiences_DataGrid.DataContext = completionList;
+
+				}
+			}
+		}
 
         private bool learningExperienceFieldsCheck(Learning_Experience expROW)
         {
@@ -385,6 +407,11 @@ namespace SLApp_Beta
         }
 
         #endregion
+
+		private void StudentLearningExperiences_DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+		{
+			if (e.PropertyName == "ID") e.Cancel = true;
+		}
 
         #region Notes
 
