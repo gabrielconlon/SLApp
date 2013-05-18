@@ -1,22 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace SLApp_Beta
 {
 	/// <summary>
 	/// Interaction logic for CreateStudentProfile.xaml
-    /// TODO - adjust database, types of notes allows nulls, add column of text to hold the actual note
 	/// </summary>
 	public partial class StudentProfile : Window
     {
@@ -24,7 +15,6 @@ namespace SLApp_Beta
         #region Database Methods, Formatting Methods, Members
 
         private Student student = new Student();
-		private bool isEdit;
 		DatabaseMethods dbMethods = new DatabaseMethods();
 
         private double myWidth;
@@ -52,23 +42,25 @@ namespace SLApp_Beta
         public StudentProfile(bool isAdmin)
 		{
 			InitializeComponent();
-            if (isAdmin == false)
-            {
-                studentNotes_DataGrid.IsEnabled = false;
-            }
+
+            if (isAdmin == false) studentNotes_DataGrid.IsEnabled = false;
+#if Demo
+			studentID_TB.Visibility = Visibility.Hidden;
+#endif
+
             LoadStudentLearningExperiences();
 		}
 
 		public StudentProfile(Student stud, bool isAdmin, bool IsEdit)
 		{
 			InitializeComponent();
-			if (isAdmin == false)
-			{
-				studentNotes_DataGrid.IsEnabled = false;
-			}
+
+			if (isAdmin == false)studentNotes_DataGrid.IsEnabled = false;
+#if Demo
+			studentID_TB.Visibility = Visibility.Hidden;
+#endif
+
 			student = stud;
-			isEdit = IsEdit;
-			
 
 			this.studentFirstName_TB.Text = stud.FirstName;
 			this.studentLastName_TB.Text = stud.LastName;
@@ -147,7 +139,7 @@ namespace SLApp_Beta
 
 							//saves experience by calling the save experiences button event
 
-							learningExperienceSave_BTN_Click(sender, e);
+							learningExperienceSave();
 
 							db.SubmitChanges();
 						}
@@ -164,13 +156,6 @@ namespace SLApp_Beta
 				}
 			}
 		}
-
-		private
-	        void SaveAndClose_BTN_Click(object sender, RoutedEventArgs e)
-        {
-            save_BTN_Click(sender, e);
-            this.Close();
-        }
 
         private void delete_BTN_Click(object sender, RoutedEventArgs e)
         {
@@ -260,10 +245,7 @@ namespace SLApp_Beta
             return true;
         }
 
-
-        //button is disabled and invisible, the "Save Profile" button calls this method to save experiences
-        //HACK BUG - does not work properly with the "save" button on the right click menu
-        private void learningExperienceSave_BTN_Click(object sender, RoutedEventArgs e)
+        private void learningExperienceSave()
         {
             Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
                 if (learningExperienceFieldsCheck(expROW))
@@ -323,40 +305,8 @@ namespace SLApp_Beta
                 }
         }
 
-        //currently hidden and disabled, testing the new save/add combo button
-        private void learningExperienceAdd_BTN_Click(object sender, RoutedEventArgs e)
-        {
-            Learning_Experience expROW = studentLearningExperiences_DataGrid.SelectedItem as Learning_Experience;
-            if (learningExperienceFieldsCheck(expROW))
-            {
-                if (dbMethods.CheckDatabaseConnection())
-                {
-                    using (PubsDataContext db = new PubsDataContext())
-                    {
-                        Learning_Experience exp = new Learning_Experience();
 
-                        exp.Student_ID = student.Student_ID;
-                        exp.ConfirmedHours = expROW.ConfirmedHours;
-                        exp.CourseNumber = expROW.CourseNumber;
-                        exp.LiabilityWaiver = expROW.LiabilityWaiver;
-                        exp.ProjectAgreement = expROW.ProjectAgreement;
-                        exp.Semester = expROW.Semester;
-                        exp.Year = expROW.Year;
-                        exp.TimeLog = expROW.TimeLog;
-                        exp.TotalHours = expROW.TotalHours;
-                        exp.TypeofLearning = expROW.TypeofLearning;
-
-                        db.Learning_Experiences.InsertOnSubmit(exp);
-                        db.SubmitChanges();
-                        LoadStudentLearningExperiences();
-                    }
-                }
-            }
-
-        }
-
-        //exists, but uneccesary because of the addition of the "delete" button on right click
-        private void learningExperienceDelete_BTN_Click(object sender, RoutedEventArgs e)
+        private void learningExperienceDelete()
         {
             if (dbMethods.CheckDatabaseConnection())
             {
@@ -370,20 +320,6 @@ namespace SLApp_Beta
 	                        var completionList = new List<Learning_Experience>(from s in db.Learning_Experiences
 	                                                                           where s.ID == expROW.ID
 	                                                                           select s);
-                        //if (expROW != null && completionList.Count() == 1)
-                        //{
-                        //    var completion = completionList.First();
-                        //    db.Learning_Experiences.DeleteOnSubmit(completion);
-
-                        //    Learning_Experience exp = new Learning_Experience();
-                        //    exp.Student_ID = student.Student_ID;
-                        //    db.Learning_Experiences.InsertOnSubmit(exp);
-                        //    db.SubmitChanges();
-                        //    LoadStudentLearningExperiences();
-
-                        //    db.SubmitChanges();
-                        //}
-                        //else 
                         if (expROW != null && completionList.Any())
                         {
                             var completion = completionList.First();
@@ -402,7 +338,7 @@ namespace SLApp_Beta
 
         private void Delete_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            learningExperienceDelete_BTN_Click(sender, e);
+            learningExperienceDelete();
         }
 
         #endregion
@@ -410,6 +346,9 @@ namespace SLApp_Beta
 		private void StudentLearningExperiences_DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
 		{
 			if (e.PropertyName == "ID") e.Cancel = true;
+#if Demo
+			if (e.PropertyName == "Student_ID") e.Cancel = true;
+#endif
 		}
 
         #region Notes

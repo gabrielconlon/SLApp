@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Windows;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Documents;
-
-using System.Collections;
 using System.Collections.Generic;
 
 namespace SLApp_Beta
@@ -34,7 +28,7 @@ namespace SLApp_Beta
 
 		#endregion
 
-		private DatabaseMethods dbMethods = new DatabaseMethods();
+		DatabaseMethods  dbMethods = new DatabaseMethods();
 		
 
 		public MainWindow(bool isAdmin)
@@ -266,6 +260,7 @@ namespace SLApp_Beta
         private void newAgencyProfile_BTN_Click(object sender, RoutedEventArgs e)
         {
 			AgencyProfile Agencyform = new AgencyProfile(IsAdmin);
+			Agencyform.Closed += new EventHandler((s0, e0) => agencySearch_BTN_Click(s0, null));
             Agencyform.Show();
         }
 
@@ -308,41 +303,42 @@ namespace SLApp_Beta
 
 		private void Delete_agency_MenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			//if (dbMethods.CheckDatabaseConnection())
-			//{
-			//    if (MessageBox.Show("Are you sure you want to delete this agency?", "Confirm Delete!", MessageBoxButton.YesNo) ==
-			//        MessageBoxResult.Yes)
-			//    {
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				if (MessageBox.Show("Are you sure you want to delete this agency?", "Confirm Delete!", MessageBoxButton.YesNo) ==
+					MessageBoxResult.Yes)
+				{
 
-			//        using (PubsDataContext db = new PubsDataContext())
-			//        {
-			//            Agency agentRow = studentSearch_DataGrid.SelectedItem as Agency;
-			//            Agency stud = (from a in db.Agencies
-			//                            where a.Name == agentRow.Name
-			//                            select a).Single();
+					using (PubsDataContext db = new PubsDataContext())
+					{
+						Agency agentRow = agencySearch_DataGrid.SelectedItem as Agency;
+						Agency stud = (from a in db.Agencies
+									   where a.Name == agentRow.Name
+									   select a).Single();
 
-			//            db.Agencies.DeleteOnSubmit(stud);
-			//            db.SubmitChanges();
-			//        }
-			//    }
-			//}
+						db.Agencies.DeleteOnSubmit(stud);
+						db.SubmitChanges();
+					}
+					agencySearch_BTN_Click(sender, e);
+				}
+			}
 		}
 
 		private void Edit_agency_MenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			//if (dbMethods.CheckDatabaseConnection())
-			//{
-			//    using (PubsDataContext db = new PubsDataContext())
-			//    {
-			//        Agency agentRow = studentSearch_DataGrid.SelectedItem as Agency;
-			//        Agency stud = (from a in db.Agencies
-			//                       where a.Name == agentRow.Name
-			//                       select a).Single();
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				using (PubsDataContext db = new PubsDataContext())
+				{
+					Agency agentRow = agencySearch_DataGrid.SelectedItem as Agency;
+					Agency stud = (from a in db.Agencies
+								   where a.Name == agentRow.Name
+								   select a).Single();
 
-			//        AgencyProfile agentForm = new AgencyProfile(stud, IsAdmin, true);
-			//        agentForm.Show();
-			//    }
-			//}
+					AgencyProfile agentForm = new AgencyProfile(stud, IsAdmin, true);
+					agentForm.Show();
+				}
+			}
 		}
 
 		#endregion
@@ -351,19 +347,22 @@ namespace SLApp_Beta
 
 		#region Admin Tab
 
-		//private void admin_tab_GotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    LoadUsers(users_DataGrid);
-        //}
-
         private void LoadUsers(DataGrid dg)
         {
             if (dbMethods.CheckDatabaseConnection())
             {
                 using (PubsDataContext db = new PubsDataContext())
                 {
+#if Demo
                     var Allusers = new List<Application_User>(from users in db.Application_Users
+															  where users.Username != "bwatts"
                                                               select users);
+#else
+					var Allusers = new List<Application_User>(from users in db.Application_Users
+                                                              select users);
+#endif
+
+
                     dg.DataContext = Allusers;
                 }
             }
@@ -605,6 +604,15 @@ namespace SLApp_Beta
 
 
 		#endregion
+
+
+		private void studentSearch_DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+		{
+#if Demo
+			if (e.PropertyName == "Student_ID") e.Cancel = true;
+#endif
+		}
+
 
 
 		#endregion

@@ -3,63 +3,82 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="AgencyProfile" Height="550" Width="850" MinHeight="550" MinWidth="850">
     <Grid>
-        <Expander Header="Short Term" Name="shortTerm_Expander" LostFocus="collapseExpander" Margin="0,243,319,0" Visibility="Hidden">
-            <Expander.BorderBrush>
-                <SolidColorBrush />
-            </Expander.BorderBrush>
-            <Grid Height="206" Width="477">
-                <DataGrid AutoGenerateColumns="False" BorderThickness="1" HorizontalAlignment="Stretch" Margin="6,4,0,29" Name="shortTerm_DataGrid" VerticalAlignment="Stretch" ItemsSource="{Binding}"/>
-                <Button Content="Add" Height="23" HorizontalAlignment="Right" Name="agencyShortTermServiceAdd_BTN" VerticalAlignment="Bottom" Width="75" />
-            </Grid>
-        </Expander>
-        <Expander Header="Long Term" Name="longTerm_Expander" Expanded="LongTerm_Expander_OnExpanded" LostFocus="collapseExpander" Margin="160,243,159,0" Visibility="Hidden">
-            <Expander.BorderBrush>
-                <SolidColorBrush />
-            </Expander.BorderBrush>
-            <Grid Height="206" Width="477">
-                <DataGrid AutoGenerateColumns="True" BorderThickness="1" HorizontalAlignment="Stretch" Margin="6,4,0,29" Name="longTerm_DataGrid" VerticalAlignment="Stretch" ItemsSource="{Binding}" />
-                <Button Content="Save" Height="23" HorizontalAlignment="Right" Name="agencyLongTermServiceSave_BTN" VerticalAlignment="Bottom" Width="75" Click="AgencyLongTermServiceSave_BTN_OnClick" />
-            </Grid>
-        </Expander>
-        <Expander Header="Community Based Research" Name="CBR_Expander" LostFocus="collapseExpander" Margin="319,243,0,0" Visibility="Hidden">
-            <Expander.BorderBrush>
-                <SolidColorBrush />
-            </Expander.BorderBrush>
-            <Grid Height="206" Width="477">
-                <DataGrid AutoGenerateColumns="False" BorderThickness="1" HorizontalAlignment="Stretch" Margin="6,4,0,29" Name="CBR_DataGrid" VerticalAlignment="Stretch" ItemsSource="{Binding}" />
-                <Button Content="Add" Height="23" HorizontalAlignment="Right" Name="agencyCBRServiceAdd_BTN" VerticalAlignment="Bottom" Width="75" />
-            </Grid>
-        </Expander>
-        <Label Content="Agency Name" Height="28" HorizontalAlignment="Left" Margin="10,10,0,0" Name="agencyName_LBL" VerticalAlignment="Top" />
-        <Label Content="Coordinator Name" Height="28" HorizontalAlignment="Left" Margin="10,73,0,0" Name="agencyCoordinatorName_LBL" VerticalAlignment="Top" />
-        <Label Content="Email" Height="28" HorizontalAlignment="Left" Margin="238,73,0,0" Name="agencyEmail_LBL" VerticalAlignment="Top" />
-        <Label Content="Phone" Height="28" HorizontalAlignment="Left" Margin="498,73,0,0" Name="agencyPhone_LBL" VerticalAlignment="Top" />
-        <Label Content="Street" Height="28" HorizontalAlignment="Left" Margin="10,136,0,0" Name="agencyAddressStreet_LBL" VerticalAlignment="Top" />
-        <Label Content="City" Height="28" HorizontalAlignment="Left" Margin="226,136,0,0" Name="agencyAddressCity_LBL" VerticalAlignment="Top" />
-        <Label Content="State" Height="28" HorizontalAlignment="Left" Margin="352,136,0,0" Name="agencyAddressState_LBL" VerticalAlignment="Top" />
-        <Label Content="Zipcode" Height="28" HorizontalAlignment="Left" Margin="412,136,0,0" Name="agencyAddressZipcode_LBL" VerticalAlignment="Top" />
-        <Label Content="Website URL" Height="28" HorizontalAlignment="Left" Margin="318,10,0,0" Name="agencyWebsite_LBL" VerticalAlignment="Top" />
-        <Label Content="Rating (1-3)" Height="28" HorizontalAlignment="Left" Margin="240,10,0,0" Name="agencyRating_LBL" VerticalAlignment="Top" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="10,44,0,0" Name="agencyName_TB" VerticalAlignment="Top" Width="222" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="240,44,0,0" Name="agencyRating_TB" VerticalAlignment="Top" Width="36" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="318,44,0,0" Name="agencyWebsite_TB" VerticalAlignment="Top" Width="250" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="10,107,0,0" Name="agencyCoordinatorName_TB" VerticalAlignment="Top" Width="220" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="238,107,0,0" Name="agencyEmail_TB" VerticalAlignment="Top" Width="250" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="498,107,0,0" Name="agencyPhone_TB" VerticalAlignment="Top" Width="100" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="10,170,0,0" Name="agencyAddressStreet_TB" VerticalAlignment="Top" Width="210" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="226,170,0,0" Name="agencyAddressCity_TB" VerticalAlignment="Top" Width="120" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="352,170,0,0" Name="agencyAddressState_TB" VerticalAlignment="Top" Width="50" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="412,170,0,0" Name="agencyAddressZipcode_TB" VerticalAlignment="Top" Width="75" />
-        <Button Content="Save" Height="23" HorizontalAlignment="Right" Margin="0,488,0,0" Name="save_BTN" VerticalAlignment="Top" Width="75" Click="save_BTN_Click" />
-        <Button Content="Cancel" Height="23" HorizontalAlignment="Right" Margin="0,488,81,0" Name="cancel_BTN" VerticalAlignment="Top" Width="75" Click="cancel_BTN_Click_1" />
-        <Label Content="view Community Partnership agreement" Height="28" HorizontalAlignment="Left"
-               Margin="591,165,0,0" Name="communityPartnershipAgreement_LBL" VerticalAlignment="Top" Width="225" Foreground="Blue" 
+		<Label Name="agencyName_LBL" Content="Agency Name" Height="28" HorizontalAlignment="Left" Margin="10,10,0,0"  VerticalAlignment="Top" />
+		<TextBox Name="agencyName_TB"  Height="23" HorizontalAlignment="Left" Margin="10,44,0,0" VerticalAlignment="Top" Width="222" TabIndex="0" />
+
+		<Label Name="agencyCoordinatorName_LBL" Content="Coordinator Name" Height="28" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" />
+		<TextBox Name="agencyCoordinatorName_TB" Height="23" HorizontalAlignment="Left" Margin="10,107,0,0"  VerticalAlignment="Top" Width="220" TabIndex="4" />
+
+		<Label Name="agencyEmail_LBL" Content="Email" Height="28" HorizontalAlignment="Left" Margin="238,73,0,0" VerticalAlignment="Top" />
+		<TextBox Name="agencyEmail_TB" Height="23" HorizontalAlignment="Left" Margin="238,107,0,0" VerticalAlignment="Top" Width="250" TabIndex="5" />
+
+		<Label Name="agencyPhone_LBL" Content="Phone" Height="28" HorizontalAlignment="Left" Margin="498,73,0,0" VerticalAlignment="Top" />
+		<TextBox Name="agencyPhone_TB" Height="23" HorizontalAlignment="Left" Margin="498,107,0,0" VerticalAlignment="Top" Width="100" TabIndex="6" />
+
+		<Label Name="agencyAddressStreet_LBL" Content="Street" Height="28" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" />
+		<TextBox Name="agencyAddressStreet_TB" Height="23" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Width="210" TabIndex="8" />
+
+		<Label Name="agencyAddressCity_LBL" Content="City" Height="28" HorizontalAlignment="Left" Margin="226,136,0,0" VerticalAlignment="Top" />
+		<TextBox Name="agencyAddressCity_TB" Height="23" HorizontalAlignment="Left" Margin="226,170,0,0" VerticalAlignment="Top" Width="120" TabIndex="9" />
+
+		<Label Name="agencyWebsite_LBL" Content="Website URL" Height="28" HorizontalAlignment="Left" Margin="318,10,0,0" VerticalAlignment="Top" />
+		<TextBox Name="agencyWebsite_TB" Height="23" HorizontalAlignment="Left" Margin="318,44,0,0" VerticalAlignment="Top" Width="250" TabIndex="2" />
+
+		<Label Name="agencyRating_LBL" Content="Rating (1-3)" Height="28" HorizontalAlignment="Left" Margin="240,10,0,0" VerticalAlignment="Top" />
+		<TextBox Name="agencyRating_TB" Height="23" HorizontalAlignment="Left" Margin="240,44,0,0" VerticalAlignment="Top" Width="36" TabIndex="1" />
+
+		<TextBox Name="agencyAddressState_TB" Height="23" HorizontalAlignment="Left" Margin="352,170,0,0" VerticalAlignment="Top" Width="50" TabIndex="10" />
+		<Label Name="agencyAddressState_LBL" Content="State" Height="28" HorizontalAlignment="Left" Margin="352,136,0,0" VerticalAlignment="Top" />
+		
+		<TextBox Name="agencyAddressZipcode_TB" Height="23" HorizontalAlignment="Left" Margin="412,170,0,0" VerticalAlignment="Top" Width="75" TabIndex="11" />
+		<Label Name="agencyAddressZipcode_LBL" Content="Zipcode" Height="28" HorizontalAlignment="Left" Margin="412,136,0,0" VerticalAlignment="Top" />
+
+		<Label Name="agencyFax_LBL" Content="Fax" Height="28" HorizontalAlignment="Left" Margin="604,73,0,0" VerticalAlignment="Top" />
+		<TextBox Name="agencyFax_TB"  Height="23" HorizontalAlignment="Left" Margin="604,107,0,0" VerticalAlignment="Top" Width="100" TabIndex="7" />
+
+		<Label Name="agencyAlternateName_LBL" Content="Alternate Contact" Height="28" HorizontalAlignment="Left" Margin="579,10,0,0" VerticalAlignment="Top" />
+		<TextBox Name="agencyAlternateName_TB" Height="23" HorizontalAlignment="Left" Margin="579,44,0,0" VerticalAlignment="Top" Width="220" TabIndex="3" />
+
+		<Label Name="description_LBL" Content="Description" Height="28" HorizontalAlignment="Left" Margin="10,199,0,0" VerticalAlignment="Top" />
+		<TextBox Name="description_TB" Height="266" HorizontalAlignment="Left" Margin="10,233,0,0" VerticalAlignment="Top" Width="210" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" TabIndex="12" />
+
+		<Button Name="save_BTN" Content="Save" Height="23" HorizontalAlignment="Right" Margin="0,488,0,0" VerticalAlignment="Top" Width="75" Click="save_BTN_Click" IsDefault="True" />
+		<Button Name="cancel_BTN" Content="Cancel" Height="23" HorizontalAlignment="Right" Margin="0,488,81,0" VerticalAlignment="Top" Width="75" Click="cancel_BTN_Click_1" />
+
+		<Label Name="communityPartnershipAgreement_LBL" Content="view Community Partnership agreement" Height="28" HorizontalAlignment="Left"
+               Margin="591,165,0,0" VerticalAlignment="Top" Width="225" Foreground="Blue" 
                MouseDown="communityPartnershipAgreement_LBL_MouseDown" />
-        <Label Content="Fax" Height="28" HorizontalAlignment="Left" Margin="604,73,0,0" Name="agencyFax_LBL" VerticalAlignment="Top" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="604,107,0,0" Name="agencyFax_TB" VerticalAlignment="Top" Width="100" />
-		<Label Content="Alternate Contact" Height="28" HorizontalAlignment="Left" Margin="579,10,0,0" Name="agencyAlternateName_LBL" VerticalAlignment="Top" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="579,44,0,0" Name="agencyAlternateName_TB" VerticalAlignment="Top" Width="220" />
-		<TextBox Height="266" HorizontalAlignment="Left" Margin="10,233,0,0" Name="description_TB" VerticalAlignment="Top" Width="210" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" />
-		<Label Content="Description" Height="28" HorizontalAlignment="Left" Margin="10,199,0,0" Name="label1" VerticalAlignment="Top" />
+		
+		<!-- This expander is currently invisible due to the Experience Opportunities being non-functioning -->
+		<Expander Header="Short Term" Name="shortTerm_Expander" LostFocus="collapseExpander" Margin="0,243,319,0" Visibility="Hidden">
+			<Expander.BorderBrush>
+				<SolidColorBrush />
+			</Expander.BorderBrush>
+			<Grid Height="206" Width="477">
+				<DataGrid AutoGenerateColumns="False" BorderThickness="1" HorizontalAlignment="Stretch" Margin="6,4,0,29" Name="shortTerm_DataGrid" VerticalAlignment="Stretch" ItemsSource="{Binding}"/>
+				<Button Content="Add" Height="23" HorizontalAlignment="Right" Name="agencyShortTermServiceAdd_BTN" VerticalAlignment="Bottom" Width="75" />
+			</Grid>
+		</Expander>
+		<!-- This expander is currently invisible due to the Experience Opportunities being non-functioning -->
+		<Expander Header="Long Term" Name="longTerm_Expander" Expanded="LongTerm_Expander_OnExpanded" LostFocus="collapseExpander" Margin="160,243,159,0" Visibility="Hidden">
+			<Expander.BorderBrush>
+				<SolidColorBrush />
+			</Expander.BorderBrush>
+			<Grid Height="206" Width="477">
+				<DataGrid AutoGenerateColumns="True" BorderThickness="1" HorizontalAlignment="Stretch" Margin="6,4,0,29" Name="longTerm_DataGrid" VerticalAlignment="Stretch" ItemsSource="{Binding}" />
+				<Button Content="Save" Height="23" HorizontalAlignment="Right" Name="agencyLongTermServiceSave_BTN" VerticalAlignment="Bottom" Width="75" Click="AgencyLongTermServiceSave_BTN_OnClick" />
+			</Grid>
+		</Expander>
+		<!-- This expander is currently invisible due to the Experience Opportunities being non-functioning -->
+		<Expander Header="Community Based Research" Name="CBR_Expander" LostFocus="collapseExpander" Margin="319,243,0,0" Visibility="Hidden">
+			<Expander.BorderBrush>
+				<SolidColorBrush />
+			</Expander.BorderBrush>
+			<Grid Height="206" Width="477">
+				<DataGrid AutoGenerateColumns="False" BorderThickness="1" HorizontalAlignment="Stretch" Margin="6,4,0,29" Name="CBR_DataGrid" VerticalAlignment="Stretch" ItemsSource="{Binding}" />
+				<Button Content="Add" Height="23" HorizontalAlignment="Right" Name="agencyCBRServiceAdd_BTN" VerticalAlignment="Bottom" Width="75" />
+			</Grid>
+		</Expander>
+		<Button Content="Delete" Height="23" HorizontalAlignment="Right" Margin="0,488,162,0" Name="agencyDelete_BTN" VerticalAlignment="Top" Width="75" Click="agencyDelete_BTN_Click" />
 	</Grid>
 </Window>

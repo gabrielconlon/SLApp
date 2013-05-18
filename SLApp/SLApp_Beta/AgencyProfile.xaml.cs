@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace SLApp_Beta
 {
@@ -31,6 +25,7 @@ namespace SLApp_Beta
 				agencyRating_TB.Visibility = Visibility.Hidden;
 				agencyRating_LBL.Visibility = Visibility.Hidden;
 				save_BTN.Visibility = Visibility.Hidden;
+				agencyDelete_BTN.Visibility = Visibility.Hidden;
 			}
         }
 
@@ -43,6 +38,7 @@ namespace SLApp_Beta
 				agencyRating_TB.Visibility = Visibility.Hidden;
 				agencyRating_LBL.Visibility = Visibility.Hidden;
 				save_BTN.Visibility = Visibility.Hidden;
+				agencyDelete_BTN.Visibility = Visibility.Hidden;
 			}
 
 			if(isAdmin)
@@ -63,8 +59,6 @@ namespace SLApp_Beta
             this.agencyWebsite_TB.Text = agent.WebsiteLink;
 	        this.description_TB.Text = agent.Description;
 
-	        //TODO - description???
-
         }
 
         private void collapseExpander(object sender, RoutedEventArgs e)
@@ -83,63 +77,84 @@ namespace SLApp_Beta
 									   where s.Name == agencyName_TB.Text
 									   select s);
 					//if the agency does not exists, application will create a new agency
-					if (CheckExists.Count() == 0)
+					try
 					{
-						agent.Name = agencyName_TB.Text;
-						agent.City = agencyAddressCity_TB.Text;
-						agent.CoordinatorName = agencyCoordinatorName_TB.Text;
-						agent.Description = description_TB.Text;
-						agent.Email = agencyEmail_TB.Text;
-						agent.FaxNumber = agencyFax_TB.Text;
-						agent.Phone = agencyPhone_TB.Text;
-						agent.Rating = Convert.ToInt32(agencyRating_TB.Text);
-						agent.State = agencyAddressState_TB.Text;
-						agent.StreetAddress = agencyAddressStreet_TB.Text;
-						agent.WebsiteLink = agencyWebsite_TB.Text;
-						agent.Zip = agencyAddressZipcode_TB.Text;
-						agent.AlternateContact = agencyAlternateName_TB.Text;
+						if (CheckExists.Count() == 0)
+						{
+							agent.Name = agencyName_TB.Text;
+							agent.City = agencyAddressCity_TB.Text;
+							agent.CoordinatorName = agencyCoordinatorName_TB.Text;
+							agent.Description = description_TB.Text;
+							agent.Email = agencyEmail_TB.Text;
+							agent.FaxNumber = agencyFax_TB.Text;
+							agent.Phone = agencyPhone_TB.Text;
+							agent.Rating = Convert.ToInt32(agencyRating_TB.Text);
+							agent.State = agencyAddressState_TB.Text;
+							agent.StreetAddress = agencyAddressStreet_TB.Text;
+							agent.WebsiteLink = agencyWebsite_TB.Text;
+							agent.Zip = agencyAddressZipcode_TB.Text;
+							agent.AlternateContact = agencyAlternateName_TB.Text;
 
-						db.Agencies.InsertOnSubmit(agent);
-						db.SubmitChanges();
+							db.Agencies.InsertOnSubmit(agent);
+							db.SubmitChanges();
+						}
+						else
+						{
+							//save agency info
+							Agency agency = (from s in db.Agencies
+											 where s.Name == agent.Name
+											 select s).Single();
+							agency.Name = agencyName_TB.Text;
+							agency.City = agencyAddressCity_TB.Text;
+							agency.CoordinatorName = agencyCoordinatorName_TB.Text;
+							agency.Description = description_TB.Text;
+							agency.Email = agencyEmail_TB.Text;
+							agency.FaxNumber = agencyFax_TB.Text;
+							agency.Phone = agencyPhone_TB.Text;
+							agency.Rating = Convert.ToInt32(agencyRating_TB.Text);
+							agency.State = agencyAddressState_TB.Text;
+							agency.StreetAddress = agencyAddressStreet_TB.Text;
+							agency.WebsiteLink = agencyWebsite_TB.Text;
+							agency.Zip = agencyAddressZipcode_TB.Text;
+							agency.AlternateContact = agencyAlternateName_TB.Text;
+
+							db.SubmitChanges();
+						}
 					}
-					else
+					catch (Exception)
 					{
-						//save agency info
-						Agency agency = (from s in db.Agencies
-										 where s.Name == agent.Name
-										 select s).Single();
-						agency.Name = agencyName_TB.Text;
-						agency.City = agencyAddressCity_TB.Text;
-						agency.CoordinatorName = agencyCoordinatorName_TB.Text;
-						agency.Description = description_TB.Text;
-						agency.Email = agencyEmail_TB.Text;
-						agency.FaxNumber = agencyFax_TB.Text;
-						agency.Phone = agencyPhone_TB.Text;
-						agency.Rating = Convert.ToInt32(agencyRating_TB.Text);
-						agency.State = agencyAddressState_TB.Text;
-						agency.StreetAddress = agencyAddressStreet_TB.Text;
-						agency.WebsiteLink = agencyWebsite_TB.Text;
-						agency.Zip = agencyAddressZipcode_TB.Text;
-						agency.AlternateContact = agencyAlternateName_TB.Text;
-
-						db.SubmitChanges();
+						MessageBox.Show("SLApp apologies for the inconvenience, but at this time Rating must contain contain data.",
+						                "Save Error!", MessageBoxButton.OK, MessageBoxImage.Error);
 					}
-
-
 				}
 			}
-		}
-
-		private void saveAndClose_BTN_Click(object sender, RoutedEventArgs e)
-		{
-			save_BTN_Click(sender, e);
-			this.Close();
 		}
 
         private void cancel_BTN_Click_1(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
+		private void agencyDelete_BTN_Click(object sender, RoutedEventArgs e)
+		{
+			if (dbMethods.CheckDatabaseConnection())
+			{
+				if (MessageBox.Show("Are you sure you want to delete this agency?", "Confirm Delete!", MessageBoxButton.YesNo) ==
+					MessageBoxResult.Yes)
+				{
+					using (PubsDataContext db = new PubsDataContext())
+					{
+						Agency stud = (from s in db.Agencies
+										where s.Name == agent.Name
+										select s).Single();
+						
+						db.Agencies.DeleteOnSubmit(stud);
+						db.SubmitChanges();
+						this.Close();
+					}
+				}
+			}
+		}
 
         private void communityPartnershipAgreement_LBL_MouseDown(object sender, MouseButtonEventArgs e)
         {

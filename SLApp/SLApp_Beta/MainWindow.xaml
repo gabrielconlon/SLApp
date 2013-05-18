@@ -17,20 +17,8 @@
                 <MenuItem Name="logoffMenuItem" Header="LogOff" Click="logoffMenuItem_Click" />
 				<MenuItem Header="Exit" Click="menuExit_Click" />
 			</MenuItem>
-                <!--
-			<MenuItem Header="_Profile">
-				<MenuItem Header="Create Profile" Click="menuCreateStudent_Click">
-				</MenuItem>
-				<MenuItem Header="Edit Profile">
-				</MenuItem>
-				<Separator />
-				<MenuItem Header="Create Agency Profile" Click="menuCreateAgency_Click" />
-				<MenuItem Header="Edit Agency Profile" />
-			</MenuItem>
-                -->
-			<MenuItem Header="_Options" IsTabStop="False" />
             <MenuItem Header="_Help" IsTabStop="False">
-                <MenuItem Name="manualMenuItem" Header="Learn About SLApp" Click="manualMenuItem_Click" />
+                <MenuItem Name="manualMenuItem" Header="View Help" Click="manualMenuItem_Click" />
                 <MenuItem Name="aboutMenuItem" Header="About" Click="aboutMenuItem_Click" />
             </MenuItem>
         </Menu>
@@ -53,7 +41,7 @@
                     <Button Content="_Search" Height="23" HorizontalAlignment="Right" Margin="0,257,6,0" Name="studentSearch_BTN" VerticalAlignment="Top" Width="75" Click="studentSearch_BTN_Click" TabIndex="10" IsDefault="True" />
                     <DataGrid AutoGenerateColumns="True" Name="studentSearch_DataGrid" Margin="0,286,0,0" ItemsSource="{Binding}"
                               MouseDoubleClick="StudentSearch_DataGrid_OnMouseDoubleClick" IsReadOnly="True" 
-                              IsManipulationEnabled="False" VerticalScrollBarVisibility="Visible" TabIndex="11">
+                              IsManipulationEnabled="False" VerticalScrollBarVisibility="Visible" TabIndex="11" AutoGeneratingColumn="studentSearch_DataGrid_AutoGeneratingColumn">
                         <DataGrid.ContextMenu>
                             <ContextMenu Name="studentSearch_ContextMenu">
                                 <MenuItem Header="Add" Click="Add_MenuItem_Click" />
