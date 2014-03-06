@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SLApp_Beta", "SLApp_Beta.csproj", "{A704FE6F-5646-42DE-B8F7-C8E75FA52EBF}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Windows Desktop
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SLApp", "SLApp.csproj", "{A704FE6F-5646-42DE-B8F7-C8E75FA52EBF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F860256D-B171-4E7C-98BA-EC95BBAD7392}"
 EndProject
