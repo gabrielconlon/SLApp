@@ -671,7 +671,7 @@ namespace SLApp_Beta
 		
 		private string _CourseNumber;
 		
-		private System.Nullable<int> _Section;
+		private string _Section;
 		
 		private string _Professor;
 		
@@ -703,7 +703,7 @@ namespace SLApp_Beta
     partial void OnCourseNameChanged();
     partial void OnCourseNumberChanging(string value);
     partial void OnCourseNumberChanged();
-    partial void OnSectionChanging(System.Nullable<int> value);
+    partial void OnSectionChanging(string value);
     partial void OnSectionChanged();
     partial void OnProfessorChanging(string value);
     partial void OnProfessorChanged();
@@ -791,9 +791,10 @@ namespace SLApp_Beta
 				}
 			}
 		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Section", DbType="Int")]
-		public System.Nullable<int> Section
+
+        //Changed to a string for proper input of section numbers (W and N)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Section", DbType="VarChar(50)")]
+		public string Section
 		{
 			get
 			{
